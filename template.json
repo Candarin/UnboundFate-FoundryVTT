@@ -1,0 +1,106 @@
+{
+  "Actor": {
+    "types": ["character", "npc"],
+    "templates": {
+      "base": {
+        "health": {
+          "value": 10,
+          "min": 0,
+          "max": 10
+        },
+        "power": {
+          "value": 5,
+          "min": 0,
+          "max": 5
+        },
+        "biography": ""
+      },
+      "abilities": {
+        "str": {
+          "value": 0
+        },
+        "agl": {
+          "value": 0
+        },
+        "end": {
+          "value": 0
+        },
+        "int": {
+          "value": 0
+        }, 
+        "wil": {
+          "value": 0
+        },
+        "prs": {
+          "value": 0
+        }, 
+        "awr": {
+          "value": 0
+        }
+      },
+      "creation": {
+        "isCreationMode": true
+      },
+      "grit": {
+        "grt": {
+          "value": 0
+        }
+      }
+    },
+    "character": {
+      "templates": ["base", "abilities", "creation"],
+      "attributes": {
+        "level": {
+          "value": 1
+        }
+      }      
+    },
+    "npc": {
+      "templates": ["base", "abilities"],
+      "cr": 0
+    }
+  },
+  "Item": {
+    "types": ["armour", "item", "feature", "flaw", "parry", "spell", "talent", "weapon"],
+    "templates": {
+      "base": {
+        "description": ""
+      },
+      "armour": {
+        "armourRating": 0,
+        "armourType": "light"
+      },
+      "parry": {
+        "parry": 0
+      },
+      "physicalItem": {
+        "weight": 0,
+        "cost": 0
+      },
+      "weapon": {
+        "weaponType": ""
+      }
+    },
+    "armour": {
+      "templates": ["base", "armour", "parry", "physicalItem"]
+    },
+    "item": {
+      "templates": ["base", "physicalItem"],
+      "quantity": 1,      
+      "formula": "d20 + @str.mod + ceil(@lvl / 2)"
+    },
+    "feature": {
+      "templates": ["base"]
+    },
+    "spell": {
+      "templates": ["base"],
+      "spellLevel": 1
+    },
+    "talent": {
+      "templates": ["base"]
+    },
+    "weapon": {
+      "templates": ["base", "parry", "physicalItem"]
+    }
+  }
+}

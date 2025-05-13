@@ -1,0 +1,43 @@
+{
+  "UNBOUNDFATE": {
+    "Ability": {
+      "Str": { "long": "Strength", "abbr": "str" },
+      "Agl": { "long": "Agility", "abbr": "agl" },
+      "End": { "long": "Endurance", "abbr": "end" },
+      "Int": { "long": "Intellect", "abbr": "int" },
+      "Wil": { "long": "Willpower", "abbr": "wil" },
+      "Prs": { "long": "Presence", "abbr": "prs" },
+      "Awr": { "long": "Awareness", "abbr": "awr" }
+    },
+    "SheetLabels": {
+      "Actor": "UnboundFate Actor Sheet",
+      "Item": "UnboundFate Item Sheet"
+    },
+    "Item": {
+      "Spell": {
+        "SpellLVL": "Level {level} Spells",
+        "AddLVL": "Add LVL {level}"
+      }
+    },
+    "Effect": {
+      "Source": "Source",
+      "Toggle": "Toggle Effect",
+      "Temporary": "Temporary Effects",
+      "Passive": "Passive Effects",
+      "Inactive": "Inactive Effects"
+    }
+  },
+
+  "TYPES": {
+    "Actor": {
+      "character": "Character",
+      "npc": "NPC"
+    },
+    "Item": {
+      "item": "Item",
+      "feature": "Feature",
+      "spell": "Spell",
+      "talent": "Talent"
+    }
+  }
+}
