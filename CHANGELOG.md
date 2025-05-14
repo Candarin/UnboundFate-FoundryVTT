@@ -28,3 +28,6 @@
 
 ## 1.0.8
 - Actor: updates to sheet
+
+## 1.0.9
+- Actor: updates to sheet
