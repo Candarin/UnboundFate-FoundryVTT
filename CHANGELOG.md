@@ -16,3 +16,6 @@
 ## 1.0.4
 - Actor: updated template.json. Changes to character sheet
 - Item: updated data model
+
+## 1.0.5
+- Actor sheet: Added talents and flaws tab. Layout changes

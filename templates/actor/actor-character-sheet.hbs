@@ -2,43 +2,45 @@
 
   {{!-- Sheet Header --}}
   <header class="sheet-header">
-    <div>
-      <img class="profile-img" src="{{actor.img}}" data-edit="img" title="{{actor.name}}" height="100" width="100"/>
-      <div class="header-fields">
-        <h1 class="charname"><input name="name" type="text" value="{{actor.name}}" placeholder="Name"/></h1>
-        {{!-- The grid classes are defined in scss/global/_grid.scss. To use,
-        use both the "grid" and "grid-Ncol" class where "N" can be any number
-        from 1 to 12 and will create that number of columns.  --}}
-        <div class="resources grid grid-3col">
+    <div class="resources grid grid-2row">
+      <div>
+        <img class="profile-img" src="{{actor.img}}" data-edit="img" title="{{actor.name}}" height="100" width="100"/>
+        <div class="header-fields">
+          <h1 class="charname"><input name="name" type="text" value="{{actor.name}}" placeholder="Name"/></h1>
+          {{!-- The grid classes are defined in scss/global/_grid.scss. To use,
+          use both the "grid" and "grid-Ncol" class where "N" can be any number
+          from 1 to 12 and will create that number of columns.  --}}
+          <div class="resources grid grid-3col">
 
-          {{!-- "flex-group-center" is also defined in the _grid.scss file
-          and it will add a small amount of padding, a border, and will
-          center all of its child elements content and text. --}}
-          <div class="resource flex-group-center">
-            <label for="system.health.value" class="resource-label">Health</label>
-            <div class="resource-content flexrow flex-center flex-between">
-            <input type="text" name="system.health.value" value="{{system.health.value}}" data-dtype="Number"/>
-            <span> / </span>
-            <input type="text" name="system.health.max" value="{{system.health.max}}" data-dtype="Number"/>
+            {{!-- "flex-group-center" is also defined in the _grid.scss file
+            and it will add a small amount of padding, a border, and will
+            center all of its child elements content and text. --}}
+            <div class="resource flex-group-center">
+              <label for="system.health.value" class="resource-label">Health</label>
+              <div class="resource-content flexrow flex-center flex-between">
+              <input type="text" name="system.health.value" value="{{system.health.value}}" data-dtype="Number"/>
+              <span> / </span>
+              <input type="text" name="system.health.max" value="{{system.health.max}}" data-dtype="Number"/>
+              </div>
             </div>
-          </div>
 
-          <div class="resource flex-group-center">
-            <label for="system.power.value" class="resource-label">Power</label>
-            <div class="resource-content flexrow flex-center flex-between">
-            <input type="text" name="system.power.value" value="{{system.power.value}}" data-dtype="Number"/>
-            <span> / </span>
-            <input type="text" name="system.power.max" value="{{system.power.max}}" data-dtype="Number"/>
+            <div class="resource flex-group-center">
+              <label for="system.power.value" class="resource-label">Power</label>
+              <div class="resource-content flexrow flex-center flex-between">
+              <input type="text" name="system.power.value" value="{{system.power.value}}" data-dtype="Number"/>
+              <span> / </span>
+              <input type="text" name="system.power.max" value="{{system.power.max}}" data-dtype="Number"/>
+              </div>
             </div>
-          </div>
 
-          <div class="resource flex-group-center">
-            <label for="system.attributes.level.value" class="resource-label">Level</label>
-            <div class="resource-content flexrow flex-center flex-between">
-            <input type="text" name="system.attributes.level.value" value="{{system.attributes.level.value}}" data-dtype="Number"/>
+            <div class="resource flex-group-center">
+              <label for="system.attributes.level.value" class="resource-label">Level</label>
+              <div class="resource-content flexrow flex-center flex-between">
+              <input type="text" name="system.attributes.level.value" value="{{system.attributes.level.value}}" data-dtype="Number"/>
+              </div>
             </div>
-          </div>
 
+          </div>
         </div>
       </div>
     </div>
@@ -57,6 +59,7 @@
   <nav class="sheet-tabs tabs" data-group="primary">
     {{!-- Default tab is specified in actor-sheet.mjs --}}
     <a class="item" data-tab="features">Features</a>
+    <a class="item" data-tab="talents-and-flaws">Talents</a>
     <a class="item" data-tab="description">Description</a>
     <a class="item" data-tab="items">Items</a>
     <a class="item" data-tab="spells">Spells</a>
@@ -92,6 +95,11 @@
         </section>
 
       </section>
+    </div>
+
+    {{!-- Owned Talents and Flaws Tab --}}
+    <div class="tab talents" data-group="primary" data-tab="talents-and-flaws">
+       {{> "systems/unboundfate/templates/actor/parts/actor-talents-and-flaws.hbs"}}
     </div>
 
     {{!-- Biography Tab --}}
