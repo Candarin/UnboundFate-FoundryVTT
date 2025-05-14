@@ -2,7 +2,7 @@
   "Actor": {
     "types": ["character", "npc"],
     "templates": {
-      "base": {
+      "base-template": {
         "health": {
           "value": 10,
           "min": 0,
@@ -15,40 +15,44 @@
         },
         "biography": ""
       },
-      "abilities": {
-        "str": {
-          "value": 0
-        },
-        "agl": {
-          "value": 0
-        },
-        "end": {
-          "value": 0
-        },
-        "int": {
-          "value": 0
-        }, 
-        "wil": {
-          "value": 0
-        },
-        "prs": {
-          "value": 0
-        }, 
-        "awr": {
-          "value": 0
+      "abilities-template": {
+        "abilities": {
+          "str": {
+            "value": 0
+          },
+          "agl": {
+            "value": 0
+          },
+          "end": {
+            "value": 0
+          },
+          "int": {
+            "value": 0
+          }, 
+          "wil": {
+            "value": 0
+          },
+          "prs": {
+            "value": 0
+          }, 
+          "awr": {
+            "value": 0
+          }
         }
       },
-      "creation": {
+      "creation-template": {
         "isCreationMode": true
       },
-      "grit": {
-        "grt": {
-          "value": 0
+      "grit-template": {
+        "abilities": {
+          "grt": {
+            "value": 0
+          }
         }
       }
     },
     "character": {
-      "templates": ["base", "abilities", "creation"],
+      "templates": ["base-template", "abilities-template", "creation-template","grit-template"],
       "attributes": {
         "level": {
           "value": 1
@@ -56,7 +60,7 @@
       }      
     },
     "npc": {
-      "templates": ["base", "abilities"],
+      "templates": ["base-template", "abilities-template"],
       "cr": 0
     }
   },

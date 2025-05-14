@@ -9,3 +9,6 @@
 ## 1.0.2
 - Actor: removed some unnecessary modifiers
 - Added actor logging for debug purposes
+
+## 1.0.3
+- Actor: updated template.json
