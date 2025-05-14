@@ -25,3 +25,6 @@
 
 ## 1.0.7
 - Actor: Added hbs partial to preloader
+
+## 1.0.8
+- Actor: updates to sheet

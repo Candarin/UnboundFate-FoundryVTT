@@ -13,6 +13,13 @@
           "min": 0,
           "max": 5
         },
+        "fatePoints-template": {
+          "fatePoints": {
+            "startingFP": 100,
+            "spentFP": 0,
+            "earnedFP": 0
+          }
+        },        
         "biography": ""
       },
       "abilities-template": {
@@ -46,7 +53,8 @@
       "grit-template": {
         "specialAbilities": {
           "grt": {
-            "value": 0
+            "value": 0,
+            "available": 0
           }
         }
       }
@@ -65,10 +73,11 @@
     }
   },
   "Item": {
-    "types": ["armour", "flaw", "item", "parry", "spell", "talent", "weapon"],
+    "types": ["armour", "flaw", "item", "parry", "race", "spell", "talent", "weapon"],
     "templates": {
       "base-template": {
-        "description": ""
+        "description": "",
+        "pdfReference": ""
       },
       "armour-template": {
         "armourRating": 0,
@@ -104,7 +113,11 @@
       "templates": ["base-template"]
     },
     "weapon": {
-      "templates": ["base-template", "parry-template", "physicalItem-template"]
+      "templates": ["base-template", "parry-template", "physicalItem-template"],
+      "damage1H": "1d8",
+      "damage2H": "1d10",
+      "skill": "",
+      "skillSpec": ""
     }
   }
 }

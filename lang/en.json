@@ -37,10 +37,13 @@
       "npc": "NPC"
     },
     "Item": {
+      "armour": "Armour",
       "item": "Item",
       "feature": "Feature",
+      "flaw": "Flaw",
       "spell": "Spell",
-      "talent": "Talent"
+      "talent": "Talent",
+      "weapon": "Weapon"
     }
   }
 }

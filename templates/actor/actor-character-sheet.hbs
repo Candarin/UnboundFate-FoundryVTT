@@ -3,7 +3,7 @@
   {{!-- Sheet Header --}}
   <header class="sheet-header">
     <div class="resources grid grid-2row">
-      <div>
+      <div class="resources grid grid-2col">
         <img class="profile-img" src="{{actor.img}}" data-edit="img" title="{{actor.name}}" height="100" width="100"/>
         <div class="header-fields">
           <h1 class="charname"><input name="name" type="text" value="{{actor.name}}" placeholder="Name"/></h1>
@@ -43,15 +43,16 @@
           </div>
         </div>
       </div>
-    </div>
-    <div class="abilities flexcol">
-      {{#each system.abilities as |ability key|}}
-      <div class="ability flexcol flex-group-center">
-        <label for="system.abilities.{{key}}.value" class="resource-label rollable flexlarge align-left" data-roll="d20+@abilities.{{key}}.mod" data-label="{{localize (lookup @root.config.abilities key)}}">{{localize (lookup @root.config.abilities key)}}</label>
-        <input type="text" name="system.abilities.{{key}}.value" value="{{ability.value}}" data-dtype="Number"/>
-        <span class="ability-mod rollable" data-roll="d20+@abilities.{{key}}.mod" data-label="{{localize (lookup @root.config.abilities key)}}">{{numberFormat ability.mod decimals=0 sign=true}}</span>
+      <div class="abilities flexcol">
+        {{#each system.abilities as |ability key|}}
+        <div class="ability flexcol flex-group-center">
+          <label for="system.abilities.{{key}}.value" class="resource-label rollable flexlarge align-left" data-roll="d20+@abilities.{{key}}.mod" data-label="{{localize (lookup @root.config.abilities key)}}">{{localize (lookup @root.config.abilities key)}}</label>
+          <input type="number" min="0" name="system.abilities.{{key}}.value" value="{{ability.value}}" data-dtype="Number"/>
+          <span class="ability-mod rollable" data-roll="d20+@abilities.{{key}}.mod" data-label="{{localize (lookup @root.config.abilities key)}}">{{numberFormat ability.mod decimals=0 sign=true}}</span>
+        </div>
+        {{/each}}          
       </div>
-      {{/each}}          
+
     </div>
   </header>
 
