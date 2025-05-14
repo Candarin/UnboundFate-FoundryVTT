@@ -35,3 +35,6 @@
 ## 1.0.10
 - System: Updated grid reference to correct deprecation
 - Actor: updates to sheet
+
+## 1.0.11
+- System: Updated title
