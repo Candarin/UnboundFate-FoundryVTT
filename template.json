@@ -44,7 +44,7 @@
         "isCreationMode": true
       },
       "grit-template": {
-        "abilities": {
+        "specialAbilities": {
           "grt": {
             "value": 0
           }
@@ -65,46 +65,46 @@
     }
   },
   "Item": {
-    "types": ["armour", "item", "feature", "flaw", "parry", "spell", "talent", "weapon"],
+    "types": ["armour", "flaw", "item", "parry", "spell", "talent", "weapon"],
     "templates": {
-      "base": {
+      "base-template": {
         "description": ""
       },
-      "armour": {
+      "armour-template": {
         "armourRating": 0,
         "armourType": "light"
       },
-      "parry": {
+      "parry-template": {
         "parry": 0
       },
-      "physicalItem": {
+      "physicalItem-template": {
         "weight": 0,
         "cost": 0
       },
-      "weapon": {
+      "weapon-template": {
         "weaponType": ""
       }
     },
     "armour": {
-      "templates": ["base", "armour", "parry", "physicalItem"]
-    },
+      "templates": ["base-template", "armour-template", "parry-template", "physicalItem-template"]
+    },  
+    "flaw": {
+      "templates": ["base-template"]
+    },   
     "item": {
-      "templates": ["base", "physicalItem"],
+      "templates": ["base-template", "physicalItem-template"],
       "quantity": 1,      
       "formula": "d20 + @str.mod + ceil(@lvl / 2)"
     },
-    "feature": {
-      "templates": ["base"]
-    },
     "spell": {
-      "templates": ["base"],
+      "templates": ["base-template"],
       "spellLevel": 1
     },
     "talent": {
-      "templates": ["base"]
+      "templates": ["base-template"]
     },
     "weapon": {
-      "templates": ["base", "parry", "physicalItem"]
+      "templates": ["base-template", "parry-template", "physicalItem-template"]
     }
   }
 }

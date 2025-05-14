@@ -9,6 +9,9 @@
       "Prs": { "long": "Presence", "abbr": "prs" },
       "Awr": { "long": "Awareness", "abbr": "awr" }
     },
+    "SpecialAbility": {
+      "Grt": { "long": "Grit", "abbr": "grt" }
+    },
     "SheetLabels": {
       "Actor": "UnboundFate Actor Sheet",
       "Item": "UnboundFate Item Sheet"

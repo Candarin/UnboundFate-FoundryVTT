@@ -105,6 +105,8 @@ export class UnboundFateActorSheet extends ActorSheet {
     // Initialize containers.
     const gear = [];
     const features = [];
+    const flaws = [];
+    const talents = [];
     const spells = {
       0: [],
       1: [],
@@ -125,9 +127,9 @@ export class UnboundFateActorSheet extends ActorSheet {
       if (i.type === 'item') {
         gear.push(i);
       }
-      // Append to features.
-      else if (i.type === 'feature') {
-        features.push(i);
+      // Append to flaws.
+      else if (i.type === 'flaw') {
+        flaws.push(i);
       }
       // Append to spells.
       else if (i.type === 'spell') {
@@ -135,12 +137,18 @@ export class UnboundFateActorSheet extends ActorSheet {
           spells[i.system.spellLevel].push(i);
         }
       }
+       // Append to talents.
+       else if (i.type === 'talent') {
+        talents.push(i);
+      }
     }
 
     // Assign and return
     context.gear = gear;
     context.features = features;
+    context.flaws = flaws;
     context.spells = spells;
+    context.talents = talents;
   }
 
   /* -------------------------------------------- */

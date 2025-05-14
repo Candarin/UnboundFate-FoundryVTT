@@ -12,3 +12,7 @@
 
 ## 1.0.3
 - Actor: updated template.json
+
+## 1.0.4
+- Actor: updated template.json. Changes to character sheet
+- Item: updated data model
