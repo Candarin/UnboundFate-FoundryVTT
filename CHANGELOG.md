@@ -19,3 +19,6 @@
 
 ## 1.0.5
 - Actor sheet: Added talents and flaws tab. Layout changes
+
+## 1.0.6
+- Actor: Sheet rendering fixes
