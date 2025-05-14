@@ -9,6 +9,7 @@ export const preloadHandlebarsTemplates = async function () {
     'systems/unboundfate/templates/actor/parts/actor-features.hbs',
     'systems/unboundfate/templates/actor/parts/actor-items.hbs',
     'systems/unboundfate/templates/actor/parts/actor-spells.hbs',
+    'systems/unboundfate/templates/actor/parts/actor-talents.hbs',
     'systems/unboundfate/templates/actor/parts/actor-effects.hbs',
     // Item partials
     'systems/unboundfate/templates/item/parts/item-effects.hbs',

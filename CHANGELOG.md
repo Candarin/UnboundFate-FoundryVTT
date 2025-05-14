@@ -22,3 +22,6 @@
 
 ## 1.0.6
 - Actor: Sheet rendering fixes
+
+## 1.0.7
+- Actor: Added hbs partial to preloader
