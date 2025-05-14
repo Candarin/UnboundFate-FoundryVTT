@@ -36,6 +36,9 @@ export class UnboundFateActor extends Actor {
     // things organized.
     this._prepareCharacterData(actorData);
     this._prepareNpcData(actorData);
+
+    // Debug: Log the actor
+    console.log(this);
   }
 
   /**
@@ -48,10 +51,10 @@ export class UnboundFateActor extends Actor {
     const systemData = actorData.system;
 
     // Loop through ability scores, and add their modifiers to our sheet output.
-    for (let [key, ability] of Object.entries(systemData.abilities)) {
+    //for (let [key, ability] of Object.entries(systemData.abilities)) {
       // Calculate the modifier using d20 rules.
-      ability.mod = Math.floor((ability.value - 10) / 2);
-    }
+      //ability.mod = Math.floor((ability.value - 10) / 2);
+    //}
   }
 
   /**
