@@ -20,7 +20,7 @@
       "thumbnail": "systems/unboundfate/assets/anvil-impact.png"
     }
   ],
-  "version": "1.0.11",
+  "version": "1.0.12",
   "compatibility": {
     "minimum": 12,
     "verified": "12"
@@ -38,7 +38,7 @@
   "packFolders": [],
   "socket": false,
   "manifest": "https://raw.githubusercontent.com/candarin/unboundfate-foundryvtt/main/system.json",
-  "download": "https://github.com/Candarin/UnboundFate-FoundryVTT/archive/v1.0.11.zip",
+  "download": "https://github.com/Candarin/UnboundFate-FoundryVTT/archive/v1.0.12.zip",
   "background": "systems/unboundfate/assets/anvil-impact.png",
   "grid": {
     "distance": 1,

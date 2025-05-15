@@ -207,12 +207,13 @@ export class UnboundFateActorSheet extends ActorSheet {
    * @private
    */
   async _onItemCreate(event) {
+    console.log("Unbound Fate | _onItemCreate");
     event.preventDefault();
     const header = event.currentTarget;
     // Get the type of item to create.
     const type = header.dataset.type;
     // Grab any data associated with this control.
-    const data = duplicate(header.dataset);
+    const data = foundry.utils.duplicate(header.dataset);
     // Initialize a default name.
     const name = `New ${type.capitalize()}`;
     // Prepare the item object.
@@ -234,6 +235,7 @@ export class UnboundFateActorSheet extends ActorSheet {
    * @private
    */
   _onRoll(event) {
+    console.log("Unbound Fate | _onRoll");
     event.preventDefault();
     const element = event.currentTarget;
     const dataset = element.dataset;

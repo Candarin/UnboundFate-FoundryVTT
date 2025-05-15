@@ -38,3 +38,6 @@
 
 ## 1.0.11
 - System: Updated title
+
+## 1.0.12
+- Actor: updates to sheet
