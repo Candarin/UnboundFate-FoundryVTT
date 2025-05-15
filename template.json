@@ -20,7 +20,7 @@
             "earnedFP": 0
           }
         },        
-        "biography": ""
+        "biography": ""        
       },
       "abilities-template": {
         "abilities": {
@@ -57,10 +57,17 @@
             "available": 0
           }
         }
+      },
+      "skills-template": {
+        "skills": {
+          "athletics": {
+            "rating": 0  
+          }            
+        }
       }
     },
     "character": {
-      "templates": ["base-template", "abilities-template", "creation-template","grit-template"],
+      "templates": ["base-template", "abilities-template", "creation-template","grit-template", "skills-template"],
       "attributes": {
         "level": {
           "value": 1
@@ -68,7 +75,7 @@
       }      
     },
     "npc": {
-      "templates": ["base-template", "abilities-template"],
+      "templates": ["base-template", "abilities-template", "skills-template"],
       "cr": 0
     }
   },

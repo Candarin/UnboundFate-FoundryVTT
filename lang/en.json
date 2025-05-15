@@ -28,6 +28,9 @@
       "Temporary": "Temporary Effects",
       "Passive": "Passive Effects",
       "Inactive": "Inactive Effects"
+    },
+    "Skill": {
+      "athletics": "Athletics"
     }
   },
 

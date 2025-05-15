@@ -41,3 +41,7 @@
 
 ## 1.0.12
 - Actor: updates to sheet
+
+## 1.0.12
+- Actor: updates to sheet
+- Skills: Added first bits
