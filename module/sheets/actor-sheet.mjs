@@ -18,7 +18,7 @@ export class UnboundFateActorSheet extends ActorSheet {
         {
           navSelector: '.sheet-tabs',
           contentSelector: '.sheet-body',
-          initial: 'talents',
+          initial: 'skills',
         },
       ],
     });

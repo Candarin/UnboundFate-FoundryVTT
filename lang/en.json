@@ -36,7 +36,8 @@
       }
     },
     "Skill": {
-      "athletics": "Athletics"
+      "athletics": "Athletics",
+      "stealth": "Stealth"
     }
   },
 

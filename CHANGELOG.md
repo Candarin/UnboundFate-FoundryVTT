@@ -54,3 +54,6 @@
 
 ## 1.0.16
 - Actor: updates to sheet for skills
+
+## 1.0.17
+- Actor: updates to sheet for skills

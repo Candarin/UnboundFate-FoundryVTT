@@ -61,8 +61,13 @@
       "skills-template": {
         "skills": {
           "athletics": {
-            "rating": 0  
-          }            
+            "rating": 0,
+            "specialisation": ""              
+          },
+          "stealth": {
+            "rating": 0,
+            "specialisation": ""              
+          }              
         }
       }
     },
