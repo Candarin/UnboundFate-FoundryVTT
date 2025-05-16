@@ -144,7 +144,7 @@ export class UnboundFateActorSheet extends ActorSheet {
     }
 
     // Add all skills
-    for (let i of context.skills) {
+    for (let i of context.system.skills) {
       skills.push(i);
     }
 
