@@ -118,7 +118,6 @@ export class UnboundFateActorSheet extends ActorSheet {
       8: [],
       9: [],
     };
-    const skills = [];
 
     // Iterate through items, allocating to containers
     for (let i of context.items) {
@@ -143,17 +142,12 @@ export class UnboundFateActorSheet extends ActorSheet {
       }
     }
 
-    // Add all skills
-    for (let i of context.system.skills) {
-      skills.push(i);
-    }
 
     // Assign and return
     context.gear = gear;
     context.features = features;
     context.talentsAndFlaws = talentsAndFlaws;
     context.spells = spells; 
-    context.skills = skills;  
   }
 
   /* -------------------------------------------- */

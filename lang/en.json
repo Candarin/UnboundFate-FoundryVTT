@@ -13,8 +13,8 @@
       "Grt": { "long": "Grit", "abbr": "grt" }
     },
     "SheetLabels": {
-      "Actor": "UnboundFate Actor Sheet",
-      "Item": "UnboundFate Item Sheet"
+      "Actor": "Unbound Fate Actor Sheet",
+      "Item": "Unbound Fate Item Sheet"
     },
     "Item": {
       "Spell": {
@@ -28,6 +28,12 @@
       "Temporary": "Temporary Effects",
       "Passive": "Passive Effects",
       "Inactive": "Inactive Effects"
+    },
+    "Label": {
+      "Skills": {
+        "Skill": "Skill",
+        "Rating": "Rating"
+      }
     },
     "Skill": {
       "athletics": "Athletics"

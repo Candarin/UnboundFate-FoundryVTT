@@ -1,20 +1,24 @@
 <ol class='items-list'>
   <li class='item flexrow items-header'>
-    <div class='item-name'>{{localize 'Skill'}}</div>
+    <div class='item-name'>{{localize 'UNBOUNDFATE.Labels.Skills.Skill'}}</div>
+    <div class='item-name'>{{localize 'UNBOUNDFATE.Labels.Skills.Rating'}}</div>
     <div class='item-controls'>      
       
 
     </div>
   </li>
-  {{#each skills as |item id|}}
-    <li class='item flexrow' data-item-id='{{item._id}}'>
+  {{#each system.skills as |skill key|}}
+    <li class='item flexrow' data-item-id='{{key}}'>
       <div class='item-name'>
         <div class='item-image'>
-          <a class='rollable' data-roll-type='item'>
+          <a class='rollable' data-roll-type='skill'>
             
           </a>
         </div>
-        <h4>{{item.name}}</h4>
+        <h4 for="system.skills.{{key}}.value">{{localize (lookup @root.config.skills key)}}</h4>
+      </div>
+      <div>
+        <label>{{key.rating}}</label>
       </div>
       <div class='item-controls'>
         <a

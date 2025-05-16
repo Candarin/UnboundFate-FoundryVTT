@@ -23,3 +23,7 @@ UNBOUNDFATE.abilityAbbreviations = {
   prs: 'UNBOUNDFATE.Ability.Prs.abbr',
   awr: 'UNBOUNDFATE.Ability.Awr.abbr',
 };
+
+UNBOUNDFATE.skills = {
+  athletics: 'UNBOUNDFATE.Skill.Athletics'
+}
