@@ -61,3 +61,7 @@
 ## 1.0.18
 - Actor: updates to sheet for skills
 - Item: Added talent item sheet
+
+## 1.0.19
+- Actor: updates to sheet for skills
+- Added test system settings

@@ -29,12 +29,6 @@
       "Passive": "Passive Effects",
       "Inactive": "Inactive Effects"
     },
-    "Label": {
-      "Skills": {
-        "Skill": "Skill",
-        "Rating": "Rating"
-      }
-    },
     "Skill": {
       "athletics": "Athletics",
       "stealth": "Stealth"
@@ -54,6 +48,13 @@
       "spell": "Spell",
       "talent": "Talent",
       "weapon": "Weapon"
+    }
+  },
+
+  "LABELS": {
+    "Skills": {
+      "Skill": "Skill",
+      "Rating": "Rating"
     }
   }
 }

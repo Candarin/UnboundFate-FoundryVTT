@@ -24,6 +24,10 @@ Hooks.once('init', function () {
   // Add custom constants for configuration.
   CONFIG.UNBOUNDFATE = UNBOUNDFATE;
 
+  // Register System Settings
+  console.log("Unbound Fate | Initializing System settings...");
+  registerSystemSettings();
+
   /**
    * Set an initiative formula for the system
    * @type {String}
