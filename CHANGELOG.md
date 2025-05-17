@@ -72,3 +72,6 @@
 
 ## 1.0.21
 - Actor: updates to sheet for skills/layout/localisation
+
+## 1.0.22
+- Actor: updates to sheet for skills/layout/localisation
