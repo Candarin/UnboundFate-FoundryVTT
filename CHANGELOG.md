@@ -78,3 +78,6 @@
 
 ## 1.0.23
 - Actor: updates to sheet for skills/layout/localisation
+
+## 1.0.24
+- Actor: updates to sheet for skills. Added skill modal

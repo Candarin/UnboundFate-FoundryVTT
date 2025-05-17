@@ -167,6 +167,57 @@ export class UnboundFateActorSheet extends ActorSheet {
     html.on('click', '.skill-edit', (ev) => {
       // TODO: Need custom skill sheet
       console.log("Unbound Fate | Skill Edit");
+
+      // Launch a custom dialog for editing skills
+      const skillKey = $(ev.currentTarget).data('skill');
+      const skill = this.actor.system.skills[skillKey];
+
+      if (!skill) {
+        console.error(`Unbound Fate | Skill ${skillKey} not found on actor.`);
+        return;
+      }
+
+      // Create a custom dialog
+      new Dialog({
+        title: `Edit Skill: ${skill.name}`,
+        content: `
+          <form>
+            <div class="form-group">
+              <label for="skill-name">Name</label>
+              <input type="text" id="skill-name" name="name" value="${skill.name}" />
+            </div>
+            <div class="form-group">
+              <label for="skill-value">Value</label>
+              <input type="number" id="skill-value" name="value" value="${skill.value}" />
+            </div>
+            <div class="form-group">
+              <label for="skill-description">Description</label>
+              <textarea id="skill-description" name="description">${skill.description || ''}</textarea>
+            </div>
+          </form>
+        `,
+        buttons: {
+          save: {
+            label: "Save",
+            callback: (html) => {
+              const formData = new FormData(html[0].querySelector('form'));
+              const updatedSkill = {
+                name: formData.get('name'),
+                value: parseInt(formData.get('value'), 10),
+                description: formData.get('description'),
+              };
+
+              // Update the actor's skill data
+              const updateData = { [`system.skills.${skillKey}`]: updatedSkill };
+              this.actor.update(updateData);
+            },
+          },
+          cancel: {
+            label: "Cancel",
+          },
+        },
+      }).render(true);
+
     });
 
     // -------------------------------------------------------------
