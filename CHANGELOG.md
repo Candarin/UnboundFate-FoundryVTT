@@ -57,3 +57,7 @@
 
 ## 1.0.17
 - Actor: updates to sheet for skills
+
+## 1.0.18
+- Actor: updates to sheet for skills
+- Item: Added talent item sheet
