@@ -65,3 +65,7 @@
 ## 1.0.19
 - Actor: updates to sheet for skills
 - Added test system settings
+
+## 1.0.20
+- Actor: updates to sheet for skills/layout
+- Settings: Added import statement

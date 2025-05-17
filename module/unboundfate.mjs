@@ -1,3 +1,5 @@
+// Import system settings.
+import { registerSystemSettings } from './settings.mjs';
 // Import document classes.
 import { UnboundFateActor } from './documents/actor.mjs';
 import { UnboundFateItem } from './documents/item.mjs';

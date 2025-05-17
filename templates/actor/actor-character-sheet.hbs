@@ -42,17 +42,18 @@
       </div>
     
     </div>
-  </header>
 
-  {{!-- Ability Scores --}}
-  <div class="abilities grid grid-1row">
-    {{#each system.abilities as |ability key|}}
-    <div class="ability flexcol flex-group-center">
-      <label for="system.abilities.{{key}}.value" class="resource-label rollable flexlarge align-left" data-roll="d20+@abilities.{{key}}.mod" data-label="{{localize (lookup @root.config.abilities key)}}">{{localize (lookup @root.config.abilities key)}}</label>
-      <input type="number" min="0" name="system.abilities.{{key}}.value" value="{{ability.value}}" data-dtype="Number"/>          
+    {{!-- Ability Scores --}}
+    <div class="abilities grid grid-1row">
+      {{#each system.abilities as |ability key|}}
+      <div class="ability flexcol flex-group-center">
+        <label for="system.abilities.{{key}}.value" class="resource-label rollable flexlarge align-left" data-roll="d20+@abilities.{{key}}.mod" data-label="{{localize (lookup @root.config.abilities key)}}">{{localize (lookup @root.config.abilities key)}}</label>
+        <input type="number" min="0" name="system.abilities.{{key}}.value" value="{{ability.value}}" data-dtype="Number"/>          
+      </div>
+      {{/each}}          
     </div>
-    {{/each}}          
-  </div>
+
+  </header>
   
   {{!-- Sheet Tab Navigation --}}
   <nav class="sheet-tabs tabs" data-group="primary">
