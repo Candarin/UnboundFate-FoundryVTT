@@ -162,6 +162,12 @@ export class UnboundFateActorSheet extends ActorSheet {
       const item = this.actor.items.get(li.data('itemId'));
       item.sheet.render(true);
     });
+    
+    // Skill modal
+    html.on('click', '.skill-edit', (ev) => {
+      // TODO: Need custom skill sheet
+      console.log("Unbound Fate | Skill Edit");
+    });
 
     // -------------------------------------------------------------
     // Everything below here is only needed if the sheet is editable
@@ -190,6 +196,8 @@ export class UnboundFateActorSheet extends ActorSheet {
 
     // Rollable abilities.
     html.on('click', '.rollable', this._onRoll.bind(this));
+
+  
 
     // Drag events for macros.
     if (this.actor.isOwner) {

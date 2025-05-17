@@ -69,3 +69,6 @@
 ## 1.0.20
 - Actor: updates to sheet for skills/layout
 - Settings: Added import statement
+
+## 1.0.21
+- Actor: updates to sheet for skills/layout/localisation

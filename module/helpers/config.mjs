@@ -25,6 +25,6 @@ UNBOUNDFATE.abilityAbbreviations = {
 };
 
 UNBOUNDFATE.skills = {
-  athletics: 'UNBOUNDFATE.Skill.Athletics',
-  stealth: 'UNBOUNDFATE.Skill.Stealth',
+  athletics: 'UNBOUNDFATE.Skill.athletics',
+  stealth: 'UNBOUNDFATE.Skill.stealth',
 }

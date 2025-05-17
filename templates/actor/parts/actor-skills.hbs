@@ -1,7 +1,7 @@
 <ol class='items-list'>
   <li class='item flexrow items-header'>
-    <div class='item-name'>{{localize 'LABELS.Skills.skill' }}</div>
-    <div class='item-name'>{{localize 'LABELS.Skills.rating' }}</div>
+    <div class='item-name'>{{localize 'UNBOUNDFATE.LABELS.Skills.skill' }}</div>
+    <div class='item-name'>{{localize 'UNBOUNDFATE.LABELS.Skills.rating' }}</div>
     <div class='item-controls'>      
       
 
@@ -15,16 +15,13 @@
             
           </a>
         </div>
-        <h4 for="system.skills.{{key}}.value">{{localize (lookup @root.config.UNBOUNDFATE.skills key)}}</h4> 
+        <h4 for="system.skills.{{key}}">{{localize (lookup @root.config.UNBOUNDFATE.skills key)}}</h4> 
       </div>
       <div>
         <label>{{key.rating}}</label>
       </div>
       <div class='item-controls'>
-        <a
-          class='item-control item-edit'
-          title='{{localize "DOCUMENT.Edit" type='{{skill}}'}}'
-        >
+        <a class='item-control skill-edit' title='{{localize "DOCUMENT.Edit" type='{{skill}}'}}' >
           <i class='fas fa-edit'></i>
         </a>        
       </div>
