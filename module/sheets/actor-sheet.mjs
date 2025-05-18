@@ -203,7 +203,7 @@ export class UnboundFateActorSheet extends ActorSheet {
             callback: (html) => {
               const formData = new FormData(html[0].querySelector('form'));
               const updatedSkill = {              
-                value: parseInt(formData.get('rating'), 10),     
+                rating: parseInt(formData.get('rating'), 10),     
                 specialisation: formData.get('specialisation')           
               };
 
