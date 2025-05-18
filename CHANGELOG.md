@@ -81,3 +81,6 @@
 
 ## 1.0.24
 - Actor: updates to sheet for skills. Added skill modal
+
+## 1.0.25
+- Actor: updates to skill modal process

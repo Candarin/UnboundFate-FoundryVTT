@@ -165,11 +165,11 @@ export class UnboundFateActorSheet extends ActorSheet {
     
     // Skill modal
     html.on('click', '.skill-edit', (ev) => {
-      // TODO: Need custom skill sheet
       console.log("Unbound Fate | Skill Edit");
 
       // Launch a custom dialog for editing skills
       const skillKey = $(ev.currentTarget).data('skill');
+      console.log(ev);      
       const skill = this.actor.system.skills[skillKey];
 
       if (!skill) {
