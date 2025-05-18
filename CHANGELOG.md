@@ -84,3 +84,6 @@
 
 ## 1.0.25
 - Actor: updates to skill modal process
+
+## 1.0.26
+- Actor: updates to skill modal process
