@@ -181,21 +181,20 @@ export class UnboundFateActorSheet extends ActorSheet {
 
       // Create a custom dialog
       new Dialog({
-        title: `Edit Skill: ${skill.name}`,
+        title: `Edit Skill: ${skillKey}`,
         content: `
           <form>
             <div class="form-group">
-              <label for="skill-name">Name</label>
-              <input type="text" id="skill-name" name="name" value="${skill.name}" />
+              <label for="skill-name">Name</label>              
             </div>
             <div class="form-group">
-              <label for="skill-value">Value</label>
-              <input type="number" id="skill-value" name="value" value="${skill.value}" />
+              <label for="skill-rating">Rating</label>
+              <input type="number" id="skill-rating" name="rating" value="${skill.rating}" />
             </div>
             <div class="form-group">
-              <label for="skill-description">Description</label>
-              <textarea id="skill-description" name="description">${skill.description || ''}</textarea>
-            </div>
+              <label for="skill-specialisation">Specialisation</label>
+              <input type="text" id="skill-specialisation" name="specialisation" value="${skill.specialisation}" />
+            </div>                 
           </form>
         `,
         buttons: {
@@ -203,10 +202,9 @@ export class UnboundFateActorSheet extends ActorSheet {
             label: "Save",
             callback: (html) => {
               const formData = new FormData(html[0].querySelector('form'));
-              const updatedSkill = {
-                name: formData.get('name'),
-                value: parseInt(formData.get('value'), 10),
-                description: formData.get('description'),
+              const updatedSkill = {              
+                value: parseInt(formData.get('rating'), 10),     
+                specialisation: formData.get('specialisation')           
               };
 
               // Update the actor's skill data
