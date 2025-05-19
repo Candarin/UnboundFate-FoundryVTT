@@ -54,7 +54,8 @@
   "LABELS": {
     "Skills": {
       "Skill": "Skill",
-      "Rating": "Rating"
+      "Rating": "Rating",
+      "Specialisation": "Specialisation"
     }
   }
 }

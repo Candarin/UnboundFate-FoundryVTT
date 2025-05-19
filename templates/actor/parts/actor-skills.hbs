@@ -2,7 +2,7 @@
   <li class='item flexrow items-header'>
     <div class='item-name'>{{localize "LABELS.Skills.Skill" }}</div>
     <div class='item-name'>{{localize "LABELS.Skills.Rating" }}</div>
-
+    <div class='item-name'>{{localize "LABELS.Skills.Specialisation" }}</div>
     <div class='item-controls'>      
       
 
@@ -16,11 +16,18 @@
             
           </a>
         </div>
-        <h4 for="system.skills.{{key}}">{{localize (lookup @root.config.skills key)}}</h4> 
+        <h4 for="system.skills.{{key}}" class="rollable">{{localize (lookup @root.config.skills key)}}</h4> 
       </div>
+      
       <div>
         <label>{{skill.rating}}</label>
       </div>
+
+      <div>
+        <label class="rollable" data-roll-type='skill-spec'>{{skill.specialisation}}</label>
+      </div>
+
+
       <div class='item-controls'>
         <a class='item-control skill-edit' title='{{localize "DOCUMENT.Edit" type='{{skill}}'}}' >
           <i class='fas fa-edit'></i>
