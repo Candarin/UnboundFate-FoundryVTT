@@ -309,6 +309,71 @@ export class UnboundFateActorSheet extends ActorSheet {
       }
     }
 
+    // Handle skill rolls.
+    if (dataset.rollType === 'skill') {
+      const skillKey = dataset.skill;
+      const skill = this.actor.system.skills[skillKey];
+      if (!skill) {
+        ui.notifications.warn(`Skill "${skillKey}" not found.`);
+        return;
+      }
+
+      // Get the associated attribute (assume it's stored as skill.attribute)
+      const attributeKey = skill.attribute;
+      const attribute = this.actor.system.attributes?.[attributeKey];
+
+      // Default values
+      const skillRating = skill.rating || 0;
+      const attributeValue = attribute?.value || 0;
+
+      // Build dialog content
+      let content = `
+        <form>
+          <div class="form-group">
+            <label>Skill: </label>
+            <span>${skillKey.capitalize()} (${skillRating})</span>
+          </div>
+          <div class="form-group">
+            <label>Attribute: </label>
+            <span>${attributeKey ? attributeKey.capitalize() : 'None'} (${attributeValue})</span>
+          </div>
+          <div class="form-group">
+            <label for="modifier">Modifier</label>
+            <input type="number" name="modifier" value="0" />
+          </div>
+        </form>
+      `;
+
+      new Dialog({
+        title: `Roll Skill: ${skillKey.capitalize()}`,
+        content,
+        buttons: {
+          roll: {
+            label: "Roll",
+            callback: (html) => {
+              const form = html[0].querySelector('form');
+              const modifier = parseInt(form.modifier.value, 10) || 0;
+              const total = skillRating + attributeValue + modifier;
+              // Example roll: d6 per point in pool
+              const formula = `${total}d6`;
+              const label = `${skillKey.capitalize()} + ${attributeKey ? attributeKey.capitalize() : ''} (${skillRating}+${attributeValue}${modifier ? `+${modifier}` : ''})`;
+              const roll = new Roll(formula, this.actor.getRollData());
+              roll.toMessage({
+                speaker: ChatMessage.getSpeaker({ actor: this.actor }),
+                flavor: label,
+                rollMode: game.settings.get('core', 'rollMode'),
+              });
+            }
+          },
+          cancel: {
+            label: "Cancel"
+          }
+        }
+      }).render(true);
+
+      return;
+    }
+
     // Handle rolls that supply the formula directly.
     if (dataset.roll) {
       let label = dataset.label ? `[ability] ${dataset.label}` : '';
