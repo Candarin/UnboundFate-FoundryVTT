@@ -99,3 +99,6 @@
 
 ## 1.0.30
 - Actor: updates to skill roll process
+
+## 1.0.31
+- Actor: updates to skill roll process

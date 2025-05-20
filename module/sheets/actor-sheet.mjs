@@ -311,7 +311,7 @@ export class UnboundFateActorSheet extends ActorSheet {
 
     // Handle skill rolls.
     if (dataset.rollType === 'skill') {
-      const skillKey = dataset.skill;
+      const skillKey = element.closest('.item').dataset.itemId;
       const skill = this.actor.system.skills[skillKey];
       if (!skill) {
         ui.notifications.warn(`Skill "${skillKey}" not found.`);
@@ -334,13 +334,17 @@ export class UnboundFateActorSheet extends ActorSheet {
             <span>${skillKey.capitalize()} (${skillRating})</span>
           </div>
           <div class="form-group">
-            <label>Attribute: </label>
+            <label>Ability: </label>
             <span>${attributeKey ? attributeKey.capitalize() : 'None'} (${attributeValue})</span>
-          </div>
+          </div>          
           <div class="form-group">
             <label for="modifier">Modifier</label>
             <input type="number" name="modifier" value="0" />
           </div>
+          <div class="form-group">
+            <label for="total">Total</label>
+            <input type="number" name="total" value="${skillRating + attributeValue}" disabled />            
+            </div>
         </form>
       `;
 
