@@ -318,13 +318,13 @@ export class UnboundFateActorSheet extends ActorSheet {
         return;
       }
 
-      // Get the associated attribute (assume it's stored as skill.attribute)
-      const attributeKey = skill.attribute;
-      const attribute = this.actor.system.attributes?.[attributeKey];
+      // Get the associated ability (assume it's stored as skill.ability)
+      const abilityKey = skill.ability;
+      const ability = this.actor.system.abilities?.[abilityKey];
 
       // Default values
       const skillRating = skill.rating || 0;
-      const attributeValue = attribute?.value || 0;
+      const abilityValue = ability?.value || 0;
 
       // Build dialog content
       let content = `
@@ -335,15 +335,15 @@ export class UnboundFateActorSheet extends ActorSheet {
           </div>
           <div class="form-group">
             <label>Ability: </label>
-            <span>${attributeKey ? attributeKey.capitalize() : 'None'} (${attributeValue})</span>
+            <span>${abilityKey ? abilityKey.capitalize() : 'None'} (${abilityValue})</span>
           </div>          
           <div class="form-group">
             <label for="modifier">Modifier</label>
-            <input type="number" name="modifier" value="0" />
+            <input type="number" name="modifier" value="0" oninput="this.form.total.value = Number(${skillRating} + ${abilityValue}) + Number(this.value || 0)" />
           </div>
           <div class="form-group">
             <label for="total">Total</label>
-            <input type="number" name="total" value="${skillRating + attributeValue}" disabled />            
+            <input type="number" name="total" value="${skillRating + abilityValue}" disabled />            
             </div>
         </form>
       `;
@@ -357,14 +357,19 @@ export class UnboundFateActorSheet extends ActorSheet {
             callback: (html) => {
               const form = html[0].querySelector('form');
               const modifier = parseInt(form.modifier.value, 10) || 0;
-              const total = skillRating + attributeValue + modifier;
-              // Example roll: d6 per point in pool
+              const total = skillRating + abilityValue + modifier;
+              // Roll d6s and count successes (5 or 6)
               const formula = `${total}d6`;
-              const label = `${skillKey.capitalize()} + ${attributeKey ? attributeKey.capitalize() : ''} (${skillRating}+${attributeValue}${modifier ? `+${modifier}` : ''})`;
+              const label = `${skillKey.capitalize()} + ${abilityKey ? abilityKey.capitalize() : ''} (${skillRating}+${abilityValue}${modifier ? `+${modifier}` : ''})`;
               const roll = new Roll(formula, this.actor.getRollData());
+              roll.roll({async: false});
+              // Count successes (5 or 6)
+              const dice = roll.dice[0]?.results || [];
+              const successes = dice.filter(d => d.result >= 5).length;
+              const successText = `<strong>Successes:</strong> ${successes}`;
               roll.toMessage({
                 speaker: ChatMessage.getSpeaker({ actor: this.actor }),
-                flavor: label,
+                flavor: `${label}<br>${successText}`,
                 rollMode: game.settings.get('core', 'rollMode'),
               });
             }
