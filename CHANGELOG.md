@@ -115,3 +115,6 @@
 ## 1.0.34
 - Actor: updates to skill roll process
 - Added skill definitions
+
+## 1.0.35
+- Actor: updates to skill roll process

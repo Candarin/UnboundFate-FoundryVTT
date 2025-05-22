@@ -8,7 +8,7 @@
  * @param {number} params.modifier
  * @param {Actor} params.actor
  */
-export async function rollSkillPool({ skillKey, skillRating, abilityKey, abilityValue, modifier, threshold = 0, actor }) {
+export async function rollSkillPool({ skillKey, skillRating, abilityKey, abilityValue, modifier, threshold = 0, actor, rollMode }) {
   const totalPool = skillRating + abilityValue + modifier;
   const formula = `${totalPool}d6cs>=5`;
   const label = `${skillKey.capitalize()} + ${abilityKey ? abilityKey.capitalize() : ''} (${skillRating}+${abilityValue}${modifier ? `+${modifier}` : ''})`;
@@ -35,7 +35,7 @@ export async function rollSkillPool({ skillKey, skillRating, abilityKey, ability
   roll.toMessage({
     speaker: ChatMessage.getSpeaker({ actor }),
     flavor: `${label}<br>${successText}${outcome}`,
-    rollMode: game.settings.get('core', 'rollMode'),
+    rollMode: rollMode || game.settings.get('core', 'rollMode'),
     content: rollHTML
   });
 }

@@ -13,6 +13,13 @@ import { rollSkillPool } from '../dice/rolltypes.mjs';
 export function launchSkillDialog({ skillKey, skill, abilityKey, ability, actor, threshold = 1 }) {
   const skillRating = skill.rating || 0;
   const abilityValue = ability?.value || 0;
+  const rollModes = [
+    { value: 'roll', label: 'Public Roll' },
+    { value: 'gmroll', label: 'Private GM Roll' },
+    { value: 'blindroll', label: 'Blind GM Roll' },
+    { value: 'selfroll', label: 'Self Roll' }
+  ];
+  const currentRollMode = game.settings.get('core', 'rollMode') || 'roll';
 
   let content = `
     <form>
@@ -33,9 +40,17 @@ export function launchSkillDialog({ skillKey, skill, abilityKey, ability, actor,
         <input type="number" name="threshold" value="${threshold}" min="0" />
       </div>
       <div class="form-group">
+        <label for="rollMode">Roll Type</label>
+        <select name="rollMode">
+          ${rollModes.map(rm => `<option value="${rm.value}"${rm.value === currentRollMode ? ' selected' : ''}>${rm.label}</option>`).join('')}
+        </select>
+      </div>
+      <div class="form-group">
         <label for="total">Total</label>
         <input type="number" name="total" value="${skillRating + abilityValue}" disabled />            
-        </div>
+      </div>
+      <hr>
+      
     </form>
   `;
 
@@ -49,6 +64,7 @@ export function launchSkillDialog({ skillKey, skill, abilityKey, ability, actor,
           const form = html[0].querySelector('form');
           const modifier = parseInt(form.modifier.value, 10) || 0;
           const thresholdVal = parseInt(form.threshold.value, 10) || 0;
+          const rollMode = form.rollMode.value || currentRollMode;
           await rollSkillPool({
             skillKey,
             skillRating,
@@ -56,7 +72,8 @@ export function launchSkillDialog({ skillKey, skill, abilityKey, ability, actor,
             abilityValue,
             modifier,
             threshold: thresholdVal,
-            actor
+            actor,
+            rollMode
           });
         }
       },
