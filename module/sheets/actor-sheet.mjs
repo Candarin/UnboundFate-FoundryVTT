@@ -3,6 +3,7 @@ import {
   prepareActiveEffectCategories,
 } from '../helpers/effects.mjs';
 import { launchSkillDialog } from '../dialogs/skill-dialog.mjs';
+import { UNBOUNDFATE as CONFIG_UNBOUNDFATE } from '../helpers/config.mjs';
 
 /**
  * Extend the basic ActorSheet with some very simple modifications
@@ -318,7 +319,8 @@ export class UnboundFateActorSheet extends ActorSheet {
         ui.notifications.warn(`Skill "${skillKey}" not found.`);
         return;
       }
-      const abilityKey = skill.ability;
+      // Lookup abilityKey from config.skillDefinitions, not from skill data
+      const abilityKey = CONFIG_UNBOUNDFATE.skillDefinitions[skillKey]?.ability;
       const ability = this.actor.system.abilities?.[abilityKey];
       launchSkillDialog({ skillKey, skill, abilityKey, ability, actor: this.actor });
       return;

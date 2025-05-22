@@ -28,3 +28,25 @@ UNBOUNDFATE.skills = {
   athletics: 'UNBOUNDFATE.Skill.athletics',
   stealth: 'UNBOUNDFATE.Skill.stealth',
 }
+
+UNBOUNDFATE.skillDefinitions = {
+  athletics: {
+    ability: 'str',
+    specOptions: [
+      'Climbing',
+      'Jumping',
+      'Swimming',
+      'Running'
+    ]
+  },
+  stealth: {
+    ability: 'agl',
+    specOptions: [
+      'Sneaking',
+      'Hiding',
+      'Shadowing',
+      'Camouflage'
+    ]
+  },
+  // Add other skill definitions here
+};

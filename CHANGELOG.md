@@ -111,3 +111,7 @@
 - Actor: updates to skill roll process
 - Actor: Added character creation ribbon
 - Shifted skill rolls and dialogs to separate files
+
+## 1.0.34
+- Actor: updates to skill roll process
+- Added skill definitions

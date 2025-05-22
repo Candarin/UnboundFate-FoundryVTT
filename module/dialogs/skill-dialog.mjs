@@ -10,7 +10,7 @@ import { rollSkillPool } from '../dice/rolltypes.mjs';
  * @param {object} params.ability - The ability object
  * @param {Actor} params.actor - The actor instance
  */
-export function launchSkillDialog({ skillKey, skill, abilityKey, ability, actor }) {
+export function launchSkillDialog({ skillKey, skill, abilityKey, ability, actor, threshold = 1 }) {
   const skillRating = skill.rating || 0;
   const abilityValue = ability?.value || 0;
 
@@ -29,6 +29,10 @@ export function launchSkillDialog({ skillKey, skill, abilityKey, ability, actor 
         <input type="number" name="modifier" value="0" oninput="this.form.total.value = Number(${skillRating} + ${abilityValue}) + Number(this.value || 0)" />
       </div>
       <div class="form-group">
+        <label for="threshold">Threshold</label>
+        <input type="number" name="threshold" value="${threshold}" min="0" />
+      </div>
+      <div class="form-group">
         <label for="total">Total</label>
         <input type="number" name="total" value="${skillRating + abilityValue}" disabled />            
         </div>
@@ -44,12 +48,14 @@ export function launchSkillDialog({ skillKey, skill, abilityKey, ability, actor 
         callback: async (html) => {
           const form = html[0].querySelector('form');
           const modifier = parseInt(form.modifier.value, 10) || 0;
+          const thresholdVal = parseInt(form.threshold.value, 10) || 0;
           await rollSkillPool({
             skillKey,
             skillRating,
             abilityKey,
             abilityValue,
             modifier,
+            threshold: thresholdVal,
             actor
           });
         }
