@@ -106,3 +106,8 @@
 ## 1.0.32
 - Added background and thumbnail images
 - Actor: updates to skill roll process
+
+## 1.0.33
+- Actor: updates to skill roll process
+- Actor: Added character creation ribbon
+- Shifted skill rolls and dialogs to separate files
