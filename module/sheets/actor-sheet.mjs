@@ -326,6 +326,34 @@ export class UnboundFateActorSheet extends ActorSheet {
       return;
     }
 
+    // Handle skill specialisation rolls.
+    if (dataset.rollType === 'skill-spec') {
+      const skillKey = element.closest('.item').dataset.itemId;
+      const skill = this.actor.system.skills[skillKey];
+      if (!skill) {
+        ui.notifications.warn(`Skill "${skillKey}" not found.`);
+        return;
+      }
+      // Lookup abilityKey and specOptions from config.skillDefinitions
+      const skillDef = CONFIG_UNBOUNDFATE.skillDefinitions[skillKey] || {};
+      const abilityKey = skillDef.ability;
+      const ability = this.actor.system.abilities?.[abilityKey];
+      const specOptions = skillDef.specOptions || [];
+      // Pre-populate the specialisation from the actor's skill data
+      const specialisation = skill.specialisation || '';
+      launchSkillDialog({
+        skillKey,
+        skill,
+        abilityKey,
+        ability,
+        actor: this.actor,
+        rollType: 'skill-spec',
+        specialisation,
+        specOptions
+      });
+      return;
+    }
+    
     // Handle rolls that supply the formula directly.
     if (dataset.roll) {
       let label = dataset.label ? `[ability] ${dataset.label}` : '';

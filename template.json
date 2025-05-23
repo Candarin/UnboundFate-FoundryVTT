@@ -48,7 +48,7 @@
         }
       },
       "creation-template": {
-        "isCreationMode": true
+        "isCreationMode": true      
       },
       "grit-template": {
         "specialAbilities": {
@@ -72,7 +72,7 @@
       }
     },
     "character": {
-      "templates": ["base-template", "abilities-template", "creation-template","grit-template", "skills-template"],
+      "templates": ["base-template", "abilities-template", "creation-template", "fatePoints-template", "grit-template", "skills-template"],
       "attributes": {
         "level": {
           "value": 1
@@ -80,7 +80,7 @@
       }      
     },
     "npc": {
-      "templates": ["base-template", "abilities-template", "skills-template"],
+      "templates": ["base-template", "abilities-template", "fatePoints-template", "skills-template"],
       "cr": 0
     }
   },

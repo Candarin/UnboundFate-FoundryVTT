@@ -40,7 +40,7 @@ export function launchSkillDialog({ skillKey, skill, abilityKey, ability, actor,
       </div>
       <div class="form-group">
         <label for="modifier">Modifier</label>
-        <input type="number" name="modifier" value="0" oninput="this.form.total.value = Number(${skillRating}) + Number(document.querySelector('[name=abilityKey]').selectedOptions[0].dataset.value || 0) + Number(this.value || 0) + (this.form.useSpec?.checked ? 2 : 0)" />
+        <input type="number" name="modifier" value="0" />
       </div>
       <div class="form-group">
         <input type="checkbox" id="useSpec" name="useSpec" />
@@ -71,25 +71,35 @@ export function launchSkillDialog({ skillKey, skill, abilityKey, ability, actor,
       </div>
     </form>
     <script>
-      // Enable/disable specialisation field
       const form = document.currentScript.parentElement.querySelector('form');
+      // Enable/disable specialisation field
       form.useSpec.addEventListener('change', function() {
         form.specialisation.disabled = !this.checked;
-        // Update total if checked/unchecked
-        const skillRating = ${skillRating};
-        const abilityValue = Number(form.abilityKey.selectedOptions[0].dataset.value || 0);
-        const modifier = Number(form.modifier.value || 0);
-        form.total.value = skillRating + abilityValue + modifier + (this.checked ? 2 : 0);
+        updateTotal();
       });
       // Update ability value and total when ability changes
       form.abilityKey.addEventListener('change', function() {
         const selectedKey = this.value;
         const newValue = (window.actorAbilities && window.actorAbilities[selectedKey]) || 0;
         document.getElementById('ability-value').textContent = newValue;
+        // Recalculate total using the new ability value
         const skillRating = ${skillRating};
+        const selectedKey = form.abilityKey.value;
+        const abilityValue = (window.actorAbilities && window.actorAbilities[selectedKey]) || 0;
         const modifier = Number(form.modifier.value || 0);
-        form.total.value = skillRating + newValue + modifier + (form.useSpec.checked ? 2 : 0);
+        const useSpec = form.useSpec.checked ? 2 : 0;
+        form.total.value = skillRating + abilityValue + modifier + useSpec;
       });
+      // Update total when modifier changes
+      form.modifier.addEventListener('input', updateTotal);
+      function updateTotal() {
+        const skillRating = ${skillRating};
+        const selectedKey = form.abilityKey.value;
+        const abilityValue = (window.actorAbilities && window.actorAbilities[selectedKey]) || 0;
+        const modifier = Number(form.modifier.value || 0);
+        const useSpec = form.useSpec.checked ? 2 : 0;
+        form.total.value = skillRating + abilityValue + modifier + useSpec;
+      }
     </script>
   `;
 

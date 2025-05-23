@@ -1,16 +1,16 @@
 <form class="{{cssClass}} {{actor.type}} flexcol" autocomplete="off">
   {{!-- Creation Mode Ribbon --}}
-  {{#if isCreationMode}}
-    <div class="creation-mode-ribbon" style="position: absolute; top: 0; left: 0; width: 100%; background: #e67e22; color: #fff; text-align: center; padding: 0.5em 0; z-index: 1000; font-size: 1.2em; font-weight: bold; letter-spacing: 1px;">
-      Character Creation Mode
-      <button type="button" class="toggle-creation-mode" style="margin-left: 1em; background: #fff; color: #e67e22; border: none; border-radius: 4px; padding: 0.2em 0.8em; font-weight: bold; cursor: pointer;">Exit Creation</button>
+  <div class="creation-mode-ribbon grid grid-1row flex-group-center" style="background: {{#if isCreationMode}}#e67e22{{else}}#888{{/if}}; color: #fff; font-size: 1.2em; font-weight: bold; letter-spacing: 1px; margin-bottom: 0.5em; border-radius: 0 0 8px 8px;">
+    <div class="flexlarge" style="text-align: center;">
+      {{#if isCreationMode}}
+        Character Creation Mode
+        <button type="button" class="toggle-creation-mode" style="margin-left: 1em; background: #fff; color: #e67e22; border: none; border-radius: 4px; padding: 0.2em 0.8em; font-weight: bold; cursor: pointer;">Exit Creation</button>
+      {{else}}
+        Normal Mode
+        <button type="button" class="toggle-creation-mode" style="margin-left: 1em; background: #fff; color: #888; border: none; border-radius: 4px; padding: 0.2em 0.8em; font-weight: bold; cursor: pointer;">Enter Creation</button>
+      {{/if}}
     </div>
-  {{else}}
-    <div class="creation-mode-ribbon" style="position: absolute; top: 0; left: 0; width: 100%; background: #888; color: #fff; text-align: center; padding: 0.5em 0; z-index: 1000; font-size: 1.2em; font-weight: bold; letter-spacing: 1px;">
-      Normal Mode
-      <button type="button" class="toggle-creation-mode" style="margin-left: 1em; background: #fff; color: #888; border: none; border-radius: 4px; padding: 0.2em 0.8em; font-weight: bold; cursor: pointer;">Enter Creation</button>
-    </div>
-  {{/if}}
+  </div>
 
   {{!-- Sheet Header --}}
   <header class="sheet-header">

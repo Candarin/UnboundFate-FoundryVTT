@@ -121,3 +121,7 @@
 
 ## 1.0.36
 - Actor: updates to skill roll dialog. Added ability selector and specialisation toggle.
+
+## 1.0.37
+- Actor: updates to skill roll dialog. Added skill spec roll. Fixes for character creation ribbon.
+- Added weapon item sheet
