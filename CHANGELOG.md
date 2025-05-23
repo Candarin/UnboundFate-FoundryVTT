@@ -118,3 +118,6 @@
 
 ## 1.0.35
 - Actor: updates to skill roll process
+
+## 1.0.36
+- Actor: updates to skill roll dialog. Added ability selector and specialisation toggle.
