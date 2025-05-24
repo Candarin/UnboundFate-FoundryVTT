@@ -125,3 +125,6 @@
 ## 1.0.37
 - Actor: updates to skill roll dialog. Added skill spec roll. Fixes for character creation ribbon.
 - Added weapon item sheet
+
+## 1.0.38
+- Actor: Shifted skill roll dialog to hbs template. Corrected some logic

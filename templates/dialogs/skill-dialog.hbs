@@ -1,0 +1,56 @@
+{{!-- templates/dialogs/skill-dialog.hbs --}}
+<form>
+  <div class="form-group">
+    <label>Skill: </label>
+    <span>{{skillLabel}} ({{skillRating}})</span>
+  </div>
+  <div class="form-group">
+    <label for="abilityKey">Ability</label>
+    <select name="abilityKey">
+      {{#each abilityOptions}}
+        <option value="{{this.key}}" {{#if this.selected}}selected{{/if}}>{{this.label}}</option>
+      {{/each}}
+    </select>
+    <span> (<span id="ability-value">{{abilityValue}}</span>)</span>
+  </div>
+  <div class="form-group">
+    <label for="modifier">Modifier</label>
+    <input type="number" name="modifier" value="{{modifier}}" />
+  </div>
+  <div class="form-group">
+    <input type="checkbox" id="useSpec" name="useSpec" {{#if useSpec}}checked{{/if}} />
+    <label for="useSpec">Use Specialisation</label>
+  </div>
+  <div class="form-group">
+    <label for="specialisation">Specialisation</label>
+    <input list="specOptions" name="specialisation" value="{{specialisation}}" {{#unless useSpec}}disabled{{/unless}} />
+    <datalist id="specOptions">
+      {{#each specOptions}}
+        <option value="{{this}}">
+      {{/each}}
+    </datalist>
+  </div>
+  <hr>
+  <div class="form-group">
+    <label>Modifiers</label>
+    <span id="modifiers-string">{{modifiersString}}</span>
+  </div>
+  <div class="form-group">
+    <label for="total">Total</label>
+    <input type="number" name="total" value="{{total}}" disabled />
+  </div>
+  <hr>
+  <div class="form-group">
+    <label for="targetNumber">Target Number</label>
+    <input type="number" name="targetNumber" value="{{targetNumber}}" min="0" />
+  </div>
+  <hr>
+  <div class="form-group">
+    <label for="rollMode">Roll Type</label>
+    <select name="rollMode">
+      {{#each rollModes}}
+        <option value="{{this.value}}" {{#if this.selected}}selected{{/if}}>{{this.label}}</option>
+      {{/each}}
+    </select>
+  </div>
+</form>

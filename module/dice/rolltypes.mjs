@@ -1,3 +1,5 @@
+import { UFRoll } from './UFRoll.mjs';
+
 /**
  * Rolls a skill pool and sends the result to chat.
  * @param {object} params
@@ -8,33 +10,26 @@
  * @param {number} params.modifier
  * @param {Actor} params.actor
  */
-export async function rollSkillPool({ skillKey, skillRating, abilityKey, abilityValue, modifier, threshold = 0, actor, rollMode }) {
-  const totalPool = skillRating + abilityValue + modifier;
+export async function rollSkillPool({ skillKey, skillRating, abilityKey, abilityValue, modifier, targetNumber = 0, actor, rollMode, useSpec, specialisation, modifiersString }) {
+  const totalPool = skillRating + abilityValue + modifier + (useSpec ? 2 : 0);
   const formula = `${totalPool}d6cs>=5`;
   const label = `${skillKey.capitalize()} + ${abilityKey ? abilityKey.capitalize() : ''} (${skillRating}+${abilityValue}${modifier ? `+${modifier}` : ''})`;
-  const roll = new Roll(formula, actor.getRollData());
+  const roll = new UFRoll(formula, actor.getRollData(), { targetNumber });
   await roll.evaluate({async: true});
-  // Count successes (5 or 6) and apply 'success' class
-  const dice = roll.dice[0]?.results || [];
-  let successes = 0;
-  for (const d of dice) {
-    if (d.result >= 5) {
-      d.classes = d.classes || [];
-      //if (!d.classes.includes('success')) d.classes.push('success');
-      successes++;
-    }
-  }
+  // No need to manually count or mark successes, cs>=5 handles it
+  let successes = roll.hits;
   // Custom roll HTML without total section
   let rollHTML = await roll.render();
   rollHTML = rollHTML.replace(/<div class="dice-total">[\s\S]*?<\/div>/, '');
-  const successText = `<strong>Successes:</strong> ${successes} / <strong>Threshold:</strong> ${threshold}`;
+  const successText = `<strong>Successes:</strong> ${successes} / <strong>Target Number:</strong> ${targetNumber}`;
   let outcome = '';
-  if (threshold > 0) {
-    outcome = `<div class="roll-outcome" style="margin-top:0.5em;font-weight:bold;">${successes >= threshold ? '<span style="color:green;">Success</span>' : '<span style="color:red;">Failure</span>'}</div>`;
+  if (targetNumber > 0) {
+    outcome = `<div class="roll-outcome" style="margin-top:0.5em;font-weight:bold;">${roll.isSuccess() ? '<span style="color:green;">Success</span>' : '<span style="color:red;">Failure</span>'}</div>`;
   }
+  const modifiersHtml = modifiersString ? `<div class="modifiers-string" style="margin-bottom:0.5em;">${modifiersString}</div>` : '';
   roll.toMessage({
     speaker: ChatMessage.getSpeaker({ actor }),
-    flavor: `${label}<br>${successText}${outcome}`,
+    flavor: `${label}<br>${modifiersHtml}${successText}${outcome}`,
     rollMode: rollMode || game.settings.get('core', 'rollMode'),
     content: rollHTML
   });
