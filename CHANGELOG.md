@@ -128,3 +128,8 @@
 
 ## 1.0.38
 - Actor: Shifted skill roll dialog to hbs template. Corrected some logic
+
+## 1.0.39
+- Actor: Improved Item sheet
+- Weapon: Improvements to sheet
+- corrected roll.evaluate call

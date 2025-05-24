@@ -10,12 +10,13 @@ import { rollSkillPool } from '../dice/rolltypes.mjs';
  * @param {object} params.ability - The ability object
  * @param {Actor} params.actor - The actor instance
  */
-export function launchSkillDialog({ skillKey, skill, abilityKey, ability, actor, targetNumber = 1, specialisation = '', specOptions = [] }) {
+export function launchSkillDialog({ skillKey, skill, abilityKey, ability, actor, targetNumber = 1, specialisation = '', useSpecDefault = false }) {
   const skillRating = skill.rating || 0;
   const abilityValue = ability?.value || 0;
   const modifier = 0;
-  const useSpec = false;
-  const total = skillRating + abilityValue;
+  // useSpec is now settable via useSpecDefault
+  const useSpec = useSpecDefault;
+  const total = skillRating + abilityValue + (useSpec ? 2 : 0);
   const rollModes = [
     { value: 'roll', label: 'Public Roll' },
     { value: 'gmroll', label: 'Private GM Roll' },
@@ -66,11 +67,11 @@ export function launchSkillDialog({ skillKey, skill, abilityKey, ability, actor,
     modifier,
     useSpec,
     specialisation,
-    specOptions,
+    // Remove specOptions from templateData
     total,
     targetNumber,
     rollModes: rollModeOptions,
-    modifiersString,
+    modifiersString
   };
 
   renderTemplate('systems/unboundfate/templates/dialogs/skill-dialog.hbs', templateData).then(content => {

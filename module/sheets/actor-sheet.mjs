@@ -104,52 +104,36 @@ export class UnboundFateActorSheet extends ActorSheet {
    * @param {object} context The context object to mutate
    */
   _prepareItems(context) {
-    // Initialize containers.
+    // Initialize containers for each group.
+    const weapons = [];
+    const armour = [];
     const gear = [];
-    const features = [];   
     const talentsAndFlaws = [];
     const spells = {
-      0: [],
-      1: [],
-      2: [],
-      3: [],
-      4: [],
-      5: [],
-      6: [],
-      7: [],
-      8: [],
-      9: [],
+      0: [], 1: [], 2: [], 3: [], 4: [], 5: [], 6: [], 7: [], 8: [], 9: []
     };
-
-    // Iterate through items, allocating to containers
     for (let i of context.items) {
       i.img = i.img || Item.DEFAULT_ICON;
-      // Append to gear.
-      if (i.type === 'item') {
+      if (i.type === 'weapon') {
+        weapons.push(i);
+      } else if (i.type === 'armour') {
+        armour.push(i);
+      } else if (i.type === 'item') {
         gear.push(i);
-      }
-      // Append to talents and flaws.
-      else if (i.type === 'flaw') {
+      } else if (i.type === 'flaw' || i.type === 'talent') {
         talentsAndFlaws.push(i);
-      }
-      // Append to spells.
-      else if (i.type === 'spell') {
+      } else if (i.type === 'spell') {
         if (i.system.spellLevel != undefined) {
           spells[i.system.spellLevel].push(i);
         }
       }
-       // Append to talents and flaws.
-       else if (i.type === 'talent') {
-        talentsAndFlaws.push(i);
-      }
+      // You can add more types/groups here as needed
     }
-
-
-    // Assign and return
+    context.weapons = weapons;
+    context.armour = armour;
     context.gear = gear;
-    context.features = features;
     context.talentsAndFlaws = talentsAndFlaws;
-    context.spells = spells; 
+    context.spells = spells;
   }
 
   /* -------------------------------------------- */
@@ -322,7 +306,7 @@ export class UnboundFateActorSheet extends ActorSheet {
       // Lookup abilityKey from config.skillDefinitions, not from skill data
       const abilityKey = CONFIG_UNBOUNDFATE.skillDefinitions[skillKey]?.ability;
       const ability = this.actor.system.abilities?.[abilityKey];
-      launchSkillDialog({ skillKey, skill, abilityKey, ability, actor: this.actor });
+      launchSkillDialog({ skillKey, skill, abilityKey, ability, actor: this.actor, useSpecDefault: false });
       return;
     }
 
@@ -338,7 +322,6 @@ export class UnboundFateActorSheet extends ActorSheet {
       const skillDef = CONFIG_UNBOUNDFATE.skillDefinitions[skillKey] || {};
       const abilityKey = skillDef.ability;
       const ability = this.actor.system.abilities?.[abilityKey];
-      const specOptions = skillDef.specOptions || [];
       // Pre-populate the specialisation from the actor's skill data
       const specialisation = skill.specialisation || '';
       launchSkillDialog({
@@ -349,7 +332,7 @@ export class UnboundFateActorSheet extends ActorSheet {
         actor: this.actor,
         rollType: 'skill-spec',
         specialisation,
-        specOptions
+        useSpecDefault: true
       });
       return;
     }

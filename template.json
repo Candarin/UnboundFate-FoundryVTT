@@ -89,7 +89,8 @@
     "templates": {
       "base-template": {
         "description": "",
-        "pdfReference": ""
+        "pdfReference": "",
+        "actionType": ""
       },
       "armour-template": {
         "armourRating": 0,

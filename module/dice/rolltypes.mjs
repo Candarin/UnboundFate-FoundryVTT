@@ -15,7 +15,7 @@ export async function rollSkillPool({ skillKey, skillRating, abilityKey, ability
   const formula = `${totalPool}d6cs>=5`;
   const label = `${skillKey.capitalize()} + ${abilityKey ? abilityKey.capitalize() : ''} (${skillRating}+${abilityValue}${modifier ? `+${modifier}` : ''})`;
   const roll = new UFRoll(formula, actor.getRollData(), { targetNumber });
-  await roll.evaluate({async: true});
+  await roll.evaluate();
   // No need to manually count or mark successes, cs>=5 handles it
   let successes = roll.hits;
   // Custom roll HTML without total section
