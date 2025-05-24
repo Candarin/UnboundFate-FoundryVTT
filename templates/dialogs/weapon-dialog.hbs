@@ -1,0 +1,26 @@
+<form>
+  <div class="form-group">
+    <label>Weapon:</label>
+    <span>{{weaponName}}</span>
+  </div>
+  <div class="form-group">
+    <label>Skill:</label>
+    <span>{{skillKey}}{{#if skillSpec}} ({{skillSpec}}){{/if}}</span>
+  </div>
+  <div class="form-group">
+    <label>Damage (1H/2H):</label>
+    <span>{{damage1H}}{{#if damage2H}} / {{damage2H}}{{/if}}</span>
+  </div>
+  <div class="form-group">
+    <label>Weapon Type:</label>
+    <span>{{weaponType}}</span>
+  </div>
+  <div class="form-group">
+    <label>Parry:</label>
+    <span>{{parry}}</span>
+  </div>
+  <div class="form-group">
+    <label>Targets:</label>
+    <span>{{#if targetNames}}{{targetNames}}{{else}}<em>None</em>{{/if}}</span>
+  </div>
+</form>

@@ -34,3 +34,57 @@ export async function rollSkillPool({ skillKey, skillRating, abilityKey, ability
     content: rollHTML
   });
 }
+
+/**
+ * Rolls a weapon attack and sends the result to chat.
+ * @param {object} params
+ * @param {object} params.weapon - The weapon item object
+ * @param {Actor} params.actor - The attacking actor
+ * @param {Array<Token>} params.targets - Array of targeted tokens
+ */
+export async function rollWeaponAttack({ weapon, actor, targets = [] }) {
+  // Get weapon and skill info
+  const weaponName = weapon.name;
+  const skillKey = weapon.system.skill || '';
+  const skillSpec = weapon.system.skillSpec || '';
+  const damage1H = weapon.system.damage1H || '';
+  const damage2H = weapon.system.damage2H || '';
+  const weaponType = weapon.system.weaponType || '';
+  const parry = weapon.system.parry || 0;
+
+  // Get skill/ability from actor
+  const skill = actor.system.skills?.[skillKey] || {};
+  const skillRating = skill.rating || 0;
+  // Lookup ability from config
+  const abilityKey = CONFIG.UNBOUNDFATE.skillDefinitions?.[skillKey]?.ability;
+  const abilityValue = actor.system.abilities?.[abilityKey]?.value || 0;
+
+  // For now, use 1H damage
+  const damage = damage1H;
+
+  // Compose target names for chat
+  const targetNames = (targets && targets.length)
+    ? targets.map(t => t.name).join(', ')
+    : '<em>None</em>';
+
+  // Compose label
+  const label = `<strong>${weaponName}</strong> [${skillKey.capitalize()}${skillSpec ? ' (' + skillSpec + ')' : ''}] vs ${targetNames}`;
+
+  // Roll attack (for now, use rollSkillPool logic)
+  // TODO: Add attack/damage roll separation, modifiers, etc.
+  const rollResult = await game.unboundfate.rollSkillPool({
+    skillKey,
+    skillRating,
+    abilityKey,
+    abilityValue,
+    modifier: 0,
+    targetNumber: 0,
+    actor,
+    rollMode: undefined,
+    useSpec: false,
+    specialisation: skillSpec,
+    modifiersString: ''
+  });
+
+  // TODO: Add damage roll, outcome, and improved chat message
+}

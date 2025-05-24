@@ -48,6 +48,8 @@
   <nav class="sheet-tabs tabs" data-group="primary">
     {{!-- Default tab is specified in actor-sheet.mjs --}}
     <a class="item" data-tab="description">Description</a>
+    <a class="item" data-tab="skills">Skills</a>
+    <a class="item" data-tab="talents">Talents & Flaws</a>
     <a class="item" data-tab="items">Items</a>
     <a class="item" data-tab="effects">Effects</a>
   </nav>
@@ -59,6 +61,16 @@
     <div class="tab biography" data-group="primary" data-tab="description">
       {{!-- Editors must receive enriched text data from getData to properly handle rolls --}}
       {{editor enrichedBiography target="system.biography" engine="prosemirror" button=true editable=editable}}
+    </div>
+
+    {{!-- Skills Tab --}}
+    <div class="tab skills" data-group="primary" data-tab="skills">
+      {{> "systems/unboundfate/templates/actor/parts/actor-skills.hbs"}}
+    </div>
+
+    {{!-- Talents & Flaws Tab --}}
+    <div class="tab talents" data-group="primary" data-tab="talents">
+      {{> "systems/unboundfate/templates/actor/parts/actor-talents.hbs"}}
     </div>
 
     {{!-- Owned Items Tab --}}

@@ -133,3 +133,11 @@
 - Actor: Improved Item sheet
 - Weapon: Improvements to sheet
 - corrected roll.evaluate call
+
+## 1.0.40
+- Added weapon attack dialog and roll logic with targeting support
+- Refactored weapon dialog to use Handlebars template
+- Grouped actor item lists (weapons, armour, gear) with section headers and add buttons
+- Split talents and flaws into separate groups and updated talents tab
+- Updated NPC sheet to use the same tab structure/partials as the character sheet
+- Improved item/weapon sheet roll handling and UI consistency

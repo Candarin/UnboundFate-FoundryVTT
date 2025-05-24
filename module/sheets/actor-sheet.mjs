@@ -60,6 +60,7 @@ export class UnboundFateActorSheet extends ActorSheet {
     // Prepare NPC data and items.
     if (actorData.type == 'npc') {
       this._prepareItems(context);
+      // No _prepareCharacterData for NPCs, but ensure talents, flaws, skills, etc. are available
     }
 
     // Enrich biography info for display
@@ -108,7 +109,8 @@ export class UnboundFateActorSheet extends ActorSheet {
     const weapons = [];
     const armour = [];
     const gear = [];
-    const talentsAndFlaws = [];
+    const talents = [];
+    const flaws = [];
     const spells = {
       0: [], 1: [], 2: [], 3: [], 4: [], 5: [], 6: [], 7: [], 8: [], 9: []
     };
@@ -120,8 +122,10 @@ export class UnboundFateActorSheet extends ActorSheet {
         armour.push(i);
       } else if (i.type === 'item') {
         gear.push(i);
-      } else if (i.type === 'flaw' || i.type === 'talent') {
-        talentsAndFlaws.push(i);
+      } else if (i.type === 'talent') {
+        talents.push(i);
+      } else if (i.type === 'flaw') {
+        flaws.push(i);
       } else if (i.type === 'spell') {
         if (i.system.spellLevel != undefined) {
           spells[i.system.spellLevel].push(i);
@@ -132,7 +136,8 @@ export class UnboundFateActorSheet extends ActorSheet {
     context.weapons = weapons;
     context.armour = armour;
     context.gear = gear;
-    context.talentsAndFlaws = talentsAndFlaws;
+    context.talents = talents;
+    context.flaws = flaws;
     context.spells = spells;
   }
 
@@ -231,10 +236,80 @@ export class UnboundFateActorSheet extends ActorSheet {
       onManageActiveEffect(ev, document);
     });
 
-    // Rollable abilities.
-    html.on('click', '.rollable', this._onRoll.bind(this));
+    // Rollable abilities and items.
+    html.on('click', '.rollable', async (ev) => {
+      const element = ev.currentTarget;
+      const dataset = element.dataset;
+      // Handle item rolls (including weapon attacks)
+      if (dataset.rollType === 'item') {
+        const itemId = element.closest('.item').dataset.itemId;
+        const item = this.actor.items.get(itemId);
+        if (item) {
+          if (item.type === 'weapon') {
+            // Launch weapon attack dialog
+            const { launchWeaponDialog } = await import('../dialogs/weapon-dialog.mjs');
+            launchWeaponDialog({ weapon: item, actor: this.actor });
+            return;
+          } else {
+            return item.roll();
+          }
+        }
+      }
 
-  
+      // Handle skill rolls.
+      if (dataset.rollType === 'skill') {
+        const skillKey = element.closest('.item').dataset.itemId;
+        const skill = this.actor.system.skills[skillKey];
+        if (!skill) {
+          ui.notifications.warn(`Skill "${skillKey}" not found.`);
+          return;
+        }
+        // Lookup abilityKey from config.skillDefinitions, not from skill data
+        const abilityKey = CONFIG_UNBOUNDFATE.skillDefinitions[skillKey]?.ability;
+        const ability = this.actor.system.abilities?.[abilityKey];
+        launchSkillDialog({ skillKey, skill, abilityKey, ability, actor: this.actor, useSpecDefault: false });
+        return;
+      }
+
+      // Handle skill specialisation rolls.
+      if (dataset.rollType === 'skill-spec') {
+        const skillKey = element.closest('.item').dataset.itemId;
+        const skill = this.actor.system.skills[skillKey];
+        if (!skill) {
+          ui.notifications.warn(`Skill "${skillKey}" not found.`);
+          return;
+        }
+        // Lookup abilityKey and specOptions from config.skillDefinitions
+        const skillDef = CONFIG_UNBOUNDFATE.skillDefinitions[skillKey] || {};
+        const abilityKey = skillDef.ability;
+        const ability = this.actor.system.abilities?.[abilityKey];
+        // Pre-populate the specialisation from the actor's skill data
+        const specialisation = skill.specialisation || '';
+        launchSkillDialog({
+          skillKey,
+          skill,
+          abilityKey,
+          ability,
+          actor: this.actor,
+          rollType: 'skill-spec',
+          specialisation,
+          useSpecDefault: true
+        });
+        return;
+      }
+      
+      // Handle rolls that supply the formula directly.
+      if (dataset.roll) {
+        let label = dataset.label ? `[ability] ${dataset.label}` : '';
+        let roll = new Roll(dataset.roll, this.actor.getRollData());
+        roll.toMessage({
+          speaker: ChatMessage.getSpeaker({ actor: this.actor }),
+          flavor: label,
+          rollMode: game.settings.get('core', 'rollMode'),
+        });
+        return roll;
+      }
+    });
 
     // Drag events for macros.
     if (this.actor.isOwner) {
