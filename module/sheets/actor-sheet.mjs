@@ -215,6 +215,15 @@ export class UnboundFateActorSheet extends ActorSheet {
     // Everything below here is only needed if the sheet is editable
     if (!this.isEditable) return;
 
+    // Creation mode toggle
+    html.on('click', '.toggle-creation-mode', (ev) => {
+      ev.preventDefault();
+      // Toggle a flag or property on the actor to switch creation mode
+      const isCreationMode = this.actor.getFlag('unboundfate', 'isCreationMode') || false;
+      this.actor.setFlag('unboundfate', 'isCreationMode', !isCreationMode);
+      this.render();
+    });
+
     // Add Inventory Item
     html.on('click', '.item-create', this._onItemCreate.bind(this));
 

@@ -147,3 +147,6 @@
 - Updated both character and NPC sheets to use the new abilities partial for consistency.
 - Standardized NPC sheet structure to match the character sheet, including tab layout and use of modular partials for abilities, skills, items, talents/flaws, and effects.
 - Improved maintainability and modularity of sheet templates.
+
+## 1.0.41
+- Fixed issues with actor sheet layout.

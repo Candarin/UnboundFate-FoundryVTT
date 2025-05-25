@@ -11,12 +11,7 @@
   {{#each system.skills as |skill key|}}
     <li class='item flexrow' data-item-id='{{key}}'>
       <div class='item-name'>
-        <div class='item-image'>
-          <a class='rollable' data-roll-type='skill'>
-            
-          </a>
-        </div>
-        <h4 for="system.skills.{{key}}" class="rollable" data-roll-type='skill'>{{localize (lookup @root.config.skills key)}}</h4> 
+        <label for="system.skills.{{key}}" class="rollable" data-roll-type='skill'>{{localize (lookup @root.config.skills key)}}</label> 
       </div>
       
       <div>
@@ -26,7 +21,6 @@
       <div>
         <label class="rollable" data-roll-type='skill-spec'>{{skill.specialisation}}</label>
       </div>
-
 
       <div class='item-controls'>
         <a class='item-control skill-edit' title='{{localize "DOCUMENT.Edit" type='{{skill}}'}}' >
