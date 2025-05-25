@@ -21,6 +21,7 @@
       </div>
       <div class='item-formula item-prop'>{{item.system.damage1H}}{{#if item.system.damage2H}} / {{item.system.damage2H}}{{/if}}</div>
       <div class='item-controls'>
+        <input type="checkbox" name="system.isEquipped" {{#if item.system.isEquipped}}checked{{/if}} title="Equipped" />
         <a class='item-control item-edit' title='{{localize "DOCUMENT.Update" type='Item'}}'><i class='fas fa-edit'></i></a>
         <a class='item-control item-delete' title='{{localize "DOCUMENT.Delete" type='Item'}}'><i class='fas fa-trash'></i></a>
       </div>
@@ -49,6 +50,7 @@
       </div>
       <div class='item-formula item-prop'>{{item.system.armourRating}}</div>
       <div class='item-controls'>
+        <input type="checkbox" name="system.isEquipped" {{#if item.system.isEquipped}}checked{{/if}} title="Equipped" />
         <a class='item-control item-edit' title='{{localize "DOCUMENT.Update" type='Item'}}'><i class='fas fa-edit'></i></a>
         <a class='item-control item-delete' title='{{localize "DOCUMENT.Delete" type='Item'}}'><i class='fas fa-trash'></i></a>
       </div>
@@ -77,6 +79,7 @@
       </div>
       <div class='item-formula item-prop'>{{item.system.formula}}</div>
       <div class='item-controls'>
+        <input type="checkbox" name="system.isEquipped" {{#if item.system.isEquipped}}checked{{/if}} title="Equipped" />
         <a class='item-control item-edit' title='{{localize "DOCUMENT.Update" type='Item'}}'><i class='fas fa-edit'></i></a>
         <a class='item-control item-delete' title='{{localize "DOCUMENT.Delete" type='Item'}}'><i class='fas fa-trash'></i></a>
       </div>

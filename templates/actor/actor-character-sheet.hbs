@@ -53,27 +53,16 @@
 
       </div>
     
-    </div>
-
-    {{!-- Ability Scores --}}
-    <div class="abilities grid grid-1row">
-      {{#each system.abilities as |ability key|}}
-      <div class="ability flexcol flex-group-center">
-        <label for="system.abilities.{{key}}.value" class="resource-label rollable flexlarge align-left" data-roll="d20+@abilities.{{key}}.mod" data-label="{{localize (lookup @root.config.abilities key)}}">{{localize (lookup @root.config.abilities key)}}</label>
-        <input type="number" min="0" name="system.abilities.{{key}}.value" value="{{ability.value}}" data-dtype="Number"/>          
-      </div>
-      {{/each}}          
-    </div>
+    </div>   
 
   </header>
   
   {{!-- Sheet Tab Navigation --}}
   <nav class="sheet-tabs tabs" data-group="primary">
     {{!-- Default tab is specified in actor-sheet.mjs --}}
-    <a class="item" data-tab="features">Features</a>
-    <a class="item" data-tab="skills">Skills</a>
-    <a class="item" data-tab="talents-and-flaws">Talents</a>
     <a class="item" data-tab="description">Description</a>
+    <a class="item" data-tab="core">Core</a>
+    <a class="item" data-tab="talents">Talents & Flaws</a>
     <a class="item" data-tab="items">Items</a>
     <a class="item" data-tab="spells">Spells</a>
     <a class="item" data-tab="effects">Effects</a>
@@ -82,34 +71,15 @@
   {{!-- Sheet Body --}}
   <section class="sheet-body">
 
-    {{!-- Owned Features Tab --}}
-    <div class="tab features" data-group="primary" data-tab="features">
-      <section class="grid grid-3col">
-        <aside class="sidebar">
-
-          {{!-- The grid classes are defined in scss/global/_grid.scss. To use,
-          use both the "grid" and "grid-Ncol" class where "N" can be any number
-          from 1 to 12 and will create that number of columns.  --}}
-          
-        </aside>
-
-        {{!-- For the main features list, span the right two columns --}}
-        <section class="main grid-span-2">
-          {{!-- This is a Handlebars partial. They're stored in the `/parts` folder next to this sheet, and defined in module/helpers/templates.mjs --}}
-          {{> "systems/unboundfate/templates/actor/parts/actor-features.hbs"}}
-        </section>
-
+    {{!-- Core Tab --}}
+    <div class="tab core" data-group="primary" data-tab="core">
+      <aside>
+        {{> "systems/unboundfate/templates/actor/parts/actor-abilities.hbs"}}
+      </aside>
+      <section>
+        {{!-- Skills Tab --}}
+        {{> "systems/unboundfate/templates/actor/parts/actor-skills.hbs"}}
       </section>
-    </div>
-
-    {{!-- Skills Tab --}}
-    <div class="tab skills" data-group="primary" data-tab="skills">
-       {{> "systems/unboundfate/templates/actor/parts/actor-skills.hbs"}}
-    </div>
-
-    {{!-- Owned Talents and Flaws Tab --}}
-    <div class="tab talents" data-group="primary" data-tab="talents-and-flaws">
-       {{> "systems/unboundfate/templates/actor/parts/actor-talents.hbs"}}
     </div>
 
     {{!-- Biography Tab --}}

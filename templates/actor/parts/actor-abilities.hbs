@@ -1,0 +1,8 @@
+<div class="abilities grid grid-7col">
+  {{#each config.abilities as |abl ablKey|}}
+    <div class="ability flex-group-center">
+      <label for="system.abilities.{{ablKey}}.value" class="resource-label">{{localize abl}}</label>
+      <input type="number" name="system.abilities.{{ablKey}}.value" value="{{system.abilities.[ablKey].value}}" data-dtype="Number"/>
+    </div>
+  {{/each}}
+</div>

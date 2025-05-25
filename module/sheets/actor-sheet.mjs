@@ -246,7 +246,6 @@ export class UnboundFateActorSheet extends ActorSheet {
         const item = this.actor.items.get(itemId);
         if (item) {
           if (item.type === 'weapon') {
-            // Launch weapon attack dialog
             const { launchWeaponDialog } = await import('../dialogs/weapon-dialog.mjs');
             launchWeaponDialog({ weapon: item, actor: this.actor });
             return;
@@ -308,6 +307,19 @@ export class UnboundFateActorSheet extends ActorSheet {
           rollMode: game.settings.get('core', 'rollMode'),
         });
         return roll;
+      }
+    });
+
+    // Equipped checkbox handler for items
+    html.on('change', 'input[type="checkbox"][name="system.isEquipped"]', (ev) => {
+      const checkbox = ev.currentTarget;
+      const li = $(checkbox).closest('li.item');
+      const itemId = li.data('itemId');
+      const item = this.actor.items.get(itemId);
+      if (item) {
+        item.update({ 'system.isEquipped': checkbox.checked });
+        // Toggle equipped class for styling
+        li.toggleClass('equipped', checkbox.checked);
       }
     });
 

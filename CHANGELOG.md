@@ -141,3 +141,9 @@
 - Split talents and flaws into separate groups and updated talents tab
 - Updated NPC sheet to use the same tab structure/partials as the character sheet
 - Improved item/weapon sheet roll handling and UI consistency
+
+## 1.0.41
+- Refactored abilities partial: moved code from actor-attributes.hbs to actor-abilities.hbs and deleted the old file.
+- Updated both character and NPC sheets to use the new abilities partial for consistency.
+- Standardized NPC sheet structure to match the character sheet, including tab layout and use of modular partials for abilities, skills, items, talents/flaws, and effects.
+- Improved maintainability and modularity of sheet templates.

@@ -90,7 +90,8 @@
       "base-template": {
         "description": "",
         "pdfReference": "",
-        "actionType": ""
+        "actionType": "",
+        "isEquipped": false
       },
       "armour-template": {
         "armourRating": 0,
