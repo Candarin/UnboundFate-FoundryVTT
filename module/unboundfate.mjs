@@ -9,6 +9,8 @@ import { UnboundFateItemSheet } from './sheets/item-sheet.mjs';
 // Import helper/utility classes and constants.
 import { preloadHandlebarsTemplates } from './helpers/templates.mjs';
 import { UNBOUNDFATE } from './helpers/config.mjs';
+// Import custom rolls
+import { UFRoll } from './dice/UFRoll.mjs';
 
 /* -------------------------------------------- */
 /*  Init Hook                                   */
@@ -59,6 +61,9 @@ Hooks.once('init', function () {
     makeDefault: true,
     label: 'UNBOUNDFATE.SheetLabels.Item',
   });
+
+  // Register UFRoll with CONFIG.Dice.rolls to allow rehydration from chat data
+  CONFIG.Dice.rolls.push(UFRoll);
 
   // Preload Handlebars templates.
   return preloadHandlebarsTemplates();

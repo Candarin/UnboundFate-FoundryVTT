@@ -157,3 +157,7 @@
 ## 1.0.44
 - Fixed issue on actor sheet rendering
 
+## 1.0.45
+- Fixed issue on actor sheet rendering
+- Fixed issue with UFRoll registration
+

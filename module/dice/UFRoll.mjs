@@ -4,6 +4,8 @@
  * Unbound Fate specific Roll class.
  */
 export class UFRoll extends Roll {
+    static SERIALIZE = true;
+
     /**
      * @param {string} formula - The dice formula (e.g., "5d6").
      * @param {object} data - Roll data, including Unbound Fate specific options.
