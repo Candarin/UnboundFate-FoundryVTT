@@ -154,3 +154,6 @@
 ## 1.0.43
 - added weapon dodge dialog and roll
 
+## 1.0.44
+- Fixed issue on actor sheet rendering
+

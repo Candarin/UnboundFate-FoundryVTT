@@ -57,6 +57,7 @@ export async function rollWeaponAttack({ weapon, actor, targets = [] }) {
   // Get skill/ability from actor
   const skill = actor.system.skills?.[skillKey] || {};
   const skillRating = skill.rating || 0;
+  
   // Lookup ability from config
   const abilityKey = CONFIG.UNBOUNDFATE.skillDefinitions?.[skillKey]?.ability;
   const abilityValue = actor.system.abilities?.[abilityKey]?.value || 0;

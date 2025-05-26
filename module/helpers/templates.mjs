@@ -6,7 +6,9 @@
 export const preloadHandlebarsTemplates = async function () {
   return loadTemplates([
     // Actor partials.
-    'systems/unboundfate/templates/actor/parts/actor-features.hbs',
+    // Features are not used in the current system, so they are commented out.
+    // 'systems/unboundfate/templates/actor/parts/actor-features.hbs', 
+
     'systems/unboundfate/templates/actor/parts/actor-items.hbs',
     'systems/unboundfate/templates/actor/parts/actor-spells.hbs',
     'systems/unboundfate/templates/actor/parts/actor-talents.hbs',
@@ -14,6 +16,6 @@ export const preloadHandlebarsTemplates = async function () {
     'systems/unboundfate/templates/actor/parts/actor-skills.hbs',
     'systems/unboundfate/templates/actor/parts/actor-abilities.hbs',
     // Item partials
-    'systems/unboundfate/templates/item/parts/item-effects.hbs',
+    'systems/unboundfate/templates/item/parts/item-effects.hbs'
   ]);
 };
