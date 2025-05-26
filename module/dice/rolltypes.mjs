@@ -112,7 +112,7 @@ export async function rollWeaponDodge({ actor, attackingActor, options = {} }) {
   const result = await launchWeaponDodgeDialog({ actor, attackingActor, options });
   if (!result) return; // Cancelled
   // Roll the dodge (no skill, just ability + parry + modifier)
-  await rollSkillPool({
+  const dodgeRoll = await rollSkillPool({
     skillKey: 'dodge',
     skillRating: 0,
     abilityKey: result.abilityKey,
@@ -124,5 +124,40 @@ export async function rollWeaponDodge({ actor, attackingActor, options = {} }) {
     useSpec: false,
     specialisation: '',
     modifiersString: result.modifiersString
+  });
+  // If the dodge failed, roll damage from the attacking actor
+  if (dodgeRoll === false || (typeof dodgeRoll === 'object' && dodgeRoll.isFailure && dodgeRoll.isFailure())) {
+    // Try to get weapon/damage info from options or chatMessageData
+    const weapon = options.weapon || (options.chatMessageData?.flags?.weapon ?? null);
+    const damage = options.damage || weapon?.system?.damage1H || weapon?.system?.damage || '';
+    if (attackingActor && weapon && damage) {
+      await rollWeaponDamage({ weapon, attacker: attackingActor, target: actor, damage });
+    }
+  }
+}
+
+/**
+ * Rolls weapon damage and sends the result to chat.
+ * @param {object} params
+ * @param {object} params.weapon - The weapon item object
+ * @param {Actor} params.attacker - The attacking actor
+ * @param {Actor} params.target - The defending actor
+ * @param {string} params.damage - The damage formula (e.g., '2d6')
+ */
+export async function rollWeaponDamage({ weapon, attacker, target, damage }) {
+  if (!damage) {
+    ui.notifications.warn('No damage formula specified for this weapon.');
+    return;
+  }
+  const label = `<strong>${weapon.name}</strong> Damage to ${target?.name || 'Target'}`;
+  const roll = new Roll(damage, attacker.getRollData());
+  await roll.evaluate();
+  let rollHTML = await roll.render();
+  ChatMessage.create({
+    speaker: ChatMessage.getSpeaker({ actor: attacker }),
+    flavor: label,
+    content: rollHTML,
+    roll: roll,
+    type: CONST.CHAT_MESSAGE_TYPES.ROLL
   });
 }

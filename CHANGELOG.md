@@ -164,3 +164,6 @@
 ## 1.0.46
 - Fixed issue on actor sheet rendering
 
+## 1.0.47
+- Added dodge roll and weapon damage roll
+
