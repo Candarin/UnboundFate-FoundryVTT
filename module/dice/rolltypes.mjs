@@ -96,7 +96,7 @@ export async function rollWeaponAttack({ weapon, actor, targets = [] }) {
     flavor: `${label}<br><strong>Successes:</strong> ${successes}${dodgeButtons}`,
     content: rollHTML,
     roll: roll,
-    type: CONST.CHAT_MESSAGE_TYPES.ROLL
+    style: CONST.CHAT_MESSAGE_STYLES.ROLL
   });
 }
 
@@ -108,26 +108,40 @@ export async function rollWeaponAttack({ weapon, actor, targets = [] }) {
  * @param {object} params.options - Optional: { attackLabel, successes, weapon, etc. }
  */
 export async function rollWeaponDodge({ actor, attackingActor, options = {} }) {
-  // Launch the dialog and get user input
-  const result = await launchWeaponDodgeDialog({ actor, attackingActor, options });
-  if (!result) return; // Cancelled
-  // Roll the dodge (no skill, just ability + parry + modifier)
-  const dodgeRoll = await rollSkillPool({
-    skillKey: 'dodge',
-    skillRating: 0,
-    abilityKey: result.abilityKey,
-    abilityValue: result.abilityValue + result.parry,
-    modifier: result.modifier,
-    targetNumber: result.targetNumber,
-    actor,
-    rollMode: undefined,
-    useSpec: false,
-    specialisation: '',
-    modifiersString: result.modifiersString
+  // Gather dodge pool: ability + parry + modifier
+  const abilityKey = options.abilityKey || 'dex';
+  const abilityValue = options.abilityValue || (actor.system.abilities?.[abilityKey]?.value ?? 0);
+  const parry = options.parry || 0;
+  const modifier = options.modifier || 0;
+  const totalPool = abilityValue + parry + modifier;
+  const formula = `${totalPool}d6cs>=5`;
+  const targetNumber = options.targetNumber || options.attackSuccesses || 0;
+  const label = options.attackLabel || `Dodge${attackingActor ? ' vs ' + attackingActor.name : ''}`;
+  const modifiersHtml = options.modifiersString ? `<div class="modifiers-string" style="margin-bottom:0.5em;">${options.modifiersString}</div>` : '';
+
+  // Roll dodge
+  const roll = new UFRoll(formula, actor.getRollData(), { targetNumber });
+  await roll.evaluate();
+  const successes = roll.hits;
+  let rollHTML = await roll.render();
+  rollHTML = rollHTML.replace(/<div class="dice-total">[\s\S]*?<\/div>/, '');
+  const successText = `<strong>Successes:</strong> ${successes} / <strong>Target Number:</strong> ${targetNumber}`;
+  let outcome = '';
+  if (targetNumber > 0) {
+    outcome = `<div class="roll-outcome" style="margin-top:0.5em;font-weight:bold;">${roll.isSuccess() ? '<span style="color:green;">Success</span>' : '<span style="color:red;">Failure</span>'}</div>`;
+  }
+
+  // Output to chat
+  await roll.toMessage({
+    speaker: ChatMessage.getSpeaker({ actor }),
+    flavor: `${label}<br>${modifiersHtml}${successText}${outcome}`,
+    rollMode: options.rollMode || game.settings.get('core', 'rollMode'),
+    content: rollHTML,
+    style: CONST.CHAT_MESSAGE_STYLES.ROLL
   });
+
   // If the dodge failed, roll damage from the attacking actor
-  if (dodgeRoll === false || (typeof dodgeRoll === 'object' && dodgeRoll.isFailure && dodgeRoll.isFailure())) {
-    // Try to get weapon/damage info from options or chatMessageData
+  if (targetNumber > 0 && !roll.isSuccess()) {
     const weapon = options.weapon || (options.chatMessageData?.flags?.weapon ?? null);
     const damage = options.damage || weapon?.system?.damage1H || weapon?.system?.damage || '';
     if (attackingActor && weapon && damage) {
@@ -158,6 +172,6 @@ export async function rollWeaponDamage({ weapon, attacker, target, damage }) {
     flavor: label,
     content: rollHTML,
     roll: roll,
-    type: CONST.CHAT_MESSAGE_TYPES.ROLL
+    style: CONST.CHAT_MESSAGE_STYLES.ROLL
   });
 }

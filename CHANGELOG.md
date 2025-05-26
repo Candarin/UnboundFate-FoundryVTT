@@ -167,3 +167,6 @@
 ## 1.0.47
 - Added dodge roll and weapon damage roll
 
+## 1.0.48
+- Corrected some logic in the dodge roll
+

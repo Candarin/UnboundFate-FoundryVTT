@@ -1,4 +1,4 @@
-import { rollWeaponDodge } from '../dice/rolltypes.mjs';
+import { launchWeaponDodgeDialog } from '../dialogs/weapondodge-dialog.mjs';
 
 /**
  * Global chat listeners for Unbound Fate system.
@@ -40,10 +40,8 @@ export function registerUnboundFateChatListeners() {
       // Optionally, extract attack label
       const attackLabelMatch = flavor.match(/<strong>(.*?)<\/strong>/i);
       const attackLabel = attackLabelMatch ? attackLabelMatch[1] : '';
-      // You can also access all chat message data here if needed:
-      // chatMessage.data, chatMessage.flags, chatMessage.rolls, etc.
-      // Call the dodge dialog/roll
-      await rollWeaponDodge({
+      // Call the dodge dialog (which will call rollWeaponDodge internally)
+      await launchWeaponDodgeDialog({
         actor,
         attackingActor: null, // Could be improved if you want to pass attacker
         options: {

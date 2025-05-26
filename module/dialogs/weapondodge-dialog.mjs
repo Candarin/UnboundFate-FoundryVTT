@@ -9,34 +9,15 @@ import { rollWeaponDodge } from '../dice/rolltypes.mjs';
  * @returns {Promise<object|null>} Resolves with the selected options or null if cancelled
  */
 export function launchWeaponDodgeDialog({ actor, attackingActor, options = {} }) {
-  // Gather ability options (all abilities)
-  const abilityOptions = Object.entries(actor.system.abilities || {}).map(([key, abl]) => ({
-    key,
-    label: key.capitalize(),
-    value: abl.value,
-    selected: false
-  }));
-  if (abilityOptions.length) abilityOptions[0].selected = true;
-
+  
   // Gather equipped weapons
   const equippedWeapons = actor.items.filter(i => i.type === 'weapon' && i.system.isEquipped);
 
   // Default targetNumber from options.successes or 0
   const targetNumber = options.successes ?? 0;
 
-  const templateData = {
-    skillLabel: skillKey.capitalize(),
-    skillRating,
-    abilityOptions,
-    abilityValue,
-    modifier,
-    useSpec,
-    specialisation,
-    // Remove specOptions from templateData
-    total,
-    targetNumber,
-    rollModes: rollModeOptions,
-    modifiersString
+  const templateData = {       
+    targetNumber    
   };
 
   // Render the dialog template
@@ -50,8 +31,7 @@ export function launchWeaponDodgeDialog({ actor, attackingActor, options = {} })
           label: 'Roll Dodge',
           callback: async (html) => {
             const form = html[0].querySelector('form');
-            const abilityKey = html.find('select[name="abilityKey"]').val();
-            const abilityValue = Number(actor.system.abilities?.[abilityKey]?.value) || 0;
+            const abilityKey = html.find('select[name="abilityKey"]').val();            
             const weaponId = html.find('select[name="weaponId"]').val();
             let parry = 0;
             if (weaponId) {
