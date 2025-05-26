@@ -1,7 +1,7 @@
 <form class="{{cssClass}} {{actor.type}} flexcol" autocomplete="off">
   {{!-- Creation Mode Ribbon --}}
-  <div class="creation-mode-ribbon grid grid-1row flex-group-center" style="background: {{#if isCreationMode}}#e67e22{{else}}#888{{/if}}; color: #fff; font-size: 1.2em; font-weight: bold; letter-spacing: 1px; margin-bottom: 0.5em; border-radius: 4px 4px 4px 4px;">
-    <div class="flex0 flexcol" style="text-align: center;">
+  <div class="creation-mode-ribbon flex0" style="background: {{#if isCreationMode}}#e67e22{{else}}#888{{/if}}; border-radius: 4px 4px 4px 4px;">
+    <div class="flexcol" style="text-align: center;">
       {{#if isCreationMode}}
         <div>Character Creation Mode</div>
         <button type="button" class="flex0 toggle-creation-mode">Exit Creation</button>

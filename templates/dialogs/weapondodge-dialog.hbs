@@ -1,0 +1,30 @@
+<form>
+  <div class="form-group">
+    <label>Ability:</label>
+    <select name="abilityKey">
+      {{#each abilityOptions}}
+        <option value="{{this.key}}" {{#if this.selected}}selected{{/if}}>{{this.label}} ({{this.value}})</option>
+      {{/each}}
+    </select>
+  </div>
+  <div class="form-group">
+    <label>Equipped Weapon (Parry):</label>
+    <select name="weaponId">
+      <option value="">None</option>
+      {{#each equippedWeapons}}
+        <option value="{{this._id}}" data-parry="{{this.system.parry}}">{{this.name}} (Parry: {{this.system.parry}})</option>
+      {{/each}}
+    </select>
+  </div>
+  <div class="form-group">
+    <label>Modifier:</label>
+    <input type="number" name="modifier" value="0" style="width:4em;"/>
+  </div>
+  <div class="form-group">
+    <label>Target Number (Attack Successes):</label>
+    <input type="number" name="targetNumber" value="{{targetNumber}}" min="0"/>
+  </div>
+  {{#if attackLabel}}
+    <div class="form-group"><label>Attack:</label> <span>{{attackLabel}}</span></div>
+  {{/if}}
+</form>

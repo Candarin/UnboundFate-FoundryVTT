@@ -148,5 +148,9 @@
 - Standardized NPC sheet structure to match the character sheet, including tab layout and use of modular partials for abilities, skills, items, talents/flaws, and effects.
 - Improved maintainability and modularity of sheet templates.
 
-## 1.0.41
+## 1.0.42
 - Fixed issues with actor sheet layout.
+
+## 1.0.43
+- added weapon dodge dialog and roll
+

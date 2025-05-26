@@ -1,4 +1,6 @@
 import { UFRoll } from './UFRoll.mjs';
+import { renderTemplate } from '../helpers/templates.mjs';
+import { launchWeaponDodgeDialog } from '../dialogs/weapondodge-dialog.mjs';
 
 /**
  * Rolls a skill pool and sends the result to chat.
@@ -70,21 +72,57 @@ export async function rollWeaponAttack({ weapon, actor, targets = [] }) {
   // Compose label
   const label = `<strong>${weaponName}</strong> [${skillKey.capitalize()}${skillSpec ? ' (' + skillSpec + ')' : ''}] vs ${targetNames}`;
 
-  // Roll attack (for now, use rollSkillPool logic)
-  // TODO: Add attack/damage roll separation, modifiers, etc.
-  const rollResult = await game.unboundfate.rollSkillPool({
-    skillKey,
-    skillRating,
-    abilityKey,
-    abilityValue,
-    modifier: 0,
-    targetNumber: 0,
+  // Roll attack (use rollSkillPool logic, but capture result)
+  const totalPool = skillRating + abilityValue;
+  const formula = `${totalPool}d6cs>=5`;
+  const roll = new UFRoll(formula, actor.getRollData(), { targetNumber: 0 });
+  await roll.evaluate();
+  const successes = roll.hits;
+  const rollHTML = (await roll.render()).replace(/<div class="dice-total">[\s\S]*?<\/div>/, '');
+
+  // Build chat content with a Dodge button for each target
+  let dodgeButtons = '';
+  if (targets && targets.length) {
+    dodgeButtons = '<div class="dodge-buttons" style="margin-top:0.5em;">';
+    for (const t of targets) {
+      dodgeButtons += `<button class="dodge-roll" data-token-id="${t.id}" data-actor-id="${t.actor?.id || ''}">Dodge (${t.name})</button> `;
+    }
+    dodgeButtons += '</div>';
+  }
+
+  // Output to chat
+  ChatMessage.create({
+    speaker: ChatMessage.getSpeaker({ actor }),
+    flavor: `${label}<br><strong>Successes:</strong> ${successes}${dodgeButtons}`,
+    content: rollHTML,
+    roll: roll,
+    type: CONST.CHAT_MESSAGE_TYPES.ROLL
+  });
+}
+
+/**
+ * Rolls a dodge defense against a weapon attack, using dialog for options/modifiers.
+ * @param {object} params
+ * @param {Actor} params.actor - The defending actor
+ * @param {Actor} params.attackingActor - The attacking actor
+ * @param {object} params.options - Optional: { attackLabel, successes, weapon, etc. }
+ */
+export async function rollWeaponDodge({ actor, attackingActor, options = {} }) {
+  // Launch the dialog and get user input
+  const result = await launchWeaponDodgeDialog({ actor, attackingActor, options });
+  if (!result) return; // Cancelled
+  // Roll the dodge (no skill, just ability + parry + modifier)
+  await rollSkillPool({
+    skillKey: 'dodge',
+    skillRating: 0,
+    abilityKey: result.abilityKey,
+    abilityValue: result.abilityValue + result.parry,
+    modifier: result.modifier,
+    targetNumber: result.targetNumber,
     actor,
     rollMode: undefined,
     useSpec: false,
-    specialisation: skillSpec,
-    modifiersString: ''
+    specialisation: '',
+    modifiersString: result.modifiersString
   });
-
-  // TODO: Add damage roll, outcome, and improved chat message
 }
