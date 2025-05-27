@@ -94,7 +94,13 @@ export function launchWeaponDialog({ weapon, actor }) {
 
           // Get selected skill key and value
           const skillKey = form.skillKey?.value || 'str';
-          const skillRating = parseInt(form.skillRating?.value, 10) || 0;
+          let skillRating = 0;
+          if (actor.system.skills && actor.system.skills[skillKey]) {
+            skillRating = parseInt(actor.system.skills[skillKey].value, 10) || 0;
+          } else {
+            // If skill not found, default to 0
+            skillRating = 0;
+          }
 
           // Get selected ability value
           const abilityKey = form.abilityKey?.value || 'str';
@@ -126,10 +132,10 @@ export function launchWeaponDialog({ weapon, actor }) {
           // Calculate modifiers string
           let modifiersText = [];
           if (abilityKey && abilityValue !== 0) {
-            modifiersText.push(`${game.i18n.localize(abilities[abilityKey])} ${abilityValue >= 0 ? '+' : ''}${abilityValue}`);
+            modifiersText.push(`${game.i18n.localize(`UNBOUNDFATE.Ability.${abilityKey}`)} ${abilityValue >= 0 ? '+' : ''}${abilityValue}`);
           }
-          if (skillKey && skillRating !== 0) {
-            modifiersText.push(`${skillKey.capitalize()} ${skillRating >= 0 ? '+' : ''}${skillRating}`);
+          if (skillKey && skillRating !== 0) {           
+            modifiersText.push(`${game.i18n.localize(`UNBOUNDFATE.Skills.${skillKey}`)} ${skillRating >= 0 ? '+' : ''}${skillRating}`);
           }
           if (form.useSpec.checked) {
             modifiersText.push('Specialisation +2');

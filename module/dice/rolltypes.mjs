@@ -92,8 +92,7 @@ export async function rollWeaponAttack({ weapon, actor, targets = [], totalPool,
     speaker: ChatMessage.getSpeaker({ actor }),
     flavor: `${modifierList}<br><strong>Successes:</strong> ${successes}${dodgeButtons}`,
     content: rollHTML,
-    roll: roll,
-    style: CONST.CHAT_MESSAGE_STYLES.ROLL
+    roll: roll
   });
 }
 
