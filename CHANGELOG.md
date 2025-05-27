@@ -181,5 +181,8 @@
 - Added skill Blades
 - actor sheet layout changes
 
+## 1.0.52
+- Updated weapon dialog
+
 
 

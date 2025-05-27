@@ -22,7 +22,11 @@
   <!-- Skill -->
   <div class="form-group">
     <label>Skill:</label>
-    <span name="skillKey">{{skillKey}}</span>
+    <select name="skillKey">
+      {{#each skillOptions}}
+        <option value="{{this.key}}" {{#if this.selected}}selected{{/if}}>{{this.label}}</option>
+      {{/each}}
+    </select>
     <span> (<span id="skill-rating">{{skillRating}}</span>)</span>
   </div>
   <div class="form-group">
@@ -46,7 +50,7 @@
   </div>
   <div class="form-group">
     <label>Total Pool:</label>
-    <span name="totalPool" id="totalPool">{{totalPool}}</span>
+    <input type="text" name="totalPool" id="totalPool" value="{{totalPool}}" disabled />
   </div>
 
   <hr>

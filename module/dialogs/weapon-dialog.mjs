@@ -31,6 +31,13 @@ export function launchWeaponDialog({ weapon, actor }) {
   const abilityKey = 'str';
   const abilityValue = abilities[abilityKey]?.value ?? 0;
 
+  // Determine skill options
+  const skillOptions = Object.keys(actor.system.skills || {}).map(key => ({
+    key,
+    label: game.i18n.localize(`UNBOUNDFATE.Skills.${key.toUpperCase()}`),
+    selected: key === skillKey
+  }));
+
   // Determine useSpec and specialisation for the weapon's skill
   let useSpec = false;
   let specialisation = '';
@@ -46,7 +53,8 @@ export function launchWeaponDialog({ weapon, actor }) {
     damage2H,
     skillKey,
     skillRating,
-    skillSpec,    
+    skillSpec,
+    skillOptions,    
     weaponType,
     targetNames,
     totalPool,
@@ -130,8 +138,7 @@ export function launchWeaponDialog({ weapon, actor }) {
             modifiersText.push(`Modifier ${modifier >= 0 ? '+' : ''}${modifier}`);
           }
           const modifiersString = modifiersText.join(', ');
-
-          if (!modifiersString) modifiersString = 'None';
+          
           // Update modifiers string
           const modifiersElem = form.querySelector('#modifiers-string');
           if (modifiersElem) modifiersElem.textContent = modifiersString;         
