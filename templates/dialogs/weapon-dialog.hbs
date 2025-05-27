@@ -23,6 +23,7 @@
   <div class="form-group">
     <label>Skill:</label>
     <span name="skillKey">{{skillKey}}{{#if skillSpec}} ({{skillSpec}}){{/if}}</span>
+    <span> (<span id="skill-rating">{{skillRating}}</span>)</span>
   </div>
   <div class="form-group">
     <label for="useSpec">Apply Specialisation</label>
@@ -41,7 +42,7 @@
   </div>
   <div class="form-group">
     <label>Total Pool:</label>
-    <span name="totalPool">{{totalPool}}</span>
+    <span name="totalPool" id="totalPool">{{totalPool}}</span>
   </div>
 
   <hr>

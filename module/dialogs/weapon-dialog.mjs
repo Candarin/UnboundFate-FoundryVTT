@@ -12,8 +12,10 @@ export function launchWeaponDialog({ weapon, actor }) {
   const damage1H = weapon.system.damage1H || '';
   const damage2H = weapon.system.damage2H || '';
   const skillKey = weapon.system.skill || '';
+  const skillRating = actor.system.skills[skillKey]?.value ?? 0;
   const skillSpec = weapon.system.skillSpec || '';  
   const weaponType = weapon.system.weaponType || '';
+  const totalPool = 0;
 
   // Get current targets
   const targets = Array.from(game.user.targets || []);
@@ -43,6 +45,7 @@ export function launchWeaponDialog({ weapon, actor }) {
     damage1H,
     damage2H,
     skillKey,
+    skillRating,
     skillSpec,    
     weaponType,
     targetNames,
@@ -80,41 +83,52 @@ export function launchWeaponDialog({ weapon, actor }) {
         if (!form) return;
         // Helper to update total and ability value
         function updateTotal() {
+
+          // Get selected skill key
+          const skillKey = form.skillKey?.value || 'str';
+
+
           // Get selected ability value
           const abilityKey = form.abilityKey?.value || 'str';
           let abilityValue = 0;
           if (actor.system.abilities && actor.system.abilities[abilityKey]) {
             abilityValue = parseInt(actor.system.abilities[abilityKey].value, 10) || 0;
-          }
-          // Update ability value display
-          const abilityValueElem = form.querySelector('#ability-value');
-          if (abilityValueElem) abilityValueElem.textContent = abilityValue;
-
+          }         
           // Get modifier
           const modifier = parseInt(form.modifier?.value, 10) || 0;
-
           // Check if specialisation applies
-          const useSpec = form.useSpec?.checked;
-          let specBonus = 0;
-          let modifiersString = '';
-          if (useSpec && form.specialisation?.value) {
-            specBonus = 1;
-            modifiersString += '+1 Specialisation';
-          }
-          if (modifier !== 0) {
-            if (modifiersString) modifiersString += ', ';
-            modifiersString += (modifier > 0 ? '+' : '') + modifier + ' Modifier';
-          }
-          if (!modifiersString) modifiersString = 'None';
+          const useSpec = form.useSpec.checked ? 2 : 0;          
 
-          // Calculate total pool: ability + spec + modifier
+           // Calculate total pool: ability + skill + spec + modifier
           const total = abilityValue + specBonus + modifier;
           // Update totalPool display
           const totalPoolElem = form.querySelector('[name="totalPool"]');
           if (totalPoolElem) totalPoolElem.textContent = total;
+
+
+          // Update displayed ability value display
+          const abilityValueElem = form.querySelector('#ability-value');
+          if (abilityValueElem) abilityValueElem.textContent = abilityValue;
+
+
+          // Update displayed Skill Rating
+          const skillRatingElem = form.querySelector('#skill-rating');
+          if (skillRatingElem) skillRatingElem.textContent = skillRating;
+
+          // Calculate modifiers string
+          let modifiersText = [];
+          if (form.useSpec.checked) {
+            modifiersText.push('Specialisation +2');
+          }
+          if (modifier !== 0) {
+            modifiersText.push(`Modifier ${modifier >= 0 ? '+' : ''}${modifier}`);
+          }
+          const modifiersString = modifiersText.join(', ');
+
+          if (!modifiersString) modifiersString = 'None';
           // Update modifiers string
           const modifiersElem = form.querySelector('#modifiers-string');
-          if (modifiersElem) modifiersElem.textContent = modifiersString;
+          if (modifiersElem) modifiersElem.textContent = modifiersString;         
         }
         // Add listeners for each editable field, matching skill-dialog style
         form.abilityKey?.addEventListener('change', updateTotal);
