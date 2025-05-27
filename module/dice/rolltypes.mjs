@@ -42,24 +42,16 @@ export async function rollSkillPool({ skillKey, skillRating, abilityKey, ability
  * @param {object} params.weapon - The weapon item object
  * @param {Actor} params.actor - The attacking actor
  * @param {Array<Token>} params.targets - Array of targeted tokens
+ * @param {string} params.totalPool - The total pool of dice to roll (required)
+ * @param {string} params.modifierList - A concatenated string of modifiers (optional) to display on the chat message
  */
-export async function rollWeaponAttack({ weapon, actor, targets = [] }) {
+export async function rollWeaponAttack({ weapon, actor, targets = [], totalPool, modifierList = ''}) {
   // Get weapon and skill info
   const weaponName = weapon.name;
-  const skillKey = weapon.system.skill || '';
-  const skillSpec = weapon.system.skillSpec || '';
   const damage1H = weapon.system.damage1H || '';
   const damage2H = weapon.system.damage2H || '';
   const weaponType = weapon.system.weaponType || '';
-  const parry = weapon.system.parry || 0;
-
-  // Get skill/ability from actor
-  const skill = actor.system.skills?.[skillKey] || {};
-  const skillRating = skill.rating || 0;
-
-  // Lookup ability from config
-  const abilityKey = CONFIG.UNBOUNDFATE.skillDefinitions?.[skillKey]?.ability;
-  const abilityValue = actor.system.abilities?.[abilityKey]?.value || 0;
+  
 
   // For now, use 1H damage
   const damage = damage1H;
@@ -69,11 +61,9 @@ export async function rollWeaponAttack({ weapon, actor, targets = [] }) {
     ? targets.map(t => t.name).join(', ')
     : '<em>None</em>';
 
-  // Compose label
-  const label = `<strong>${weaponName}</strong> [${skillKey.capitalize()}${skillSpec ? ' (' + skillSpec + ')' : ''}] vs ${targetNames}`;
+  
+  
 
-  // Roll attack (use rollSkillPool logic, but capture result)
-  const totalPool = skillRating + abilityValue;
   const formula = `${totalPool}d6cs>=5`;
   const roll = new UFRoll(formula, actor.getRollData(), { targetNumber: 0 });
   await roll.evaluate();
@@ -90,10 +80,17 @@ export async function rollWeaponAttack({ weapon, actor, targets = [] }) {
     dodgeButtons += '</div>';
   }
 
+  // Build content for chat message
+  let rollContent = `<strong>${weaponName}</strong> Attack Roll<br>`;
+  rollContent += `<strong>Weapon Type:</strong> ${weaponType}<br>`;
+  rollContent += `${modifierList ? `<div class="modifiers-string">${modifierList}</div>` : ''}`;
+  rollContent += `<hr>`;
+  rollContent += `<h4>Targets:</h4><br>${targetNames}`;
+
   // Output to chat
   ChatMessage.create({
     speaker: ChatMessage.getSpeaker({ actor }),
-    flavor: `${label}<br><strong>Successes:</strong> ${successes}${dodgeButtons}`,
+    flavor: `${modifierList}<br><strong>Successes:</strong> ${successes}${dodgeButtons}`,
     content: rollHTML,
     roll: roll,
     style: CONST.CHAT_MESSAGE_STYLES.ROLL

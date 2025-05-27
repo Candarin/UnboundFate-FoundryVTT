@@ -170,3 +170,7 @@
 ## 1.0.48
 - Corrected some logic in the dodge roll
 
+## 1.0.49 
+- Updated weapon dialog
+
+
