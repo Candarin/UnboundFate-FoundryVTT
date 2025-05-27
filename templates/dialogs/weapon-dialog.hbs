@@ -22,7 +22,7 @@
   <!-- Skill -->
   <div class="form-group">
     <label>Skill:</label>
-    <span name="skillKey">{{skillKey}}{{#if skillSpec}} ({{skillSpec}}){{/if}}</span>
+    <span name="skillKey">{{skillKey}}</span>
     <span> (<span id="skill-rating">{{skillRating}}</span>)</span>
   </div>
   <div class="form-group">
@@ -34,6 +34,10 @@
     <input type="text" name="specialisation" value="{{specialisation}}" disabled />
   </div>
   <!-- Modifier -->
+  <div class="form-group">
+    <label for="modifier">Modifier</label>
+    <input type="number" name="modifier" value="{{modifier}}" />
+  </div>
 
   <hr>
   <div class="form-group">

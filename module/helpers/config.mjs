@@ -26,6 +26,7 @@ UNBOUNDFATE.abilityAbbreviations = {
 
 UNBOUNDFATE.skills = {
   athletics: 'UNBOUNDFATE.Skill.athletics',
+  blades: 'UNBOUNDFATE.Skill.blades',
   stealth: 'UNBOUNDFATE.Skill.stealth',
 }
 
@@ -37,6 +38,14 @@ UNBOUNDFATE.skillDefinitions = {
       'Jumping',
       'Swimming',
       'Running'
+    ]
+  },
+  blades: {
+    ability: 'str',
+    specOptions: [
+      'Longblades',
+      'Shortblades',
+      'Axes'
     ]
   },
   stealth: {

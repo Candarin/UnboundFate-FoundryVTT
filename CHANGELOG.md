@@ -176,4 +176,10 @@
 ## 1.0.50
 - Updated weapon dialog
 
+## 1.0.51
+- Updated weapon dialog
+- Added skill Blades
+- actor sheet layout changes
+
+
 

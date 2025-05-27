@@ -64,6 +64,10 @@
             "rating": 0,
             "specialisation": ""              
           },
+          "blades": {
+            "rating": 0,
+            "specialisation": ""              
+          },              
           "stealth": {
             "rating": 0,
             "specialisation": ""              

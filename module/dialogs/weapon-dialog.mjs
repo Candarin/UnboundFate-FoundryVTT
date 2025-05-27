@@ -84,9 +84,9 @@ export function launchWeaponDialog({ weapon, actor }) {
         // Helper to update total and ability value
         function updateTotal() {
 
-          // Get selected skill key
+          // Get selected skill key and value
           const skillKey = form.skillKey?.value || 'str';
-
+          const skillRating = parseInt(form.skillRating?.value, 10) || 0;
 
           // Get selected ability value
           const abilityKey = form.abilityKey?.value || 'str';
@@ -100,7 +100,7 @@ export function launchWeaponDialog({ weapon, actor }) {
           const useSpec = form.useSpec.checked ? 2 : 0;          
 
            // Calculate total pool: ability + skill + spec + modifier
-          const total = abilityValue + specBonus + modifier;
+          const total = abilityValue + skillRating + useSpec + modifier;
           // Update totalPool display
           const totalPoolElem = form.querySelector('[name="totalPool"]');
           if (totalPoolElem) totalPoolElem.textContent = total;
@@ -117,6 +117,12 @@ export function launchWeaponDialog({ weapon, actor }) {
 
           // Calculate modifiers string
           let modifiersText = [];
+          if (abilityKey && abilityValue !== 0) {
+            modifiersText.push(`${game.i18n.localize(abilities[abilityKey])} ${abilityValue >= 0 ? '+' : ''}${abilityValue}`);
+          }
+          if (skillKey && skillRating !== 0) {
+            modifiersText.push(`${skillKey.capitalize()} ${skillRating >= 0 ? '+' : ''}${skillRating}`);
+          }
           if (form.useSpec.checked) {
             modifiersText.push('Specialisation +2');
           }
@@ -131,9 +137,13 @@ export function launchWeaponDialog({ weapon, actor }) {
           if (modifiersElem) modifiersElem.textContent = modifiersString;         
         }
         // Add listeners for each editable field, matching skill-dialog style
-        form.abilityKey?.addEventListener('change', updateTotal);
-        form.modifier?.addEventListener('input', updateTotal);
-        form.useSpec?.addEventListener('change', updateTotal);
+        form.abilityKey.addEventListener('change', updateTotal);
+        form.skillKey.addEventListener('change', updateTotal);
+        form.modifier.addEventListener('change', updateTotal);
+        form.useSpec.addEventListener('change', function() {
+          form.specialisation.disabled = !this.checked;
+          updateTotal();
+        });
       }
     }).render(true);
   });

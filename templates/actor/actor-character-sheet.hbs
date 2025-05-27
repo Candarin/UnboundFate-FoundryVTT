@@ -73,12 +73,14 @@
 
     {{!-- Core Tab --}}
     <div class="tab core" data-group="primary" data-tab="core">
-      <aside>
-        {{> "systems/unboundfate/templates/actor/parts/actor-abilities.hbs"}}
-      </aside>
-      <section>
-        {{!-- Skills Tab --}}
-        {{> "systems/unboundfate/templates/actor/parts/actor-skills.hbs"}}
+      <section class="grid grid-3col">
+        <aside class="sidebar">
+          {{> "systems/unboundfate/templates/actor/parts/actor-abilities.hbs"}}
+        </aside>
+        <section class="main grid-span-2">
+          {{!-- Skills Tab --}}
+          {{> "systems/unboundfate/templates/actor/parts/actor-skills.hbs"}}
+        </section>
       </section>
     </div> 
 
