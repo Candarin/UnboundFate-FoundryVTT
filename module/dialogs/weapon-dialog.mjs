@@ -7,14 +7,19 @@ import { rollWeaponAttack } from '../dice/rolltypes.mjs';
  * @param {Actor} params.actor - The attacking actor instance
  */
 export function launchWeaponDialog({ weapon, actor }) {
-  // Get weapon fields
+  // Weapon fields
   const weaponName = weapon.name;
   const damage1H = weapon.system.damage1H || '';
   const damage2H = weapon.system.damage2H || '';
-  const weaponSkillKey = weapon.system.skill || '';   // The skill key associated with the weapon
-  const skillRating = actor.system.skills[skillKey]?.value ?? 0;
-  const skillSpec = weapon.system.skillSpec || '';  
+  const weaponSkillKey = weapon.system.skill || '';                     // The skill key associated with the weapon
   const weaponType = weapon.system.weaponType || '';
+  const weaponSkillSpec = weapon.system.skillSpec || '';                // The skill specialisation associated with the weapon
+  // Actor fields
+  const skillKey = actor.system.skills[weaponSkillKey] ? weaponSkillKey : '';                                                  // The selected skill key, default to empty string
+  const skillRating = actor.system.skills[weaponSkillKey]?.value ?? 0;  // The skill rating of the actor for the weapon's skill
+  const skillSpec = '';     
+  const abilityKey = weapon.system.ability || 'str';                    // The ability key associated with the weapon  
+  // Roll fields
   const totalPool = 0;
 
   // Get current targets
@@ -39,13 +44,6 @@ export function launchWeaponDialog({ weapon, actor }) {
     selected: key === skillKey
   }));
 
-  // 
-  if (actor.system.skills[weaponSkillKey]) {
-    const skillKey = weaponSkillKey || 'str';           // The selected skill, Default to the weaponskill  
-  }
-  
-
-
   // Determine useSpec and specialisation for the weapon's skill
   let useSpec = false;
   const canUseSpec = actor.system.skills[skillKey]?.specialisation == weapon.system.skillSpec
@@ -66,6 +64,7 @@ export function launchWeaponDialog({ weapon, actor }) {
     skillOptions,    
     weaponType,
     weaponSkillKey,
+    weaponSkillSpec,
     targetNames,
     totalPool,
     abilityOptions,
@@ -162,8 +161,12 @@ export function launchWeaponDialog({ weapon, actor }) {
         form.abilityKey.addEventListener('change', updateTotal);
         form.skillKey.addEventListener('change', function() {
           // update the skill specialisation field based on the selected skill
-          
 
+          // 
+
+          // Does the actors Specilisation match the weapon's skill spec?
+          const selectedSkillKey = this.value;
+          const skillSpec = actor.system.skills[selectedSkillKey]?.specialisation || '';
           updateTotal();
         });
         form.modifier.addEventListener('input', updateTotal);
