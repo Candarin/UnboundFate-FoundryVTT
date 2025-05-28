@@ -49,12 +49,7 @@ export function launchWeaponDialog({ weapon, actor }) {
   let useSpec = false;
   if (actor.system.skills[skillKey]?.specialisation === weapon.system.skillSpec && skillKey === weapon.system.skill) {
     useSpec = true;
-  } 
-  else {
-    useSpec = false;
   }
-
-
 
   // Prepare data for the template
   const templateData = {
@@ -73,8 +68,7 @@ export function launchWeaponDialog({ weapon, actor }) {
     abilityOptions,
     abilityKey,
     abilityValue,
-    useSpec,
-    specialisation
+    useSpec
   };
 
   renderTemplate('systems/unboundfate/templates/dialogs/weapon-dialog.hbs', templateData).then(content => {
@@ -165,7 +159,7 @@ export function launchWeaponDialog({ weapon, actor }) {
         form.skillKey.addEventListener('change', function() {
           const selectedSkillKey = this.value;
           // update the skill specialisation field based on the selected skill
-          const specElem = form.querySelector('#specialisation');
+          const specElem = form.querySelector('#skillSpec');
           specElem.textContent = actor.system.skills[selectedSkillKey]?.specialisation || '';
           // Does the actors Specilisation match the weapon's skill spec?          
           if (actor.system.skills[selectedSkillKey]?.specialisation === weapon.system.skillSpec && selectedSkillKey === weapon.system.skill) {
@@ -184,10 +178,7 @@ export function launchWeaponDialog({ weapon, actor }) {
         });
         form.modifier.addEventListener('input', updateTotal);
         form.useSpec.addEventListener('change', function() {
-          form.specialisation.disabled = !this.checked;
-
-
-
+          
           updateTotal();
         });
       }
