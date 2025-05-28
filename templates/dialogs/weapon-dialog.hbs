@@ -9,6 +9,11 @@
     <span name="weaponType">{{weaponType}}</span>
   </div>
 
+  <div class="form-group">
+    <label>Weapon Skill:</label>
+    <span name="weaponSkillKey">{{weaponSkillKey}} {{#if skillSpec}}({{skillSpec}}){{/if}}</span>
+  </div>
+  
   <!-- Ability -->
   <div class="form-group">
     <label for="abilityKey">Ability</label>
@@ -31,7 +36,7 @@
   </div>
   <div class="form-group">
     <label for="useSpec">Apply Specialisation</label>
-    <input type="checkbox" id="useSpec" name="useSpec" {{#if useSpec}}checked{{/if}} />
+    <input type="checkbox" id="useSpec" name="useSpec" {{#if useSpec}}checked{{/if}} disabled/>
   </div>
   <div class="form-group">
     <label for="specialisation">Specialisation</label>

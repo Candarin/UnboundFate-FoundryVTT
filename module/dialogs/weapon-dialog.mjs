@@ -11,7 +11,7 @@ export function launchWeaponDialog({ weapon, actor }) {
   const weaponName = weapon.name;
   const damage1H = weapon.system.damage1H || '';
   const damage2H = weapon.system.damage2H || '';
-  const skillKey = weapon.system.skill || '';
+  const weaponSkillKey = weapon.system.skill || '';   // The skill key associated with the weapon
   const skillRating = actor.system.skills[skillKey]?.value ?? 0;
   const skillSpec = weapon.system.skillSpec || '';  
   const weaponType = weapon.system.weaponType || '';
@@ -21,26 +21,35 @@ export function launchWeaponDialog({ weapon, actor }) {
   const targets = Array.from(game.user.targets || []);
   const targetNames = targets.map(t => t.name).join(', ');
 
-  // Determine ability options and selected ability
-  const abilities = actor.system.abilities || {};
-  const abilityOptions = Object.entries(abilities).map(([key, value]) => ({
+  // Get all abilities from config
+  const abilities = CONFIG.UNBOUNDFATE.abilities || {};
+  const abilityKeys = Object.keys(abilities);
+  const abilityOptions = abilityKeys.map(key => ({
     key,
-    label: value.label || key.toUpperCase(),
-    selected: key === 'str'
+    label: game.i18n.localize(abilities[key]),
+    selected: key === abilityKey ? abilityKey : 'str' // Default to 'str' if no abilityKey is set
   }));
-  const abilityKey = 'str';
-  const abilityValue = abilities[abilityKey]?.value ?? 0;
 
   // Determine skill options
-  const skillOptions = Object.keys(actor.system.skills || {}).map(key => ({
+  const skills = CONFIG.UNBOUNDFATE.skills || {};
+  const skillKeys = Object.keys(skills);
+  const skillOptions = skillKeys.map(key => ({
     key,
-    label: game.i18n.localize(`UNBOUNDFATE.Skills.${key.toUpperCase()}`),
+    label: game.i18n.localize(skills[key]),
     selected: key === skillKey
   }));
 
+  // 
+  if (actor.system.skills[weaponSkillKey]) {
+    const skillKey = weaponSkillKey || 'str';           // The selected skill, Default to the weaponskill  
+  }
+  
+
+
   // Determine useSpec and specialisation for the weapon's skill
   let useSpec = false;
-  let specialisation = '';
+  const canUseSpec = actor.system.skills[skillKey]?.specialisation == weapon.system.skillSpec
+  const specialisation = '';
   if (skillKey && actor.system.skills && actor.system.skills[skillKey]) {
     specialisation = actor.system.skills[skillKey].specialisation || '';
     useSpec = !!specialisation;
@@ -56,6 +65,7 @@ export function launchWeaponDialog({ weapon, actor }) {
     skillSpec,
     skillOptions,    
     weaponType,
+    weaponSkillKey,
     targetNames,
     totalPool,
     abilityOptions,
@@ -116,8 +126,7 @@ export function launchWeaponDialog({ weapon, actor }) {
            // Calculate total pool: ability + skill + spec + modifier
           const total = abilityValue + skillRating + useSpec + modifier;
           // Update totalPool display
-          const totalPoolElem = form.querySelector('[name="totalPool"]');
-          if (totalPoolElem) totalPoolElem.textContent = total;
+          form.totalPool.value = total;
 
 
           // Update displayed ability value display
@@ -151,10 +160,18 @@ export function launchWeaponDialog({ weapon, actor }) {
         }
         // Add listeners for each editable field, matching skill-dialog style
         form.abilityKey.addEventListener('change', updateTotal);
-        form.skillKey.addEventListener('change', updateTotal);
-        form.modifier.addEventListener('change', updateTotal);
+        form.skillKey.addEventListener('change', function() {
+          // update the skill specialisation field based on the selected skill
+          
+
+          updateTotal();
+        });
+        form.modifier.addEventListener('input', updateTotal);
         form.useSpec.addEventListener('change', function() {
           form.specialisation.disabled = !this.checked;
+
+
+
           updateTotal();
         });
       }

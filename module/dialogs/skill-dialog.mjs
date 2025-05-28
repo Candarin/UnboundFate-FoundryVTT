@@ -33,6 +33,7 @@ export function launchSkillDialog({ skillKey, skill, abilityKey, ability, actor,
     label: game.i18n.localize(abilities[key]),
     selected: key === abilityKey
   }));
+
   const rollModeOptions = rollModes.map(rm => ({
     ...rm,
     selected: rm.value === currentRollMode
