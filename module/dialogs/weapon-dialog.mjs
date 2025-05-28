@@ -19,6 +19,7 @@ export function launchWeaponDialog({ weapon, actor }) {
   const skillRating = actor.system.skills[weaponSkillKey]?.value ?? 0;  // The skill rating of the actor for the weapon's skill
   const skillSpec = '';     
   const abilityKey = weapon.system.ability || 'str';                    // The ability key associated with the weapon  
+  const abilityValue = actor.system.abilities[abilityKey]?.value || 0;  // The value of the selected ability
   // Roll fields
   const totalPool = 0;
 
@@ -55,6 +56,7 @@ export function launchWeaponDialog({ weapon, actor }) {
 
   // Prepare data for the template
   const templateData = {
+    actor,
     weaponName,
     damage1H,
     damage2H,
@@ -160,13 +162,17 @@ export function launchWeaponDialog({ weapon, actor }) {
         // Add listeners for each editable field, matching skill-dialog style
         form.abilityKey.addEventListener('change', updateTotal);
         form.skillKey.addEventListener('change', function() {
-          // update the skill specialisation field based on the selected skill
-
-          // 
-
-          // Does the actors Specilisation match the weapon's skill spec?
           const selectedSkillKey = this.value;
-          const skillSpec = actor.system.skills[selectedSkillKey]?.specialisation || '';
+          // update the skill specialisation field based on the selected skill
+          const specElem = form.querySelector('#specialisation');
+          specElem.textContent = actor.system.skills[selectedSkillKey].specialisation || '';          
+          // Does the actors Specilisation match the weapon's skill spec?          
+          if (actor.system.skills[selectedSkillKey]?.specialisation === weapon.system.skillSpec && selectedSkillKey === weapon.system.skill) {
+            form.useSpec.checked = true;
+          } 
+          else {
+            form.useSpec.checked = false;
+          }
           updateTotal();
         });
         form.modifier.addEventListener('input', updateTotal);

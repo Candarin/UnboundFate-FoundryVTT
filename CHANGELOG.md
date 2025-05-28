@@ -193,5 +193,8 @@
 ## 1.0.55
 - Updated weapon dialog
 
+## 1.0.56
+- Updated weapon dialog
+
 
 
