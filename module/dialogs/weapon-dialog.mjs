@@ -47,12 +47,14 @@ export function launchWeaponDialog({ weapon, actor }) {
 
   // Determine useSpec and specialisation for the weapon's skill
   let useSpec = false;
-  const canUseSpec = actor.system.skills[skillKey]?.specialisation == weapon.system.skillSpec
-  const specialisation = '';
-  if (skillKey && actor.system.skills && actor.system.skills[skillKey]) {
-    specialisation = actor.system.skills[skillKey].specialisation || '';
-    useSpec = !!specialisation;
+  if (actor.system.skills[skillKey]?.specialisation === weapon.system.skillSpec && skillKey === weapon.system.skill) {
+    useSpec = true;
+  } 
+  else {
+    useSpec = false;
   }
+
+
 
   // Prepare data for the template
   const templateData = {
@@ -172,6 +174,12 @@ export function launchWeaponDialog({ weapon, actor }) {
           else {
             form.useSpec.checked = false;
           }
+          // Update skill rating for selected skill
+          const skillRatingElem = form.querySelector('#skill-rating');    
+          if (skillRatingElem) {
+            skillRatingElem.textContent = actor.system.skills[selectedSkillKey]?.rating || 0;
+          }
+
           updateTotal();
         });
         form.modifier.addEventListener('input', updateTotal);
