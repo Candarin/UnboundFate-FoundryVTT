@@ -16,7 +16,7 @@ export function launchWeaponDialog({ weapon, actor }) {
   const weaponSkillSpec = weapon.system.skillSpec || '';                // The skill specialisation associated with the weapon
   // Actor fields
   const skillKey = actor.system.skills[weaponSkillKey] ? weaponSkillKey : '';                                                  // The selected skill key, default to empty string
-  const skillRating = actor.system.skills[weaponSkillKey]?.value ?? 0;  // The skill rating of the actor for the weapon's skill
+  const skillRating = actor.system.skills[weaponSkillKey]?.rating ?? 0;  // The skill rating of the actor for the weapon's skill
   const skillSpec = '';     
   const abilityKey = weapon.system.ability || 'str';                    // The ability key associated with the weapon  
   const abilityValue = actor.system.abilities[abilityKey]?.value || 0;  // The value of the selected ability
@@ -56,7 +56,6 @@ export function launchWeaponDialog({ weapon, actor }) {
 
   // Prepare data for the template
   const templateData = {
-    actor,
     weaponName,
     damage1H,
     damage2H,
@@ -104,7 +103,7 @@ export function launchWeaponDialog({ weapon, actor }) {
         function updateTotal() {
 
           // Get selected skill key and value
-          const skillKey = form.skillKey?.value || 'str';
+          const skillKey = form.skillKey?.value || '';
           let skillRating = 0;
           if (actor.system.skills && actor.system.skills[skillKey]) {
             skillRating = parseInt(actor.system.skills[skillKey].value, 10) || 0;
@@ -165,7 +164,7 @@ export function launchWeaponDialog({ weapon, actor }) {
           const selectedSkillKey = this.value;
           // update the skill specialisation field based on the selected skill
           const specElem = form.querySelector('#specialisation');
-          specElem.textContent = actor.system.skills[selectedSkillKey].specialisation || '';          
+          specElem.textContent = actor.system.skills[selectedSkillKey]?.specialisation || '';
           // Does the actors Specilisation match the weapon's skill spec?          
           if (actor.system.skills[selectedSkillKey]?.specialisation === weapon.system.skillSpec && selectedSkillKey === weapon.system.skill) {
             form.useSpec.checked = true;
