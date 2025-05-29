@@ -205,5 +205,9 @@
 ## 1.0.59
 - Updated weapon dialog
 
+## 1.0.60
+- Updated weapon dialog
+- Updated weapon item card
+
 
 

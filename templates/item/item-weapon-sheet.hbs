@@ -3,35 +3,19 @@
   <header class="sheet-header">
     <img class="profile-img" src="{{item.img}}" data-edit="img" title="{{item.name}}"/>
     <div class="header-fields">
-      <h1 class="charname"><input name="name" type="text" value="{{item.name}}" placeholder="Name"/></h1>
-      <div class="resources grid grid-2col">
-        <label class="resource-label">PDF Reference</label>
-        <input type="text" name="item.pdfReference" value="{{item.pdfReference}}" data-dtype="Text" />
-        <label class="resource-label">Weight</label>
-        <input type="number" name="item.weight" value="{{item.weight}}" data-dtype="Number" step="any" />
-        <label class="resource-label">Cost</label>
-        <input type="number" name="item.cost" value="{{item.cost}}" data-dtype="Number" step="any" />
-        <label class="resource-label">Weapon Type</label>
-        <input type="text" name="item.weaponType" value="{{item.weaponType}}" data-dtype="Text" />
-        <label class="resource-label">Parry</label>
-        <input type="number" name="item.parry" value="{{item.parry}}" data-dtype="Number" />
-      </div>
-      <div class="resources grid grid-2col">
-        <label class="resource-label">Damage (1H)</label>
-        <input type="text" name="system.damage1H" value="{{system.damage1H}}" />
-        <label class="resource-label">Damage (2H)</label>
-        <input type="text" name="system.damage2H" value="{{system.damage2H}}" />
-        <label class="resource-label">Skill</label>
-        <input type="text" name="system.skill" value="{{system.skill}}" />
-        <label class="resource-label">Skill Specialisation</label>
-        <input type="text" name="system.skillSpec" value="{{system.skillSpec}}" />
-      </div>
+      <h1 class="charname"><input name="name" type="text" value="{{item.name}}" placeholder="Name"/></h1>      
+        <div class="form-group">
+          <label class="resource-label">PDF Reference</label>
+          <input type="text" name="item.pdfReference" value="{{system.pdfReference}}" data-dtype="Text" />
+        </div>            
     </div>
   </header>
 
   {{!-- Sheet Tab Navigation --}}
   <nav class="sheet-tabs tabs" data-group="primary">
     <a class="item" data-tab="description">Description</a>
+    <a class="item" data-tab="melee">Melee</a>
+    <a class="item" data-tab="ranged">Ranged</a>
     <a class="item" data-tab="effects">Effects</a>
   </nav>
 
@@ -39,11 +23,78 @@
   <section class="sheet-body">
     {{!-- Description Tab --}}
     <div class="tab" data-group="primary" data-tab="description">
-      {{editor enrichedDescription target="system.description" engine="prosemirror" button=true editable=editable}}
+      <div class="flexrow">
+        <div class="flexcol flex0">
+          {{!-- Weight --}}
+          <div class="flexrow nowrap">
+            <label class="resource-label">Weight</label>
+            <input type="number" name="item.weight" value="{{system.weight}}" data-dtype="Number" step="any" />
+          </div>
+          {{!-- Cost --}}
+          <div class="flexrow nowrap">
+            <label class="resource-label">Cost</label>
+            <input type="number" name="item.cost" value="{{system.cost}}" data-dtype="Number" step="any" />              
+          </div>
+          {{!-- Weapon Type --}}
+          <div class="flexrow nowrap">
+            <label class="resource-label">Weapon Type</label>
+            <input type="text" name="item.weaponType" value="{{system.weaponType}}" data-dtype="Text" />
+          </div>
+          {{!-- Parry --}}
+          <div class="flexrow nowrap">
+              <label class="resource-label">Parry</label>
+              <input type="number" name="item.parry" value="{{system.parry}}" data-dtype="Number" />
+          </div>
+
+
+
+
+          
+          {{!-- field --}}
+          <div class="flexrow nowrap">
+            
+
+          </div>
+
+        </div>
+        <div>
+          {{editor enrichedDescription target="system.description" engine="prosemirror" button=true editable=editable}}
+        </div>
+      </div>      
     </div>
     {{!-- Effects Tab --}}
     <div class="tab effects" data-group="primary" data-tab="effects">
       {{> "systems/unboundfate/templates/item/parts/item-effects.hbs"}}
     </div>
+    {{!-- Melee Tab --}}
+    <div class="tab melee" data-group="primary" data-tab="melee">      
+      <div class="flexcol">
+          {{!-- Melee: Damage 1H --}}
+          <div class="flexrow nowrap">
+            <label class="resource-label">Damage (1H)</label>
+            <input type="text" name="system.damage1H" value="{{system.damage1H}}" />
+          </div>
+          {{!-- Melee: Damage 2H --}}
+          <div class="flexrow nowrap">
+            <label class="resource-label">Damage (2H)</label>
+            <input type="text" name="system.damage2H" value="{{system.damage2H}}" />
+          </div>
+          {{!-- Melee: Skill --}}
+          <div class="flexrow nowrap">
+            <label class="resource-label">Skill</label>
+            <input type="text" name="system.skill" value="{{system.skill}}" />
+          </div>
+          {{!-- Melee: Skill Specialisation --}}
+          <div class="flexrow nowrap">
+            <label class="resource-label">Skill Specialisation</label>
+            <input type="text" name="system.skillSpec" value="{{system.skillSpec}}" />
+          </div>                      
+      </div>
+    </div>
+    {{!-- Ranged Tab --}}
+    <div class="tab ranged" data-group="primary" data-tab="ranged">
+      
+    </div>
+
   </section>
 </form>

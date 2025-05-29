@@ -135,7 +135,9 @@
       "damage1H": "1d8",
       "damage2H": "1d10",
       "skill": "",
-      "skillSpec": ""
+      "skillSpec": "",
+      "allowsMelee": true,
+      "allowsRanged": true
     }
   }
 }

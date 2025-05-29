@@ -22,6 +22,7 @@ export function launchWeaponDialog({ weapon, actor }) {
   const abilityValue = actor.system.abilities[abilityKey]?.value || 0;  // The value of the selected ability
   // Roll fields
   const totalPool = 0;
+  const modifier = 0; // Default modifier, can be set in dialog
 
   // Get current targets
   const targets = Array.from(game.user.targets || []);
@@ -51,6 +52,24 @@ export function launchWeaponDialog({ weapon, actor }) {
     useSpec = true;
   }
 
+  // Calculate modifiers string
+  let modifiersText = [];
+  if (abilityKey && abilityValue !== 0) {
+    modifiersText.push(`${game.i18n.localize(abilities[abilityKey])} ${abilityValue >= 0 ? '+' : ''}${abilityValue}`);
+  }
+  if (skillKey && skillRating !== 0) {           
+    modifiersText.push(`${game.i18n.localize(skills[skillKey])} ${skillRating >= 0 ? '+' : ''}${skillRating}`);
+  } 
+  if (useSpec) {
+    modifiersText.push('Specialisation +2');
+  }
+  if (modifier !== 0) {
+    modifiersText.push(`Modifier ${modifier >= 0 ? '+' : ''}${modifier}`);
+  }
+  const modifiersString = modifiersText.join(', ');
+
+
+
   // Prepare data for the template
   const templateData = {
     weaponName,
@@ -68,7 +87,9 @@ export function launchWeaponDialog({ weapon, actor }) {
     abilityOptions,
     abilityKey,
     abilityValue,
-    useSpec
+    useSpec,
+    modifier,
+    modifiersString
   };
 
   renderTemplate('systems/unboundfate/templates/dialogs/weapon-dialog.hbs', templateData).then(content => {
@@ -137,10 +158,10 @@ export function launchWeaponDialog({ weapon, actor }) {
           // Calculate modifiers string
           let modifiersText = [];
           if (abilityKey && abilityValue !== 0) {
-            modifiersText.push(`${game.i18n.localize(`UNBOUNDFATE.Ability.${abilityKey}`)} ${abilityValue >= 0 ? '+' : ''}${abilityValue}`);
+            modifiersText.push(`${game.i18n.localize(abilities[abilityKey])} ${abilityValue >= 0 ? '+' : ''}${abilityValue}`);
           }
           if (skillKey && skillRating !== 0) {           
-            modifiersText.push(`${game.i18n.localize(`UNBOUNDFATE.Skills.${skillKey}`)} ${skillRating >= 0 ? '+' : ''}${skillRating}`);
+            modifiersText.push(`${game.i18n.localize(skills[skillKey])} ${skillRating >= 0 ? '+' : ''}${skillRating}`);
           }
           if (form.useSpec.checked) {
             modifiersText.push('Specialisation +2');
