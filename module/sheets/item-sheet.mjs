@@ -68,6 +68,10 @@ export class UnboundFateItemSheet extends ItemSheet {
     // Adding a pointer to CONFIG.UNBOUNDFATE
     context.config = CONFIG.UNBOUNDFATE;
 
+    // Add flags for melee/ranged tab visibility
+    context.showMeleeTab = !!itemData.system.isMelee;
+    context.showRangedTab = !!itemData.system.isRanged;
+
     // Prepare active effects for easier access
     context.effects = prepareActiveEffectCategories(this.item.effects);
 
@@ -84,6 +88,24 @@ export class UnboundFateItemSheet extends ItemSheet {
     if (!this.isEditable) return;
 
     // Roll handlers, click handlers, etc. would go here.
+
+    // Add listeners for isMelee and isRanged checkboxes to show/hide matching tabs
+    html.find('input[name="system.isMelee"]').on('change', function () {
+      const meleeTab = html.find('.tab[data-tab="melee"]');
+      if (this.checked) {
+        meleeTab.show();
+      } else {
+        meleeTab.hide();
+      }
+    });
+    html.find('input[name="system.isRanged"]').on('change', function () {
+      const rangedTab = html.find('.tab[data-tab="ranged"]');
+      if (this.checked) {
+        rangedTab.show();
+      } else {
+        rangedTab.hide();
+      }
+    });
 
     // Active Effect management
     html.on('click', '.effect-control', (ev) =>

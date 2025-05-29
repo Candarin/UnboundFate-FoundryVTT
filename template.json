@@ -110,6 +110,22 @@
       },
       "weapon-template": {
         "weaponType": ""
+      },
+      "melee-weapon-template": {
+        "melee": {
+          "damage1H": "1d8",
+          "damage2H": "1d10",
+          "skill": "",
+          "skillSpec": "",
+          "held2H": false
+        }
+      },
+      "ranged-weapon-template": {
+        "ranged": {
+          "damage": "1d8",
+          "skill": "",
+          "skillSpec": ""          
+        }
       }
     },
     "armour": {
@@ -131,11 +147,7 @@
       "templates": ["base-template"]
     },
     "weapon": {
-      "templates": ["base-template", "parry-template", "physicalItem-template"],
-      "damage1H": "1d8",
-      "damage2H": "1d10",
-      "skill": "",
-      "skillSpec": "",
+      "templates": ["base-template", "parry-template", "physicalItem-template", "melee-weapon-template", "ranged-weapon-template"],      
       "allowsMelee": true,
       "allowsRanged": true
     }

@@ -33,6 +33,11 @@
       "athletics": "Athletics",
       "blades": "Blades",
       "stealth": "Stealth"
+    },
+    "AttackTypes": {
+      "melee": "Melee",
+      "ranged": "Ranged",
+      "magic": "Magic"
     }
   },
 

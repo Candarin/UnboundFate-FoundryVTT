@@ -209,5 +209,11 @@
 - Updated weapon dialog
 - Updated weapon item card
 
+## 1.0.61
+- Updated weapon dialog (attackType, damage calc by attackType)
+- Updated weapon item card
+- Added melee and ranged tab toggling based on weapon
+
+
 
 

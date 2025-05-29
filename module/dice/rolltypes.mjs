@@ -86,11 +86,14 @@ export async function rollWeaponAttack({ weapon, actor, targets = [], totalPool,
   rollContent += `${modifierList ? `<div class="modifiers-string">${modifierList}</div>` : ''}`;
   rollContent += `<hr>`;
   rollContent += `<h4>Targets:</h4><br>${targetNames}`;
+  rollContent += `<hr>`;
+  rollContent += `<br><strong>Successes:</strong>`
+  rollContent += `${dodgeButtons}`;
 
   // Output to chat
   ChatMessage.create({
     speaker: ChatMessage.getSpeaker({ actor }),
-    flavor: `${modifierList}<br><strong>Successes:</strong> ${successes}${dodgeButtons}`,
+    flavor: rollContent,
     content: rollHTML,
     roll: roll
   });

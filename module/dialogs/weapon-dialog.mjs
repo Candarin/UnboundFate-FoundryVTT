@@ -4,21 +4,22 @@ import { rollWeaponAttack } from '../dice/rolltypes.mjs';
  * Launches a dialog for a weapon attack roll and handles the result.
  * @param {object} params - Parameters for the dialog
  * @param {object} params.weapon - The weapon item object
+ * @param {string} params.attackType - The type of attack (e.g., 'melee', 'ranged')
  * @param {Actor} params.actor - The attacking actor instance
  */
-export function launchWeaponDialog({ weapon, actor }) {
+export function launchWeaponDialog({ weapon, attackType, actor }) {
+  const attackTypeText = game.i18n.localize(`UNBOUNDFATE.AttackType.${attackType}`) || attackType;
+
   // Weapon fields
   const weaponName = weapon.name;
-  const damage1H = weapon.system.damage1H || '';
-  const damage2H = weapon.system.damage2H || '';
-  const weaponSkillKey = weapon.system.skill || '';                     // The skill key associated with the weapon
   const weaponType = weapon.system.weaponType || '';
-  const weaponSkillSpec = weapon.system.skillSpec || '';                // The skill specialisation associated with the weapon
+  const weaponSkillKey = weapon.system[attackType]?.skill || '';               // The skill key associated with the weapon for this attack type 
+  const weaponSkillSpec = weapon.system[attackType]?.skillSpec || '';          // The skill specialisation associated with the weapon for this attack type
   // Actor fields
   const skillKey = actor.system.skills[weaponSkillKey] ? weaponSkillKey : '';                                                  // The selected skill key, default to empty string
-  const skillRating = actor.system.skills[weaponSkillKey]?.rating ?? 0;  // The skill rating of the actor for the weapon's skill
-  const skillSpec = '';     
-  const abilityKey = weapon.system.ability || 'str';                    // The ability key associated with the weapon  
+  const skillRating = actor.system.skills[weaponSkillKey]?.rating ?? 0;     // The skill rating of the actor for the weapon's skill
+  const skillSpec = actor.system.skills[weaponSkillKey]?.specialisation || '';                                                  // The skill specialisation of the actor for the weapon's skill, default to empty string  
+  const abilityKey = CONFIG.UNBOUNDFATE.AttackType?.[attackType]?.defaultAbility || 'str';                    // The ability key associated with the attack type, default to 'str' 
   const abilityValue = actor.system.abilities[abilityKey]?.value || 0;  // The value of the selected ability
   // Roll fields
   const totalPool = 0;
@@ -48,7 +49,7 @@ export function launchWeaponDialog({ weapon, actor }) {
 
   // Determine useSpec and specialisation for the weapon's skill
   let useSpec = false;
-  if (actor.system.skills[skillKey]?.specialisation === weapon.system.skillSpec && skillKey === weapon.system.skill) {
+  if (actor.system.skills[skillKey]?.specialisation === weapon.system[attackType]?.skillSpec && skillKey === weapon.system[attackType]?.skill) {
     useSpec = true;
   }
 
@@ -68,13 +69,19 @@ export function launchWeaponDialog({ weapon, actor }) {
   }
   const modifiersString = modifiersText.join(', ');
 
-
+  // Determine weaponDamage based on attackType and held2H (for melee)
+  let weaponDamage = '';
+  if (attackType === 'melee') {
+    const held2H = weapon.system.melee?.held2H || false;
+    weaponDamage = held2H ? (weapon.system.melee?.damage2H || weapon.system.melee?.damage1H || '') : (weapon.system.melee?.damage1H || '');
+  } else if (attackType === 'ranged') {
+    weaponDamage = weapon.system.ranged?.damage || '';
+  }
 
   // Prepare data for the template
   const templateData = {
     weaponName,
-    damage1H,
-    damage2H,
+    weaponDamage,
     skillKey,
     skillRating,
     skillSpec,
@@ -177,13 +184,13 @@ export function launchWeaponDialog({ weapon, actor }) {
         }
         // Add listeners for each editable field, matching skill-dialog style
         form.abilityKey.addEventListener('change', updateTotal);
-        form.skillKey.addEventListener('change', function() {
-          const selectedSkillKey = this.value;
+        form.skillKey.addEventListener('change', function() {          
+          const selectedSkillKey = form.skillKey?.value || '';
           // update the skill specialisation field based on the selected skill
           const specElem = form.querySelector('#skillSpec');
-          specElem.textContent = actor.system.skills[selectedSkillKey]?.specialisation || '';
+          specElem.value = actor.system.skills[selectedSkillKey]?.specialisation || '';
           // Does the actors Specilisation match the weapon's skill spec?          
-          if (actor.system.skills[selectedSkillKey]?.specialisation === weapon.system.skillSpec && selectedSkillKey === weapon.system.skill) {
+          if (actor.system.skills[selectedSkillKey]?.specialisation === weapon.system[attackType]?.skillSpec && selectedSkillKey === weapon.system[attackType]?.skill) {
             form.useSpec.checked = true;
           } 
           else {

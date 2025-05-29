@@ -59,3 +59,14 @@ UNBOUNDFATE.skillDefinitions = {
   },
   // Add other skill definitions here
 };
+
+UNBOUNDFATE.attackTypeDefinitions = {
+  melee: {
+    defaultAbility: 'str',
+    name: 'UNBOUNDFATE.AttackType.melee',
+  },
+  ranged: {
+    defaultAbility: 'agl',
+    name: 'UNBOUNDFATE.AttackType.ranged',
+  },
+};

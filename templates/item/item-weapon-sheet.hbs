@@ -6,7 +6,7 @@
       <h1 class="charname"><input name="name" type="text" value="{{item.name}}" placeholder="Name"/></h1>      
         <div class="form-group">
           <label class="resource-label">PDF Reference</label>
-          <input type="text" name="item.pdfReference" value="{{system.pdfReference}}" data-dtype="Text" />
+          <input type="text" name="system.pdfReference" value="{{system.pdfReference}}" data-dtype="Text" />
         </div>            
     </div>
   </header>
@@ -14,39 +14,52 @@
   {{!-- Sheet Tab Navigation --}}
   <nav class="sheet-tabs tabs" data-group="primary">
     <a class="item" data-tab="description">Description</a>
-    <a class="item" data-tab="melee">Melee</a>
-    <a class="item" data-tab="ranged">Ranged</a>
+    <a class="item {{#unless showMeleeTab}}hide{{/unless}}" data-tab="melee">Melee</a>
+    <a class="item {{#unless showRangedTab}}hide{{/unless}}" data-tab="ranged">Ranged</a>
     <a class="item" data-tab="effects">Effects</a>
   </nav>
 
   {{!-- Sheet Body --}}
   <section class="sheet-body">
     {{!-- Description Tab --}}
-    <div class="tab" data-group="primary" data-tab="description">
+    <div class="tab description" data-group="primary" data-tab="description">
       <div class="flexrow">
         <div class="flexcol flex0">
           {{!-- Weight --}}
           <div class="flexrow nowrap">
             <label class="resource-label">Weight</label>
-            <input type="number" name="item.weight" value="{{system.weight}}" data-dtype="Number" step="any" />
+            <input type="number" name="system.weight" value="{{system.weight}}" data-dtype="Number" step="any" />
           </div>
           {{!-- Cost --}}
           <div class="flexrow nowrap">
             <label class="resource-label">Cost</label>
-            <input type="number" name="item.cost" value="{{system.cost}}" data-dtype="Number" step="any" />              
+            <input type="number" name="system.cost" value="{{system.cost}}" data-dtype="Number" step="any" />              
           </div>
           {{!-- Weapon Type --}}
           <div class="flexrow nowrap">
             <label class="resource-label">Weapon Type</label>
-            <input type="text" name="item.weaponType" value="{{system.weaponType}}" data-dtype="Text" />
+            <input type="text" name="system.weaponType" value="{{system.weaponType}}" data-dtype="Text" />
           </div>
           {{!-- Parry --}}
           <div class="flexrow nowrap">
               <label class="resource-label">Parry</label>
-              <input type="number" name="item.parry" value="{{system.parry}}" data-dtype="Number" />
+              <input type="number" name="system.parry" value="{{system.parry}}" data-dtype="Number" />
           </div>
-
-
+          {{!-- Is Melee --}}
+          <div class="flexrow nowrap">
+            <label class="resource-label">Is Melee</label>
+            <input type="checkbox" name="system.isMelee" {{#if system.isMelee}}checked{{/if}} />  
+          </div>          
+          {{!-- Is Ranged --}}
+          <div class="flexrow nowrap">
+            <label class="resource-label">Is Ranged</label>
+            <input type="checkbox" name="system.isRanged" {{#if system.isRanged}}checked{{/if}} />
+          </div>
+          {{!-- Is Equipped --}}  
+          <div class="flexrow nowrap">
+            <label class="resource-label">Is Equipped</label>
+            <input type="checkbox" name="system.isEquipped" {{#if system.isEquipped}}checked{{/if}} />
+          </div>
 
 
           
@@ -67,32 +80,32 @@
       {{> "systems/unboundfate/templates/item/parts/item-effects.hbs"}}
     </div>
     {{!-- Melee Tab --}}
-    <div class="tab melee" data-group="primary" data-tab="melee">      
+    <div class="tab melee {{#unless showMeleeTab}}hide{{/unless}}" data-group="primary" data-tab="melee">      
       <div class="flexcol">
           {{!-- Melee: Damage 1H --}}
           <div class="flexrow nowrap">
             <label class="resource-label">Damage (1H)</label>
-            <input type="text" name="system.damage1H" value="{{system.damage1H}}" />
+            <input type="text" name="system.melee.damage1H" value="{{system.melee.damage1H}}" />
           </div>
           {{!-- Melee: Damage 2H --}}
           <div class="flexrow nowrap">
             <label class="resource-label">Damage (2H)</label>
-            <input type="text" name="system.damage2H" value="{{system.damage2H}}" />
+            <input type="text" name="system.melee.damage2H" value="{{system.melee.damage2H}}" />
           </div>
           {{!-- Melee: Skill --}}
           <div class="flexrow nowrap">
             <label class="resource-label">Skill</label>
-            <input type="text" name="system.skill" value="{{system.skill}}" />
+            <input type="text" name="system.melee.skill" value="{{system.melee.skill}}" />
           </div>
           {{!-- Melee: Skill Specialisation --}}
           <div class="flexrow nowrap">
             <label class="resource-label">Skill Specialisation</label>
-            <input type="text" name="system.skillSpec" value="{{system.skillSpec}}" />
+            <input type="text" name="system.melee.skillSpec" value="{{system.melee.skillSpec}}" />
           </div>                      
       </div>
     </div>
     {{!-- Ranged Tab --}}
-    <div class="tab ranged" data-group="primary" data-tab="ranged">
+    <div class="tab ranged {{#unless showRangedTab}}hide{{/unless}}" data-group="primary" data-tab="ranged">
       
     </div>
 
