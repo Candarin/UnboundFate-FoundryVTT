@@ -214,6 +214,7 @@
 - Updated weapon item card
 - Added melee and ranged tab toggling based on weapon
 
-
+## 1.0.62
+- Updated weapon and dodge dialogs
 
 

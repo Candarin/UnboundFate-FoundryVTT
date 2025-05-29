@@ -34,12 +34,24 @@ export function registerUnboundFateChatListeners() {
       }
       // Extract attack info from chat message flavor
       const flavor = chatMessage?.flavor || '';
-      // Try to extract the number of successes from the flavor text
-      const match = flavor.match(/Successes:\s*(\d+)/i);
-      const successes = match ? parseInt(match[1], 10) : 0;
+
+      // SUCCESSES EXTRACTION
+      // Try to extract the number of successes from the chat message content by id
+      let successes = 0;
+      const contentElem = html[0]?.querySelector('#successes');
+      if (contentElem) {
+        successes = parseInt(contentElem.textContent, 10) || 0;
+      } else {
+        // Fallback to flavor regex if not found
+        const match = flavor.match(/Successes:\s*(\d+)/i);
+        successes = match ? parseInt(match[1], 10) : 0;
+      }
       // Optionally, extract attack label
       const attackLabelMatch = flavor.match(/<strong>(.*?)<\/strong>/i);
       const attackLabel = attackLabelMatch ? attackLabelMatch[1] : '';
+
+
+      
       // Call the dodge dialog (which will call rollWeaponDodge internally)
       await launchWeaponDodgeDialog({
         actor,

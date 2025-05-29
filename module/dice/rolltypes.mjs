@@ -45,7 +45,7 @@ export async function rollSkillPool({ skillKey, skillRating, abilityKey, ability
  * @param {string} params.totalPool - The total pool of dice to roll (required)
  * @param {string} params.modifierList - A concatenated string of modifiers (optional) to display on the chat message
  */
-export async function rollWeaponAttack({ weapon, actor, targets = [], totalPool, modifierList = ''}) {
+export async function rollWeaponAttack({ weapon, actor, targets = [], totalPool, modifierList = '', attackType}) {
   // Get weapon and skill info
   const weaponName = weapon.name;
   const damage1H = weapon.system.damage1H || '';
@@ -81,13 +81,16 @@ export async function rollWeaponAttack({ weapon, actor, targets = [], totalPool,
   }
 
   // Build content for chat message
-  let rollContent = `<strong>${weaponName}</strong> Attack Roll<br>`;
+  let rollContent = `<h3>${attackType} Attack</h3>`;
+  rollContent += `<img src="${actor.img}" alt="${actor.name}" style="width:40px; height:40px;">${actor.name}<br>`;
+  rollContent += `<hr>`;
+  rollContent += `<strong>${weaponName}</strong><br>`;
   rollContent += `<strong>Weapon Type:</strong> ${weaponType}<br>`;
   rollContent += `${modifierList ? `<div class="modifiers-string">${modifierList}</div>` : ''}`;
   rollContent += `<hr>`;
   rollContent += `<h4>Targets:</h4><br>${targetNames}`;
   rollContent += `<hr>`;
-  rollContent += `<br><strong>Successes:</strong>`
+  rollContent += `<br><strong>Successes:</strong><span id="successes" name="successes" style="color:${successes > 0 ? 'green' : 'red'};"> ${successes}</span>`;
   rollContent += `${dodgeButtons}`;
 
   // Output to chat

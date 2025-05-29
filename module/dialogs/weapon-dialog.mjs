@@ -22,7 +22,6 @@ export function launchWeaponDialog({ weapon, attackType, actor }) {
   const abilityKey = CONFIG.UNBOUNDFATE.AttackType?.[attackType]?.defaultAbility || 'str';                    // The ability key associated with the attack type, default to 'str' 
   const abilityValue = actor.system.abilities[abilityKey]?.value || 0;  // The value of the selected ability
   // Roll fields
-  const totalPool = 0;
   const modifier = 0; // Default modifier, can be set in dialog
 
   // Get current targets
@@ -35,7 +34,7 @@ export function launchWeaponDialog({ weapon, attackType, actor }) {
   const abilityOptions = abilityKeys.map(key => ({
     key,
     label: game.i18n.localize(abilities[key]),
-    selected: key === abilityKey ? abilityKey : 'str' // Default to 'str' if no abilityKey is set
+    selected: key === abilityKey
   }));
 
   // Determine skill options
@@ -52,6 +51,9 @@ export function launchWeaponDialog({ weapon, attackType, actor }) {
   if (actor.system.skills[skillKey]?.specialisation === weapon.system[attackType]?.skillSpec && skillKey === weapon.system[attackType]?.skill) {
     useSpec = true;
   }
+
+  // Calculate initial total pool
+  const totalPool = abilityValue + skillRating + (useSpec ? 2 : 0) + modifier;
 
   // Calculate modifiers string
   let modifiersText = [];
@@ -127,19 +129,13 @@ export function launchWeaponDialog({ weapon, attackType, actor }) {
         function updateTotal() {
 
           // Get selected skill key and value
-          const skillKey = form.skillKey?.value || '';
-          let skillRating = 0;
-          if (actor.system.skills && actor.system.skills[skillKey]) {
-            skillRating = parseInt(actor.system.skills[skillKey].value, 10) || 0;
-          } else {
-            // If skill not found, default to 0
-            skillRating = 0;
-          }
-
+          const skillKey = form.skillKey?.value || '';          
+          let skillRating = actor.system.skills[skillKey]?.value ?? 0;
+          
           // Get selected ability value
           const abilityKey = form.abilityKey?.value || 'str';
           let abilityValue = 0;
-          if (actor.system.abilities && actor.system.abilities[abilityKey]) {
+          if (actor.system.abilities[abilityKey]) {
             abilityValue = parseInt(actor.system.abilities[abilityKey].value, 10) || 0;
           }         
           // Get modifier
