@@ -118,6 +118,9 @@
           "skill": "",
           "skillSpec": "",
           "held2H": false
+        },
+        "shield-template": {
+          "shieldRating": 0
         }
       },
       "ranged-weapon-template": {
@@ -138,6 +141,12 @@
       "templates": ["base-template", "physicalItem-template"],
       "quantity": 1,      
       "formula": "d20 + @str.mod + ceil(@lvl / 2)"
+    },
+    "shield": {
+      "templates": ["base-template", "physicalItem-template", "shield-template"],
+      "parry": 0,
+      "armourRating": 0,
+      "armourType": "light"
     },
     "spell": {
       "templates": ["base-template"],

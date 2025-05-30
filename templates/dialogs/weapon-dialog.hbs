@@ -39,12 +39,14 @@
   <!-- Skill -->
   <div class="form-group">
     <label>Skill:</label>
-    <select name="skillKey">
+    <div class="flexrow">
+      <select class="flex2" name="skillKey">
       {{#each skillOptions}}
         <option value="{{this.key}}" {{#if this.selected}}selected{{/if}}>{{this.label}}</option>
       {{/each}}
-    </select>
-    <span> (<span id="skill-rating">{{skillRating}}</span>)</span>
+      </select>
+      <input id="skill-rating" value="{{skillRating}}" disabled />
+    </div>   
   </div>
   <div class="form-group">
     <label for="useSpec">Apply Specialisation</label>

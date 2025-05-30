@@ -50,8 +50,19 @@ export function registerUnboundFateChatListeners() {
       const attackLabelMatch = flavor.match(/<strong>(.*?)<\/strong>/i);
       const attackLabel = attackLabelMatch ? attackLabelMatch[1] : '';
 
+      // ATTACK TYPE EXTRACTION
+      let attackType = 'melee'; // Default to melee 
+      const attackTypeElem = html[0]?.querySelector('.attack-type');
+      if (attackTypeElem) {
+        attackType = attackTypeElem.textContent.trim().toLowerCase();
+      } else {
+        // Fallback to flavor regex if not found
+        const typeMatch = flavor.match(/Attack Type:\s*(\w+)/i);
+        attackType = typeMatch ? typeMatch[1].toLowerCase() : 'melee';
+      }
 
-      
+
+
       // Call the dodge dialog (which will call rollWeaponDodge internally)
       await launchWeaponDodgeDialog({
         actor,
@@ -59,7 +70,8 @@ export function registerUnboundFateChatListeners() {
         options: {
           attackLabel,
           successes,
-          chatMessageData: chatMessage?.toObject?.() || {}
+          chatMessageData: chatMessage?.toObject?.() || {},
+          attackType
         }
       });
     });

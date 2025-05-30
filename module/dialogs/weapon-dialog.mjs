@@ -157,7 +157,7 @@ export function launchWeaponDialog({ weapon, attackType, actor }) {
 
           // Update displayed Skill Rating
           const skillRatingElem = form.querySelector('#skill-rating');
-          if (skillRatingElem) skillRatingElem.textContent = skillRating;
+          if (skillRatingElem) skillRatingElem.value = skillRating;
 
           // Calculate modifiers string
           let modifiersText = [];

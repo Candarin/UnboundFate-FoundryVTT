@@ -1,14 +1,31 @@
 <form>
+  {{!-- Attack Details --}}
+  <h3>Incoming Attack</h3>
+  
   <div class="form-group">
-    <label>Ability:</label>
+    <label>Attack Type</label>
+    <input type="text" name="attackType" value="{{attackType}}" disabled/>
+  </div>
+
+  <div class="form-group">
+    <label>Attack Successes</label>
+    <input type="number" name="targetNumber" value="{{targetNumber}}" min="0" disabled/>
+  </div>
+
+
+  {{!-- Dodge Details --}}
+  <hr>
+  <div class="form-group">
+    <label>Ability</label>
     <select name="abilityKey">
       {{#each abilityOptions}}
         <option value="{{this.key}}" {{#if this.selected}}selected{{/if}}>{{this.label}} ({{this.value}})</option>
       {{/each}}
     </select>
   </div>
+
   <div class="form-group">
-    <label>Equipped Weapon (Parry):</label>
+    <label>Equipped Weapon (Parry)</label>
     <select name="weaponId">
       <option value="">None</option>
       {{#each equippedWeapons}}
@@ -16,6 +33,9 @@
       {{/each}}
     </select>
   </div>
+
+  shield
+
   <div class="form-group">
     <label>Modifier:</label>
     <input type="number" name="modifier" value="0" style="width:4em;"/>

@@ -81,7 +81,7 @@ export async function rollWeaponAttack({ weapon, actor, targets = [], totalPool,
   }
 
   // Generate handlebars templates
-  const actorHeader = await renderTemplate('templates/chat/chat-actor.hbs', { actor });
+  const actorHeader = await renderTemplate('systems/unboundfate/templates/chat/chat-actor.hbs', { actor });
   
   // Build content for chat message
   let rollContent = `<h3>${attackType} Attack</h3>`; 
