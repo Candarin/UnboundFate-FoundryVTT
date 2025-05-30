@@ -84,6 +84,7 @@ export function launchWeaponDialog({ weapon, attackType, actor }) {
   const templateData = {
     weaponName,
     weaponDamage,
+    attackType,
     skillKey,
     skillRating,
     skillSpec,
@@ -130,7 +131,7 @@ export function launchWeaponDialog({ weapon, attackType, actor }) {
 
           // Get selected skill key and value
           const skillKey = form.skillKey?.value || '';          
-          let skillRating = actor.system.skills[skillKey]?.value ?? 0;
+          let skillRating = actor.system.skills[skillKey]?.rating ?? 0;
           
           // Get selected ability value
           const abilityKey = form.abilityKey?.value || 'str';

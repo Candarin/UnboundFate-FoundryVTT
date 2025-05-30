@@ -80,9 +80,12 @@ export async function rollWeaponAttack({ weapon, actor, targets = [], totalPool,
     dodgeButtons += '</div>';
   }
 
+  // Generate handlebars templates
+  const actorHeader = await renderTemplate('templates/chat/chat-actor.hbs', { actor });
+  
   // Build content for chat message
-  let rollContent = `<h3>${attackType} Attack</h3>`;
-  rollContent += `<img src="${actor.img}" alt="${actor.name}" style="width:40px; height:40px;">${actor.name}<br>`;
+  let rollContent = `<h3>${attackType} Attack</h3>`; 
+  rollContent += actorHeader + '<br>';
   rollContent += `<hr>`;
   rollContent += `<strong>${weaponName}</strong><br>`;
   rollContent += `<strong>Weapon Type:</strong> ${weaponType}<br>`;

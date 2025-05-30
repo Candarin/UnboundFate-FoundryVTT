@@ -217,4 +217,8 @@
 ## 1.0.62
 - Updated weapon and dodge dialogs
 
+## 1.0.63
+- Updated weapon dialog and roll
+- Added chat-actor hbs
+
 
