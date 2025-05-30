@@ -224,3 +224,5 @@
 ## 1.0.64
 - Updated weapon and dodge dialogs and rolls
 
+## 1.0.65
+- Updated weapon and dodge dialogs and rolls

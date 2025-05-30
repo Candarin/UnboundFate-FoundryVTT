@@ -10,7 +10,7 @@
     </div>
     <div class="flexrow">
       <label>Attack Type</label>
-      <span name="attackType">{{attackType}}</span>
+      <span name="attackType">{{localize lookup (lookup @root.config.attackTypeDefinitions attackType)}}</span>
     </div>
     <div class="flexrow">
       <label>Weapon Skill</label>

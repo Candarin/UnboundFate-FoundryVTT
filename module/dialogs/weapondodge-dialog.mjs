@@ -20,6 +20,11 @@ export function launchWeaponDodgeDialog({ actor, attackingActor, options = {} })
     targetNumber    
   };
 
+  // Calculate Modifier String
+  let modifierList = '';
+
+  
+
   // Render the dialog template
   renderTemplate('systems/unboundfate/templates/dialogs/weapondodge-dialog.hbs', templateData).then(content => {
     new Dialog({
@@ -31,7 +36,8 @@ export function launchWeaponDodgeDialog({ actor, attackingActor, options = {} })
           label: 'Roll Dodge',
           callback: async (html) => {
             const form = html[0].querySelector('form');
-            const abilityKey = html.find('select[name="abilityKey"]').val();            
+            const abilityKey = html.find('select[name="abilityKey"]').val();
+            const abilityValue = actor.system.abilities?.[abilityKey]?.value || 0;            
             const weaponId = html.find('select[name="weaponId"]').val();
             let parry = 0;
             if (weaponId) {

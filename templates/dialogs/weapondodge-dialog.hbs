@@ -40,10 +40,18 @@
     <label>Modifier:</label>
     <input type="number" name="modifier" value="0" style="width:4em;"/>
   </div>
+  
+  <hr>
   <div class="form-group">
     <label>Target Number (Attack Successes):</label>
     <input type="number" name="targetNumber" value="{{targetNumber}}" min="0"/>
   </div>
+
+  <div class="form-group">
+    <label>Modifiers</label>
+    <span id="modifiers-string">{{modifiersString}}</span>
+  </div>
+
   {{#if attackLabel}}
     <div class="form-group"><label>Attack:</label> <span>{{attackLabel}}</span></div>
   {{/if}}

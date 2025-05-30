@@ -85,7 +85,7 @@ export async function rollWeaponAttack({ weapon, actor, targets = [], totalPool,
   
   // Build content for chat message
   let rollContent = `<h3>${attackType} Attack</h3>`; 
-  rollContent += actorHeader + '<br>';
+  rollContent += actorHeader;
   rollContent += `<hr>`;
   rollContent += `<strong>${weaponName}</strong><br>`;
   rollContent += `<strong>Weapon Type:</strong> ${weaponType}<br>`;
