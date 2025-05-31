@@ -99,7 +99,8 @@
       },
       "armour-template": {
         "armourRating": 0,
-        "armourType": "light"
+        "armourType": "light",
+        "deflect": 0
       },
       "parry-template": {
         "parry": 0
@@ -120,7 +121,8 @@
           "held2H": false
         },
         "shield-template": {
-          "shieldRating": 0
+          "shieldRating": 0,
+          "isReadied": false
         }
       },
       "ranged-weapon-template": {

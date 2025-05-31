@@ -4,55 +4,115 @@
   
   <div class="form-group">
     <label>Attack Type</label>
-    <input type="text" name="attackType" value="{{attackType}}" disabled/>
+    <input type="text" name="attackType" value="{{attackType}}" disabled id="attackType"/>
   </div>
 
   <div class="form-group">
     <label>Attack Successes</label>
-    <input type="number" name="targetNumber" value="{{targetNumber}}" min="0" disabled/>
+    <input type="number" name="attackSuccesses" value="{{attackSuccesses}}" min="0" disabled id="attackSuccesses"/>
   </div>
 
 
-  {{!-- Dodge Details --}}
+  {{!-- Ability Details --}}
   <hr>
+  <h3>Abilities</h3>
   <div class="form-group">
-    <label>Ability</label>
-    <select name="abilityKey">
-      {{#each abilityOptions}}
+    <label>Ability 1</label>
+    <select name="ability1Key">
+      {{#each ability1Options}}
+        <option value="{{this.key}}" {{#if this.selected}}selected{{/if}}>{{this.label}} ({{this.value}})</option>
+      {{/each}}
+    </select>
+  </div>
+  <div class="form-group">
+    <label>Ability 2</label>
+    <select name="ability2Key">
+      {{#each ability2Options}}
         <option value="{{this.key}}" {{#if this.selected}}selected{{/if}}>{{this.label}} ({{this.value}})</option>
       {{/each}}
     </select>
   </div>
 
+  {{!-- Parry Details --}}
+  <hr>
   <div class="form-group">
     <label>Equipped Weapon (Parry)</label>
     <select name="weaponId">
       <option value="">None</option>
-      {{#each equippedWeapons}}
-        <option value="{{this._id}}" data-parry="{{this.system.parry}}">{{this.name}} (Parry: {{this.system.parry}})</option>
+      {{#each actorWeaponOptions}}
+        <option value="{{this.key}}" {{#if this.selected}}selected{{/if}}>{{this.label}}</option>
       {{/each}}
     </select>
   </div>
-
-  shield
-
   <div class="form-group">
-    <label>Modifier:</label>
-    <input type="number" name="modifier" value="0" style="width:4em;"/>
+    <label>Linked Skill</label>
+    {{#if actorWeaponEquipped}}
+      <span id="actorWeaponSkillRating">{{actorWeaponEquipped.system.skill}} (Rating: {{actorWeaponSkillRating}})</span>
+    {{else}}
+      <span>None</span>
+    {{/if}}
+  </div>
+  <div class="form-group">
+    <label>Parry (min of skill and weapon parry)</label>
+    <input type="number" name="actorParry" value="{{actorParry}}" disabled id="actorParry"/>
   </div>
   
+  
+
+  {{!-- Shield Details --}}
   <hr>
+  <h3>Shield</h3>
   <div class="form-group">
-    <label>Target Number (Attack Successes):</label>
-    <input type="number" name="targetNumber" value="{{targetNumber}}" min="0"/>
+    <label>Readied Shield</label>
+    {{#if actorShieldReadied}}
+      <span id="actorShieldRating">{{actorShieldReadied.name}} (Block: {{actorShieldReadied.system.shieldRating}})</span>
+    {{else}}
+      <span>None</span>
+    {{/if}}
   </div>
 
+
+  {{!-- Armor Details --}}
+  <hr>
+  <h3>Armor Deflection</h3>
+  <div class="form-group">
+    <label>Equipped Armor</label>
+    <span>
+      {{#if actorArmorListString}}
+        {{actorArmorListString}}
+      {{else}}
+        None
+      {{/if}}
+    </span>
+  </div>
+  <div class="form-group">
+    <label>Total Deflect</label>
+    <input type="number" name="actorArmorDeflect" value="{{actorArmorDeflect}}" disabled id="actorArmorDeflect"/>
+  </div>
+
+
+  {{!-- Modifer --}}
+  <h3>Modifier</h3>
+  <div class="form-group">
+    <label>Modifier</label>
+    <input type="number" name="modifier" value="{{modifier}}"/>
+  </div>
+   
+  <h3>Total</h3>
   <div class="form-group">
     <label>Modifiers</label>
     <span id="modifiers-string">{{modifiersString}}</span>
   </div>
 
-  {{#if attackLabel}}
-    <div class="form-group"><label>Attack:</label> <span>{{attackLabel}}</span></div>
-  {{/if}}
+  <div class="form-group">
+    <label>Total Pool</label>
+    <input type="number" name="totalPool" id="totalPool" value="{{totalPool}}" disabled/>
+  </div>
+ 
+  <hr>
+  <div class="form-group">
+    <label>Target Number (Attack Successes):</label>
+    <input type="number" name="targetNumber" id="targetNumber" value="{{targetNumber}}" min="0"/>
+  </div>
+
 </form>

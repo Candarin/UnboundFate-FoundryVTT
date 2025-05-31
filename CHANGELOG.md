@@ -226,3 +226,7 @@
 
 ## 1.0.65
 - Updated weapon and dodge dialogs and rolls
+
+## 1.0.66
+- Updated weapon and dodge dialogs and rolls
+- added actor-utils functions
