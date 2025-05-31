@@ -230,3 +230,6 @@
 ## 1.0.66
 - Updated weapon and dodge dialogs and rolls
 - added actor-utils functions
+
+## 1.0.67
+- Remove localization from weapon dialog

@@ -82,7 +82,7 @@ export function launchWeaponDialog({ weapon, attackType, actor }) {
 
   // Prepare data for the template
   const templateData = {
-    config : CONFIG.UNBOUNDFATE,
+    config,
     weaponName,
     weaponDamage,
     attackType,
