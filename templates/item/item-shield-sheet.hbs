@@ -1,0 +1,62 @@
+{{! filepath: templates/item/item-shield-sheet.hbs }}
+<form class="{{cssClass}}" autocomplete="off">
+  <header class="sheet-header">
+    <img class="profile-img" src="{{item.img}}" data-edit="img" title="{{item.name}}"/>
+    <div class="header-fields">
+      <h1 class="charname"><input name="name" type="text" value="{{item.name}}" placeholder="Name"/></h1>
+      <div class="form-group">
+        <label class="resource-label">PDF Reference</label>
+        <input type="text" name="system.pdfReference" value="{{system.pdfReference}}" data-dtype="Text" />
+      </div>
+    </div>
+  </header>
+
+  {{!-- Sheet Tab Navigation --}}
+  <nav class="sheet-tabs tabs" data-group="primary">
+    <a class="item" data-tab="description">Description</a>
+    <a class="item" data-tab="effects">Effects</a>
+  </nav>
+
+  {{!-- Sheet Body --}}
+  <section class="sheet-body">
+    {{!-- Description Tab --}}
+    <div class="tab description" data-group="primary" data-tab="description">
+      <div class="flexrow">
+        <div class="flexcol flex1">
+          {{!-- Weight --}}
+          <div class="flexrow nowrap">
+            <label class="resource-label">Weight</label>
+            <input type="number" name="system.weight" value="{{system.weight}}" data-dtype="Number" step="any" />
+          </div>
+          {{!-- Cost --}}
+          <div class="flexrow nowrap">
+            <label class="resource-label">Cost</label>
+            <input type="number" name="system.cost" value="{{system.cost}}" data-dtype="Number" step="any" />
+          </div>
+          {{!-- Shield Rating --}}
+          <div class="flexrow nowrap">
+            <label class="resource-label">Shield Rating</label>
+            <input type="number" name="system.shieldRating" value="{{system.shieldRating}}" data-dtype="Number" />
+          </div>
+          {{!-- Is Equipped --}}
+          <div class="flexrow nowrap">
+            <label class="resource-label">Is Equipped</label>
+            <input type="checkbox" name="system.isEquipped" {{#if system.isEquipped}}checked{{/if}} />
+          </div>
+          {{!-- Is Readied --}}
+            <div class="flexrow nowrap">
+                <label class="resource-label">Is Readied</label>
+                <input type="checkbox" name="system.isReadied" {{#if system.isReadied}}checked{{/if}} />
+            </div>  
+        </div>
+        <div class="flex2">
+          {{editor enrichedDescription target="system.description" engine="prosemirror" button=true editable=editable}}
+        </div>
+      </div>
+    </div>
+    {{!-- Effects Tab --}}
+    <div class="tab effects" data-group="primary" data-tab="effects">
+      {{> "systems/unboundfate/templates/item/parts/item-effects.hbs"}}
+    </div>
+  </section>
+</form>

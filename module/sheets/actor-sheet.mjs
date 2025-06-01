@@ -108,6 +108,7 @@ export class UnboundFateActorSheet extends ActorSheet {
     // Initialize containers for each group.
     const weapons = [];
     const armour = [];
+    const shields = [];
     const gear = [];
     const talents = [];
     const flaws = [];
@@ -121,6 +122,8 @@ export class UnboundFateActorSheet extends ActorSheet {
         weapons.push(i);
       } else if (i.type === 'armour') {
         armour.push(i);
+      } else if (i.type === 'shield') {
+        shields.push(i);
       } else if (i.type === 'item') {
         gear.push(i);
       } else if (i.type === 'talent') {

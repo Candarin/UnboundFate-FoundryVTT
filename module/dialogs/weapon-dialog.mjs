@@ -82,7 +82,6 @@ export function launchWeaponDialog({ weapon, attackType, actor }) {
 
   // Prepare data for the template
   const templateData = {
-    config,
     weaponName,
     weaponDamage,
     attackType,
@@ -116,7 +115,7 @@ export function launchWeaponDialog({ weapon, attackType, actor }) {
             const totalPool = parseInt(form.totalPool.value, 10) || 0;
             const modifier = parseInt(form.modifier.value, 10) || 0;
             const modifierList = form.querySelector('#modifiers-string')?.textContent || '';
-            const attackType = form.attackType.textContent || 'melee'; // Default to melee if not set
+            const attackType = form.querySelector('#attackType')?.textContent || 'melee'; // Default to melee if not set
             // You can extract other fields similarly if needed
             await rollWeaponAttack({ weapon, actor, targets, totalPool, modifierList, attackType });
           }

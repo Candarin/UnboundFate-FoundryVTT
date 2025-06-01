@@ -1,3 +1,4 @@
+import { act } from 'react';
 import { rollWeaponDodge } from '../dice/rolltypes.mjs';
 import { getEquippedWeaponWithHighestParry, getReadiedShieldWithHighestRating } from '../helpers/actor-utils.mjs';
 
@@ -145,7 +146,91 @@ export function launchWeaponDodgeDialog({ actor, attackingActor, options = {} })
       },
       default: 'roll',
       render: (html) => {
-        // Optionally, add listeners for dynamic updates here
+        const form = html[0].querySelector('form');
+        if (!form) return;
+        // Add listeners for editable fields to update linked fields and total
+        function updateTotal() {
+          // Get current values from the form
+          const ability1Key = form.ability1Key.value;
+          const ability1Value = actor.system.abilities?.[ability1Key]?.value || 0;
+          const ability2Key = form.ability2Key.value;
+          const ability2Value = actor.system.abilities?.[ability2Key]?.value || 0;
+          const weaponId = html.find('select[name="weaponId"]').val();
+          const modifier = Number(html.find('input[name="modifier"]').val()) || 0;
+          const actorParry = form.actorParry.value || 0;
+
+          // Get actor data from closure
+          const actorData = actor;                 
+          
+
+          // Armor deflect          
+          const actorArmorDeflect = form.actorArmorDeflect.value || 0; // Use the total deflect from equipped armor
+          // Shield rating
+          const shieldRating = actorShieldReadied?.system?.shieldRating || 0; // Use the highest block rating from readied shields
+
+          // Calcuate Modrifier String
+          let modifiersText = [];  
+          if (ability1Value) {
+            modifiersText.push(`${game.i18n.localize(abilities[ability1Key])} ${ability1Value >= 0 ? '+' : ''}${ability1Value}`);
+          }
+          if (ability2Value) {
+            modifiersText.push(`${game.i18n.localize(abilities[ability2Key])} ${ability2Value >= 0 ? '+' : ''}${ability2Value}`);
+          }
+          if (actorParry) {
+            modifiersText.push(`Parry ${actorParry >= 0 ? '+' : ''}${actorParry}`);
+          }
+          if (actorArmorDeflect) {
+            modifiersText.push(`Armor Deflect ${actorArmorDeflect >= 0 ? '+' : ''}${actorArmorDeflect}`);
+          }
+          if (shieldRating && actorShieldReadied) {
+            modifiersText.push(`Shield Rating ${shieldRating >= 0 ? '+' : ''}${shieldRating}`);
+          }
+          if (modifier) {
+            modifiersText.push(`Modifier ${modifier >= 0 ? '+' : ''}${modifier}`);
+          }
+          const modifiersString = modifiersText.join(', ');
+
+          // Calculate total pool
+          const totalPool = ability1Value + ability2Value + actorParry + actorArmorDeflect + shieldRating + modifier;
+
+          // Update total pool and modifier string in the form
+          html.find('#totalPool').val(totalPool);
+          html.find('#modifiersString').text(modifiersString);
+        }
+
+        // Listeners for editable fields
+        html.find('select[name="ability1Key"]').on('change', function() {
+          const ability1Key = html.find('select[name="ability1Key"]').val();
+          const ability1Value = actorData.system.abilities?.[ability1Key]?.value || 0;
+          html.find('#ability1Value').text(ability1Value);
+          updateTotal();
+        });
+        html.find('select[name="ability2Key"]').on('change', function() {
+          const ability2Key = html.find('select[name="ability2Key"]').val();
+          const ability2Value = actorData.system.abilities?.[ability2Key]?.value || 0;
+          html.find('#ability2Value').text(ability2Value);          
+          updateTotal();
+        });
+        html.find('select[name="weaponId"]').on('change', function() {
+          // Update linked skill and parry when weapon changes
+
+          // Get values from the selected weapon
+          const weaponId = $(this).val();
+          const weapon = actor.items.get(weaponId);
+          const weaponParry = weapon?.system?.parry || 0;
+          const skillKey = weapon?.system?.skill || '';
+          const skillRating = actor.system.skills?.[skillKey]?.rating || 0;
+          const actorParry = Math.min(weaponParry, skillRating);
+
+          //update the parry and skill rating fields
+          form.actorWeaponSkill.value = skillKey ? `${skillKey} (Rating: ${skillRating})` : 'None';
+          form.actorParry.value = actorParry || 0;
+
+          html.find('#actorWeaponParry').text(weaponParry);
+
+          updateTotal();
+        });
+        html.find('input[name="modifier"]').on('input', updateTotal);
       }
     }).render(true);
   });

@@ -233,3 +233,8 @@
 
 ## 1.0.67
 - Remove localization from weapon dialog
+
+## 1.0.68
+- Updated dodge dialog and roll
+- updated item sheets for armour, shields and weapons
+- added more chat hbs templates

@@ -18,7 +18,7 @@
   <h3>Abilities</h3>
   <div class="form-group">
     <label>Ability 1</label>
-    <select name="ability1Key">
+    <select name="ability1Key" id="ability1Key">
       {{#each ability1Options}}
         <option value="{{this.key}}" {{#if this.selected}}selected{{/if}}>{{this.label}} ({{this.value}})</option>
       {{/each}}
@@ -26,7 +26,7 @@
   </div>
   <div class="form-group">
     <label>Ability 2</label>
-    <select name="ability2Key">
+    <select name="ability2Key" id="ability2Key">    
       {{#each ability2Options}}
         <option value="{{this.key}}" {{#if this.selected}}selected{{/if}}>{{this.label}} ({{this.value}})</option>
       {{/each}}
@@ -45,12 +45,8 @@
     </select>
   </div>
   <div class="form-group">
-    <label>Linked Skill</label>
-    {{#if actorWeaponEquipped}}
-      <span id="actorWeaponSkillRating">{{actorWeaponEquipped.system.skill}} (Rating: {{actorWeaponSkillRating}})</span>
-    {{else}}
-      <span>None</span>
-    {{/if}}
+    <label>Linked Skill</label>   
+    <input name="actorWeaponSkill" id="actorWeaponSkill" value="{{actorWeaponSkillKey}} (Rating: {{actorWeaponSkillRating}})" disabled />  
   </div>
   <div class="form-group">
     <label>Parry (min of skill and weapon parry)</label>
@@ -101,7 +97,7 @@
   <h3>Total</h3>
   <div class="form-group">
     <label>Modifiers</label>
-    <span id="modifiers-string">{{modifiersString}}</span>
+    <span id="modifiersString">{{modifiersString}}</span>
   </div>
 
   <div class="form-group">

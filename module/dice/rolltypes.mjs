@@ -82,13 +82,13 @@ export async function rollWeaponAttack({ weapon, actor, targets = [], totalPool,
 
   // Generate handlebars templates
   const actorHeader = await renderTemplate('systems/unboundfate/templates/chat/chat-actor.hbs', { actor });
+  const weaponHeader = await renderTemplate('systems/unboundfate/templates/chat/chat-weapon-header.hbs', { weapon });
   
   // Build content for chat message
   let rollContent = `<h3>${attackType} Attack</h3>`; 
   rollContent += actorHeader;
   rollContent += `<hr>`;
-  rollContent += `<strong>${weaponName}</strong><br>`;
-  rollContent += `<strong>Weapon Type:</strong> ${weaponType}<br>`;
+  rollContent += weaponHeader;
   rollContent += `${modifierList ? `<div class="modifiers-string">${modifierList}</div>` : ''}`;
   rollContent += `<hr>`;
   rollContent += `<h4>Targets:</h4><br>${targetNames}`;
