@@ -18,6 +18,6 @@ export const preloadHandlebarsTemplates = async function () {
     // Item partials
     'systems/unboundfate/templates/item/parts/item-effects.hbs',    
     // Chat partials
-    'systems/unboundfate/templates/chat/char-actor.hbs',
+    'systems/unboundfate/templates/chat/chat-actor.hbs',
   ]);
 };
