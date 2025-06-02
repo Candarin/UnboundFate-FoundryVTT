@@ -247,3 +247,6 @@
 
 ## 1.0.71
 - Fixed another error in handlebars preloader
+
+## 1.0.72
+- Changes to dodge roll and chatMessage appearance

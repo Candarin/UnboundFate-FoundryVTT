@@ -11,17 +11,17 @@ import { getEquippedWeaponWithHighestParry, getReadiedShieldWithHighestRating } 
  */
 export function launchWeaponDodgeDialog({ actor, attackingActor, options = {} }) {
   
-
-  // Default targetNumber from options.successes or 0
+  // Extract options 
   const attackSuccesses = options.successes ?? 0;
   const targetNumber = options.successes ?? 0;
+  const chatMessageData = options.chatMessageData || {};
 
     // Ability 1: Agility
-  const ability1Key = 'agi';
+  const ability1Key = 'agl';
   const ability1Value = actor.system.abilities?.[ability1Key]?.value || 0;
 
   // Ability 2: Awareness
-  const ability2Key = "awa";
+  const ability2Key = "awr";
   const ability2Value = actor.system.abilities?.[ability2Key]?.value || 0;
 
   // Ability Options
@@ -64,9 +64,27 @@ export function launchWeaponDodgeDialog({ actor, attackingActor, options = {} })
   // Modifier (default to 0, can be set in dialog)
   const modifier = options.modifier || 0; // Default modifier, can be set in dialog
 
-  // Calculate Modifier String
-  let modifierList = '';
-  
+  // Calculate Modifier String  
+  let modifiersText = [];  
+  if (ability1Value) {
+    modifiersText.push(`${game.i18n.localize(abilities[ability1Key])} ${ability1Value >= 0 ? '+' : ''}${ability1Value}`);
+  }
+  if (ability2Value) {
+    modifiersText.push(`${game.i18n.localize(abilities[ability2Key])} ${ability2Value >= 0 ? '+' : ''}${ability2Value}`);
+  }
+  if (actorParry) {
+    modifiersText.push(`Parry ${actorParry >= 0 ? '+' : ''}${actorParry}`);
+  }
+  if (actorArmorDeflect) {
+    modifiersText.push(`Armor Deflect ${actorArmorDeflect >= 0 ? '+' : ''}${actorArmorDeflect}`);
+  }
+  if (shieldRating && actorShieldReadied) {
+    modifiersText.push(`Shield Rating ${shieldRating >= 0 ? '+' : ''}${shieldRating}`);
+  }
+  if (modifier) {
+    modifiersText.push(`Modifier ${modifier >= 0 ? '+' : ''}${modifier}`);
+  }
+  const modifiersString = modifiersText.join(', ');
 
 
 
@@ -97,7 +115,7 @@ export function launchWeaponDodgeDialog({ actor, attackingActor, options = {} })
     actorShieldReadied,
     actorShieldRating,
     modifier,
-    modifierList,
+    modifiersString,
     totalPool
   };
 
@@ -127,14 +145,18 @@ export function launchWeaponDodgeDialog({ actor, attackingActor, options = {} })
             if (parry) modifiersString += `Parry: +${parry} `;
             if (modifier) modifiersString += `Modifier: ${modifier} `;
             await rollWeaponDodge({
-              abilityKey,
-              abilityValue,
-              parry,
-              modifier,
-              targetNumber: finalTargetNumber,
-              modifiersString,
-              attackLabel: options.attackLabel,
-              successes: finalTargetNumber
+              actor,
+              options: {
+                ability1Key,
+                ability1Value,
+                ability2Key,
+                ability2Value,
+                parry,
+                modifier,
+                totalPool,
+                modifiersString,        
+                targetNumber: finalTargetNumber
+              }                            
             });
           }
         },
@@ -200,13 +222,13 @@ export function launchWeaponDodgeDialog({ actor, attackingActor, options = {} })
         // Listeners for editable fields
         html.find('select[name="ability1Key"]').on('change', function() {
           const ability1Key = html.find('select[name="ability1Key"]').val();
-          const ability1Value = actorData.system.abilities?.[ability1Key]?.value || 0;
+          const ability1Value = actor.system.abilities?.[ability1Key]?.value || 0;
           html.find('#ability1Value').text(ability1Value);
           updateTotal();
         });
         html.find('select[name="ability2Key"]').on('change', function() {
           const ability2Key = html.find('select[name="ability2Key"]').val();
-          const ability2Value = actorData.system.abilities?.[ability2Key]?.value || 0;
+          const ability2Value = actor.system.abilities?.[ability2Key]?.value || 0;
           html.find('#ability2Value').text(ability2Value);          
           updateTotal();
         });

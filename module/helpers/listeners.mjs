@@ -11,6 +11,10 @@ export function registerUnboundFateChatListeners() {
       const button = ev.currentTarget;
       const tokenId = button.dataset.tokenId;
       const actorId = button.dataset.actorId;
+
+      // Get actor from selected token or actorId
+      const selectedActor = canvas.tokens.controlled[0]?.actor;
+
       // Get the chat message ID from the DOM
       const chatMessageElem = html.closest('.chat-message');
       const chatMessageId = chatMessageElem?.attr('data-message-id');
@@ -46,9 +50,7 @@ export function registerUnboundFateChatListeners() {
         const match = flavor.match(/Successes:\s*(\d+)/i);
         successes = match ? parseInt(match[1], 10) : 0;
       }
-      // Optionally, extract attack label
-      const attackLabelMatch = flavor.match(/<strong>(.*?)<\/strong>/i);
-      const attackLabel = attackLabelMatch ? attackLabelMatch[1] : '';
+      
 
       // ATTACK TYPE EXTRACTION
       let attackType = 'melee'; // Default to melee 
@@ -61,17 +63,20 @@ export function registerUnboundFateChatListeners() {
         attackType = typeMatch ? typeMatch[1].toLowerCase() : 'melee';
       }
 
+      // Extract attacker
+      let attackingActor = null;
+      const attackerElem = html[0]?.querySelector('.attacker-actor');
 
 
       // Call the dodge dialog (which will call rollWeaponDodge internally)
       await launchWeaponDodgeDialog({
-        actor,
+        actor: selectedActor || actor,
         attackingActor: null, // Could be improved if you want to pass attacker
-        options: {
-          attackLabel,
+        options: {          
           successes,
-          chatMessageData: chatMessage?.toObject?.() || {},
-          attackType
+          attackType,
+          chatMessageData: chatMessage?.toObject?.() || {}
+          
         }
       });
     });

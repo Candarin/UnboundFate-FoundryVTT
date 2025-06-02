@@ -81,7 +81,7 @@ export async function rollWeaponAttack({ weapon, actor, targets = [], totalPool,
   }
 
   // Generate handlebars templates
-  const actorHeader = await renderTemplate('systems/unboundfate/templates/chat/chat-actor.hbs', { actor });
+  const actorHeader = await renderTemplate('systems/unboundfate/templates/chat/chat-actor.hbs', { actor, actorType: 'attacker' });
   const weaponHeader = await renderTemplate('systems/unboundfate/templates/chat/chat-weapon.hbs', { weapon });
   
   // Build content for chat message
@@ -118,11 +118,13 @@ export async function rollWeaponDodge({ actor, attackingActor, options = {} }) {
   const abilityValue = options.abilityValue || (actor.system.abilities?.[abilityKey]?.value ?? 0);
   const parry = options.parry || 0;
   const modifier = options.modifier || 0;
-  const totalPool = abilityValue + parry + modifier;
-  const formula = `${totalPool}d6cs>=5`;
+  const totalPool = options.totalPool || 0;  
+  const modifiersString = options.modifiersString || '';
   const targetNumber = options.targetNumber || options.attackSuccesses || 0;
-  const label = options.attackLabel || `Dodge${attackingActor ? ' vs ' + attackingActor.name : ''}`;
   const modifiersHtml = options.modifiersString ? `<div class="modifiers-string" style="margin-bottom:0.5em;">${options.modifiersString}</div>` : '';
+
+  // Formula for the dodge roll
+  const formula = `${totalPool}d6cs>=5`;
 
   // Roll dodge
   const roll = new UFRoll(formula, actor.getRollData(), { targetNumber });
@@ -136,10 +138,16 @@ export async function rollWeaponDodge({ actor, attackingActor, options = {} }) {
     outcome = `<div class="roll-outcome" style="margin-top:0.5em;font-weight:bold;">${roll.isSuccess() ? '<span style="color:green;">Success</span>' : '<span style="color:red;">Failure</span>'}</div>`;
   }
 
+  // Roll Content
+  let rollContent = `<h3>Dodge Roll</h3>`;
+  rollContent += `<strong>${actor.name}</strong>`;
+  rollContent += `<hr>`;
+  rollContent += `${modifiersString ? `<div class="modifiers-string">${modifiersString}</div>` : ''}`;
+
   // Output to chat
   await roll.toMessage({
     speaker: ChatMessage.getSpeaker({ actor }),
-    flavor: `${label}<br>${modifiersHtml}${successText}${outcome}`,
+    flavor: rollContent,
     rollMode: options.rollMode || game.settings.get('core', 'rollMode'),
     content: rollHTML,
     style: CONST.CHAT_MESSAGE_STYLES.ROLL

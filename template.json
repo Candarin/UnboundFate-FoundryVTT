@@ -89,7 +89,7 @@
     }
   },
   "Item": {
-    "types": ["armour", "flaw", "item", "parry", "race", "spell", "talent", "weapon"],
+    "types": ["armour", "flaw", "item", "parry", "race", "shield", "spell", "talent", "weapon"],
     "templates": {
       "base-template": {
         "description": "",

@@ -17,20 +17,23 @@
   <hr>
   <h3>Abilities</h3>
   <div class="form-group">
-    <label>Ability 1</label>
-    <select name="ability1Key" id="ability1Key">
+    <label class="flex2">Ability 1</label>
+    <select class="flex1" name="ability1Key" id="ability1Key">
       {{#each ability1Options}}
-        <option value="{{this.key}}" {{#if this.selected}}selected{{/if}}>{{this.label}} ({{this.value}})</option>
+        <option value="{{this.key}}" {{#if this.selected}}selected{{/if}}>{{this.label}}</option>
       {{/each}}
     </select>
+    <span class="flex1"> (<span id="ability1Value">{{ability1Value}}</span>)</span>
   </div>
+
   <div class="form-group">
     <label>Ability 2</label>
     <select name="ability2Key" id="ability2Key">    
       {{#each ability2Options}}
-        <option value="{{this.key}}" {{#if this.selected}}selected{{/if}}>{{this.label}} ({{this.value}})</option>
+        <option value="{{this.key}}" {{#if this.selected}}selected{{/if}}>{{this.label}}</option>
       {{/each}}
     </select>
+    <span class="flex1"> (<span id="ability2Value">{{ability2Value}}</span>)</span>
   </div>
 
   {{!-- Parry Details --}}
