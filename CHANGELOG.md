@@ -244,3 +244,6 @@
 
 ## 1.0.70
 - Fixed error in handlebars preloader
+
+## 1.0.71
+- Fixed another error in handlebars preloader
