@@ -1,4 +1,3 @@
-import { act } from 'react';
 import { rollWeaponDodge } from '../dice/rolltypes.mjs';
 import { getEquippedWeaponWithHighestParry, getReadiedShieldWithHighestRating } from '../helpers/actor-utils.mjs';
 

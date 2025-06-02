@@ -238,3 +238,6 @@
 - Updated dodge dialog and roll
 - updated item sheets for armour, shields and weapons
 - added more chat hbs templates
+
+## 1.0.69
+- Fixed error
