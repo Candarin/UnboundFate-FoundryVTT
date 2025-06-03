@@ -20,5 +20,6 @@ export const preloadHandlebarsTemplates = async function () {
     // Chat partials
     'systems/unboundfate/templates/chat/chat-actor.hbs',
     'systems/unboundfate/templates/chat/chat-weapon.hbs',
+    'systems/unboundfate/templates/chat/chat-success-vs-target.hbs',
   ]);
 };

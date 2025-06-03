@@ -131,19 +131,13 @@ export function launchWeaponDodgeDialog({ actor, attackingActor, options = {} })
           callback: async (html) => {
             const form = html[0].querySelector('form');
             const abilityKey = html.find('select[name="abilityKey"]').val();
+            const modifiersString = html.find('#modifiersString').text().trim();
             const abilityValue = actor.system.abilities?.[abilityKey]?.value || 0;            
             const weaponId = html.find('select[name="weaponId"]').val();
-            let parry = 0;
-            if (weaponId) {
-              const weapon = actor.items.get(weaponId);
-              parry = weapon?.system?.parry || 0;
-            }
+            
             const modifier = Number(html.find('input[name="modifier"]').val()) || 0;
-            const finalTargetNumber = Number(html.find('input[name="targetNumber"]').val()) || 0;
-            // Compose modifiers string for chat
-            let modifiersString = '';
-            if (parry) modifiersString += `Parry: +${parry} `;
-            if (modifier) modifiersString += `Modifier: ${modifier} `;
+            const finalTargetNumber = Number(html.find('input[name="targetNumber"]').val()) || 0;          
+            
             await rollWeaponDodge({
               actor,
               options: {

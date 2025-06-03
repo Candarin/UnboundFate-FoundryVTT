@@ -1,0 +1,25 @@
+{{!-- templates/chat/chat-success-vs-target.hbs --}}
+<div class="chat-success-vs-target">
+  <div class="flexcol">
+    
+    <div class="flexrow" style="border-bottom: 1px solid #ddd; padding-bottom: 3px;">
+        <div class="flexcol" class="targetnumber" style="border-right: 1px solid #ddd;">
+            <label class="flex0">Target Number</label>
+            <span>{{targetNumber}}</span>
+        </div>
+        <div class="flexcol" class="rollednumber {{#if outcome}}success{{else}}fail{{/if}}">
+            <label class="flex0">Successes</label>
+            <span>{{successes}}</span>
+        </div>    
+    </div>
+      
+    <div class="roll-outcome">
+        {{#if outcome}}
+        <span>{{successMessage}}</span>
+        {{else}}
+        <span>{{failMessage}}</span>
+        {{/if}}
+    </div>
+
+  </div>
+</div>

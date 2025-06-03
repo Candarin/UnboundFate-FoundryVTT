@@ -83,6 +83,9 @@ export async function rollWeaponAttack({ weapon, actor, targets = [], totalPool,
   // Generate handlebars templates
   const actorHeader = await renderTemplate('systems/unboundfate/templates/chat/chat-actor.hbs', { actor, actorType: 'attacker' });
   const weaponHeader = await renderTemplate('systems/unboundfate/templates/chat/chat-weapon.hbs', { weapon });
+  const targetContent = (targets.length === 1)
+    ? await renderTemplate('systems/unboundfate/templates/chat/chat-actor.hbs', { actor: targets[0].actor, actorType: 'target' })
+    : '';
   
   // Build content for chat message
   let rollContent = `<h3>${attackType} Attack</h3>`; 
@@ -91,7 +94,8 @@ export async function rollWeaponAttack({ weapon, actor, targets = [], totalPool,
   rollContent += weaponHeader;
   rollContent += `${modifierList ? `<div class="modifiers-string">${modifierList}</div>` : ''}`;
   rollContent += `<hr>`;
-  rollContent += `<h4>Targets:</h4><br>${targetNames}`;
+  rollContent += `<h4>Targets:</h4>`;
+  rollContent += targets.length > 1 ? `${targetNames}` : targetContent;
   rollContent += `<hr>`;
   rollContent += `<br><strong>Successes:</strong><span id="successes" name="successes" style="color:${successes > 0 ? 'green' : 'red'};"> ${successes}</span>`;
   rollContent += `${dodgeButtons}`;
@@ -121,7 +125,7 @@ export async function rollWeaponDodge({ actor, attackingActor, options = {} }) {
   const totalPool = options.totalPool || 0;  
   const modifiersString = options.modifiersString || '';
   const targetNumber = options.targetNumber || options.attackSuccesses || 0;
-  const modifiersHtml = options.modifiersString ? `<div class="modifiers-string" style="margin-bottom:0.5em;">${options.modifiersString}</div>` : '';
+
 
   // Formula for the dodge roll
   const formula = `${totalPool}d6cs>=5`;
@@ -132,17 +136,30 @@ export async function rollWeaponDodge({ actor, attackingActor, options = {} }) {
   const successes = roll.hits;
   let rollHTML = await roll.render();
   rollHTML = rollHTML.replace(/<div class="dice-total">[\s\S]*?<\/div>/, '');
-  const successText = `<strong>Successes:</strong> ${successes} / <strong>Target Number:</strong> ${targetNumber}`;
-  let outcome = '';
-  if (targetNumber > 0) {
-    outcome = `<div class="roll-outcome" style="margin-top:0.5em;font-weight:bold;">${roll.isSuccess() ? '<span style="color:green;">Success</span>' : '<span style="color:red;">Failure</span>'}</div>`;
-  }
+ 
+  // Determine if the dodge was successful
+  const outcome = successes >= targetNumber;
+  // Prepare the success template data
+  const successMessage = "Dodged!";
+  const failMessage = "Failed to dodge!";
+
+  const rollOutcomeContent = await renderTemplate('systems/unboundfate/templates/chat/chat-success-vs-target.hbs', {
+    outcome,
+    successMessage,
+    failMessage,
+    successes,
+    targetNumber
+  });
+
 
   // Roll Content
   let rollContent = `<h3>Dodge Roll</h3>`;
   rollContent += `<strong>${actor.name}</strong>`;
   rollContent += `<hr>`;
   rollContent += `${modifiersString ? `<div class="modifiers-string">${modifiersString}</div>` : ''}`;
+  rollContent += `<hr>`;
+  rollContent += rollOutcomeContent;
+
 
   // Output to chat
   await roll.toMessage({
