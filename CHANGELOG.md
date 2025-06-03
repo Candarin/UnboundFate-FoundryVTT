@@ -254,3 +254,6 @@
 ## 1.0.73
 - Changes to dodge roll and chatMessage appearance
 - added chat hbs temlate (success vs target)
+
+## 1.0.74
+- Changes to dodge roll and chatMessage appearance

@@ -97,7 +97,7 @@ export async function rollWeaponAttack({ weapon, actor, targets = [], totalPool,
   rollContent += `<h4>Targets:</h4>`;
   rollContent += targets.length > 1 ? `${targetNames}` : targetContent;
   rollContent += `<hr>`;
-  rollContent += `<br><strong>Successes:</strong><span id="successes" name="successes" style="color:${successes > 0 ? 'green' : 'red'};"> ${successes}</span>`;
+  rollContent += `<strong>Successes:</strong><span id="successes" name="successes" style="color:${successes > 0 ? 'green' : 'red'};"> ${successes}</span>`;
   rollContent += `${dodgeButtons}`;
 
   // Output to chat

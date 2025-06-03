@@ -67,6 +67,14 @@ export function registerUnboundFateChatListeners() {
       let attackingActor = null;
       const attackerElem = html[0]?.querySelector('.attacker-actor');
 
+      // Log for debugging
+      console.log ('Undound Fate | Launching dodge dialog with:', {
+        actor: actor,
+        attackingActor: attackingActor,
+        successes: successes,
+        attackType: attackType,
+        chatMessageData: chatMessage?.toObject?.() || {}
+      });
 
       // Call the dodge dialog (which will call rollWeaponDodge internally)
       await launchWeaponDodgeDialog({

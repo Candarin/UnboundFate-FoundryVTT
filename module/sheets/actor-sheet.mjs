@@ -143,6 +143,7 @@ export class UnboundFateActorSheet extends ActorSheet {
     context.talents = talents;
     context.flaws = flaws;
     context.spells = spells;
+    context.shields = shields;
   }
 
   /* -------------------------------------------- */

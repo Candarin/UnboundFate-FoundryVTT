@@ -78,7 +78,7 @@ export function launchWeaponDodgeDialog({ actor, attackingActor, options = {} })
   if (actorArmorDeflect) {
     modifiersText.push(`Armor Deflect ${actorArmorDeflect >= 0 ? '+' : ''}${actorArmorDeflect}`);
   }
-  if (shieldRating && actorShieldReadied) {
+  if (actorShieldRating && actorShieldReadied) {
     modifiersText.push(`Shield Rating ${shieldRating >= 0 ? '+' : ''}${shieldRating}`);
   }
   if (modifier) {
@@ -181,7 +181,7 @@ export function launchWeaponDodgeDialog({ actor, attackingActor, options = {} })
           // Armor deflect          
           const actorArmorDeflect = form.actorArmorDeflect.value || 0; // Use the total deflect from equipped armor
           // Shield rating
-          const shieldRating = actorShieldReadied?.system?.shieldRating || 0; // Use the highest block rating from readied shields
+          const actorShieldRating = actorShieldReadied?.system?.shieldRating || 0; // Use the highest block rating from readied shields
 
           // Calcuate Modrifier String
           let modifiersText = [];  
@@ -197,8 +197,8 @@ export function launchWeaponDodgeDialog({ actor, attackingActor, options = {} })
           if (actorArmorDeflect) {
             modifiersText.push(`Armor Deflect ${actorArmorDeflect >= 0 ? '+' : ''}${actorArmorDeflect}`);
           }
-          if (shieldRating && actorShieldReadied) {
-            modifiersText.push(`Shield Rating ${shieldRating >= 0 ? '+' : ''}${shieldRating}`);
+          if (actorShieldRating && actorShieldReadied) {
+            modifiersText.push(`Shield Rating ${actorShieldRating >= 0 ? '+' : ''}${actorShieldRating}`);
           }
           if (modifier) {
             modifiersText.push(`Modifier ${modifier >= 0 ? '+' : ''}${modifier}`);
