@@ -48,6 +48,9 @@ export class UnboundFateActor extends Actor {
   _prepareCharacterData(actorData) {
     if (actorData.type !== 'character') return;
     const systemData = actorData.system;
+    // Ensure specialAbilities.grt exists for characters
+    if (!systemData.specialAbilities) systemData.specialAbilities = {};
+    if (!systemData.specialAbilities.grt) systemData.specialAbilities.grt = { value: 0, available: 0 };
     this._calculateHitPoints(systemData);
 
     // Make modifications to data here. For example:
@@ -64,6 +67,9 @@ export class UnboundFateActor extends Actor {
   _prepareNpcData(actorData) {
     if (actorData.type !== 'npc') return;
     const systemData = actorData.system;
+    // Ensure specialAbilities.grt exists for npcs (if needed)
+    if (!systemData.specialAbilities) systemData.specialAbilities = {};
+    if (!systemData.specialAbilities.grt) systemData.specialAbilities.grt = { value: 0, available: 0 };
     systemData.xp = systemData.cr * systemData.cr * 100;
     this._calculateHitPoints(systemData);
 
@@ -122,8 +128,9 @@ export class UnboundFateActor extends Actor {
     // Current Calculation: maxHP = ((STR + END) x 3) + Grit
     const str = systemData.abilities?.str?.value || 0;
     const end = systemData.abilities?.end?.value || 0;
+    const grt = systemData.specialAbilities?.grt?.value || 0;
     if (!systemData.hitPoints) systemData.hitPoints = {};
-    systemData.hitPoints.maxHP = ((systemData.abilities.str.value || 0) + (systemData.abilities.end.value || 0) * 3) + (systemData.specialAbilites.grt.value || 0);
+    systemData.hitPoints.maxHP = ((str + end) * 3) + (grt);
     // Clamp currentHP to maxHP if needed
     if (systemData.hitPoints.currentHP > systemData.hitPoints.maxHP) {
       systemData.hitPoints.currentHP = systemData.hitPoints.maxHP;

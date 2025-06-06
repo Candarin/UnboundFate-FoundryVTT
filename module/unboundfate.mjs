@@ -87,6 +87,15 @@ Handlebars.registerHelper('toLowerCase', function (str) {
   return str.toLowerCase();
 });
 
+// Handlebars helper: range(start, end) => [start, ..., end]
+Handlebars.registerHelper('range', function(start, end) {
+  start = Number(start);
+  end = Number(end);
+  let result = [];
+  for (let i = start; i <= end; i++) result.push(i);
+  return result;
+});
+
 /* -------------------------------------------- */
 /*  Ready Hook                                  */
 /* -------------------------------------------- */
@@ -183,4 +192,3 @@ function setUnboundFateTheme(themeKey) {
 }
 
 
-  

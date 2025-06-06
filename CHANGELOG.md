@@ -271,3 +271,6 @@
 - added some initial css for HP
 - minor changes on weapon sheet
 
+## 1.0.78
+- Added range hbs helpers
+- fixed issue with grit in HP calc
