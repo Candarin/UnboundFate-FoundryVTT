@@ -1,0 +1,16 @@
+// Unbound Fate Dark Theme
+.theme-unboundfate-dark {
+  // Example: darken backgrounds, lighten text
+  background-color: #181a1b !important;
+  color: #e0e0e0 !important;
+  
+  .window-content, .sheet {
+    background: #23272a !important;
+    color: #e0e0e0 !important;
+  }
+  
+  a, .button, .rollable {
+    color: #8ecae6 !important;
+  }
+  // Add more dark theme overrides as needed
+}

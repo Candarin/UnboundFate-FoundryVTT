@@ -70,3 +70,23 @@ UNBOUNDFATE.attackTypeDefinitions = {
     name: 'UNBOUNDFATE.AttackType.ranged',
   },
 };
+
+// Theme definitions
+export const THEME_CONFIG = {
+  'unboundfate-default': {
+    label: "Unbound Fate Default",
+    css: "css/unboundfate.css",
+    class: "theme-unboundfate-default"
+  },
+  'unboundfate-dark': {
+    label: "Unbound Fate Dark",
+    css: "css/unboundfate-dark.css",
+    class: "theme-unboundfate-dark"
+  },
+  'unboundfate-cyberpunk': {
+    label: "Unbound Fate Cyberpunk",
+    css: "css/unboundfate-cyberpunk.css",
+    class: "theme-unboundfate-cyberpunk"
+  }
+};
+

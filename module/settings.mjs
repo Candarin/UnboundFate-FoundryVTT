@@ -1,3 +1,5 @@
+import { THEME_CONFIG } from './helpers/config.mjs';
+
 // Register module settings for Foundry VTT
 export const registerSystemSettings = () => {
     game.settings.register("unboundfate", "exampleSetting", {
@@ -21,6 +23,19 @@ export const registerSystemSettings = () => {
         default: false,
         onChange: value => {
             console.log(`Unbound Fate | Enable Feature setting changed to: ${value}`);
+        }
+    });
+
+    game.settings.register("unboundfate", "theme", {
+        name: "Theme",
+        hint: "Select your preferred UI theme.",
+        scope: "client",
+        config: true,
+        type: String,
+        choices: Object.fromEntries(Object.entries(THEME_CONFIG).map(([k, v]) => [k, v.label])),
+        default: "unboundfate-default",
+        onChange: value => {
+            if (window.setUnboundFateTheme) window.setUnboundFateTheme(value);
         }
     });
 };

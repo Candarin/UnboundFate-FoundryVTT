@@ -8,7 +8,7 @@ import { UnboundFateActorSheet } from './sheets/actor-sheet.mjs';
 import { UnboundFateItemSheet } from './sheets/item-sheet.mjs';
 // Import helper/utility classes and constants.
 import { preloadHandlebarsTemplates } from './helpers/templates.mjs';
-import { UNBOUNDFATE } from './helpers/config.mjs';
+import { UNBOUNDFATE, THEME_CONFIG } from './helpers/config.mjs';
 // Import custom rolls
 import { UFRoll } from './dice/UFRoll.mjs';
 // Import chat listeners
@@ -33,6 +33,13 @@ Hooks.once('init', function () {
   // Register System Settings
   console.log("Unbound Fate | Initializing System settings...");
   registerSystemSettings();
+
+  // Apply the current theme setting on system load
+  const themeKey = game.settings?.get("unboundfate", "theme") || "unboundfate-default";
+  setUnboundFateTheme(themeKey);
+  // Make available globally for settings onChange
+  window.setUnboundFateTheme = setUnboundFateTheme;
+
 
   /**
    * Set an initiative formula for the system
@@ -157,3 +164,23 @@ function rollItemMacro(itemUuid) {
     item.roll();
   });
 }
+
+/**
+ * Applies the selected Unbound Fate theme by updating the <body> class.
+ * @param {string} themeKey - The key of the selected theme.
+ */
+function setUnboundFateTheme(themeKey) {
+    const themeConfig = THEME_CONFIG[themeKey] || THEME_CONFIG["unboundfate-default"];
+    const body = document.body;
+    // Remove all Unbound Fate theme classes
+    Object.keys(THEME_CONFIG).forEach(key => {
+        body.classList.remove(THEME_CONFIG[key].class);
+    });
+    // Add the selected theme class
+    body.classList.add(themeConfig.class);
+    // Log the theme change
+    console.log(`Unbound Fate | Theme changed to: ${themeKey} (${themeConfig.label})`);
+}
+
+
+  

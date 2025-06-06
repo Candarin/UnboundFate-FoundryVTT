@@ -364,5 +364,39 @@
 .unboundfate .effects .item .effect-controls {
   border: none;
 }
-
-/*# sourceMappingURL=unboundfate.css.map */
+.unboundfate .chat-success-vs-target .roll-outcome {
+  text-align: center;
+}
+.unboundfate .chat-success-vs-target .rolled-number {
+  text-align: center;
+  font-size: x-large;
+}
+.unboundfate .chat-success-vs-target .rolled-number .success {
+  color: var(#4caf50);
+}
+.unboundfate .chat-success-vs-target .rolled-number .fail {
+  color: var(#f44336);
+}
+.unboundfate .theme-unboundfate-dark {
+  background-color: #181a1b !important;
+  color: #e0e0e0 !important;
+}
+.unboundfate .theme-unboundfate-dark .window-content, .unboundfate .theme-unboundfate-dark .sheet {
+  background: #23272a !important;
+  color: #e0e0e0 !important;
+}
+.unboundfate .theme-unboundfate-dark a, .unboundfate .theme-unboundfate-dark .button, .unboundfate .theme-unboundfate-dark .rollable {
+  color: #8ecae6 !important;
+}
+.unboundfate .theme-unboundfate-cyberpunk {
+  background-color: #0f1021 !important;
+  color: #ff00cc !important;
+}
+.unboundfate .theme-unboundfate-cyberpunk .window-content, .unboundfate .theme-unboundfate-cyberpunk .sheet {
+  background: linear-gradient(135deg, #0f1021 60%, #232946 100%) !important;
+  color: #ff00cc !important;
+}
+.unboundfate .theme-unboundfate-cyberpunk a, .unboundfate .theme-unboundfate-cyberpunk .button, .unboundfate .theme-unboundfate-cyberpunk .rollable {
+  color: #00fff7 !important;
+  text-shadow: 0 0 4px #ff00cc, 0 0 8px #00fff7;
+}

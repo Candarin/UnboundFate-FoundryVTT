@@ -79,7 +79,7 @@ export function launchWeaponDodgeDialog({ actor, attackingActor, options = {} })
     modifiersText.push(`Armor Deflect ${actorArmorDeflect >= 0 ? '+' : ''}${actorArmorDeflect}`);
   }
   if (actorShieldRating && actorShieldReadied) {
-    modifiersText.push(`Shield Rating ${shieldRating >= 0 ? '+' : ''}${shieldRating}`);
+    modifiersText.push(`Shield Rating ${actorShieldRating >= 0 ? '+' : ''}${actorShieldRating}`);
   }
   if (modifier) {
     modifiersText.push(`Modifier ${modifier >= 0 ? '+' : ''}${modifier}`);
@@ -144,8 +144,7 @@ export function launchWeaponDodgeDialog({ actor, attackingActor, options = {} })
                 ability1Key,
                 ability1Value,
                 ability2Key,
-                ability2Value,
-                parry,
+                ability2Value,                
                 modifier,
                 totalPool,
                 modifiersString,        
@@ -206,7 +205,7 @@ export function launchWeaponDodgeDialog({ actor, attackingActor, options = {} })
           const modifiersString = modifiersText.join(', ');
 
           // Calculate total pool
-          const totalPool = ability1Value + ability2Value + actorParry + actorArmorDeflect + shieldRating + modifier;
+          const totalPool = ability1Value + ability2Value + actorParry + actorArmorDeflect + actorShieldRating + modifier;
 
           // Update total pool and modifier string in the form
           html.find('#totalPool').val(totalPool);

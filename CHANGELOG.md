@@ -257,3 +257,8 @@
 
 ## 1.0.74
 - Changes to dodge roll and chatMessage appearance
+
+## 1.0.75
+- Implemented themes and theme selection settings
+- updates to weapondodge roll and dialog
+

@@ -143,6 +143,7 @@ export async function rollWeaponDodge({ actor, attackingActor, options = {} }) {
   const successMessage = "Dodged!";
   const failMessage = "Failed to dodge!";
 
+  const rollActor = await renderTemplate('systems/unboundfate/templates/chat/chat-actor.hbs', { actor, actorType: 'defender' });
   const rollOutcomeContent = await renderTemplate('systems/unboundfate/templates/chat/chat-success-vs-target.hbs', {
     outcome,
     successMessage,
@@ -154,7 +155,7 @@ export async function rollWeaponDodge({ actor, attackingActor, options = {} }) {
 
   // Roll Content
   let rollContent = `<h3>Dodge Roll</h3>`;
-  rollContent += `<strong>${actor.name}</strong>`;
+  rollContent += rollActor;
   rollContent += `<hr>`;
   rollContent += `${modifiersString ? `<div class="modifiers-string">${modifiersString}</div>` : ''}`;
   rollContent += `<hr>`;

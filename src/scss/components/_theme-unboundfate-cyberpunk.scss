@@ -1,0 +1,17 @@
+// Unbound Fate Cyberpunk Theme
+.theme-unboundfate-cyberpunk {
+  background-color: #0f1021 !important;
+  color: #ff00cc !important;
+
+  .window-content, .sheet {
+    background: linear-gradient(135deg, #0f1021 60%, #232946 100%) !important;
+    color: #ff00cc !important;
+  }
+
+  a, .button, .rollable {
+    color: #00fff7 !important;
+    text-shadow: 0 0 4px #ff00cc, 0 0 8px #00fff7;
+  }
+
+  // Add more cyberpunk theme overrides as needed
+}

@@ -1,0 +1,20 @@
+
+.chat-success-vs-target {
+
+    .roll-outcome {
+        text-align: center;
+    }
+
+    .rolled-number {
+        text-align: center;
+        font-size: x-large;
+        
+        .success {
+            color: var($c-success);
+        }
+
+        .fail {
+            color: var($c-fail);
+        }
+    }
+}
