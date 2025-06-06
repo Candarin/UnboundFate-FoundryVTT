@@ -204,10 +204,10 @@
 }
 
 /* Styles limited to unboundfate sheets */
-.unboundfate .item-form {
+.system-unboundfate .item-form {
   font-family: "Roboto", sans-serif;
 }
-.unboundfate .sheet-header {
+.system-unboundfate .sheet-header {
   flex: 0 auto;
   overflow: hidden;
   display: flex;
@@ -216,43 +216,43 @@
   justify-content: flex-start;
   margin-bottom: 10px;
 }
-.unboundfate .sheet-header .profile-img {
+.system-unboundfate .sheet-header .profile-img {
   flex: 0 0 100px;
   height: 100px;
   margin-right: 10px;
 }
-.unboundfate .sheet-header .header-fields {
+.system-unboundfate .sheet-header .header-fields {
   flex: 1;
 }
-.unboundfate .sheet-header h1.charname {
+.system-unboundfate .sheet-header h1.charname {
   height: 50px;
   padding: 0px;
   margin: 5px 0;
   border-bottom: 0;
 }
-.unboundfate .sheet-header h1.charname input {
+.system-unboundfate .sheet-header h1.charname input {
   width: 100%;
   height: 100%;
   margin: 0;
 }
-.unboundfate .sheet-tabs {
+.system-unboundfate .sheet-tabs {
   flex: 0;
 }
-.unboundfate .sheet-body,
-.unboundfate .sheet-body .tab,
-.unboundfate .sheet-body .tab .editor {
+.system-unboundfate .sheet-body,
+.system-unboundfate .sheet-body .tab,
+.system-unboundfate .sheet-body .tab .editor {
   height: 100%;
 }
-.unboundfate .tox .tox-editor-container {
+.system-unboundfate .tox .tox-editor-container {
   background: #fff;
 }
-.unboundfate .tox .tox-edit-area {
+.system-unboundfate .tox .tox-edit-area {
   padding: 0 8px;
 }
-.unboundfate .resource-label {
+.system-unboundfate .resource-label {
   font-weight: bold;
 }
-.unboundfate .items-header {
+.system-unboundfate .items-header {
   height: 28px;
   margin: 2px 0;
   padding: 0;
@@ -261,17 +261,17 @@
   border: 2px groove #eeede0;
   font-weight: bold;
 }
-.unboundfate .items-header > * {
+.system-unboundfate .items-header > * {
   font-size: 14px;
   text-align: center;
 }
-.unboundfate .items-header .item-name {
+.system-unboundfate .items-header .item-name {
   font-weight: bold;
   padding-left: 5px;
   text-align: left;
   display: flex;
 }
-.unboundfate .items-list {
+.system-unboundfate .items-list {
   list-style: none;
   margin: 0;
   padding: 0;
@@ -279,12 +279,12 @@
   scrollbar-width: thin;
   color: #444;
 }
-.unboundfate .items-list .item-list {
+.system-unboundfate .items-list .item-list {
   list-style: none;
   margin: 0;
   padding: 0;
 }
-.unboundfate .items-list .item-name {
+.system-unboundfate .items-list .item-name {
   flex: 2;
   margin: 0;
   overflow: hidden;
@@ -293,46 +293,46 @@
   align-items: center;
   display: flex;
 }
-.unboundfate .items-list .item-name h3, .unboundfate .items-list .item-name h4 {
+.system-unboundfate .items-list .item-name h3, .system-unboundfate .items-list .item-name h4 {
   margin: 0;
   white-space: nowrap;
   overflow-x: hidden;
 }
-.unboundfate .items-list .item-controls {
+.system-unboundfate .items-list .item-controls {
   display: flex;
   flex: 0 0 100px;
   justify-content: flex-end;
 }
-.unboundfate .items-list .item-controls a {
+.system-unboundfate .items-list .item-controls a {
   font-size: 12px;
   text-align: center;
   margin: 0 6px;
 }
-.unboundfate .items-list .item {
+.system-unboundfate .items-list .item {
   align-items: center;
   padding: 0 2px;
   border-bottom: 1px solid #c9c7b8;
 }
-.unboundfate .items-list .item:last-child {
+.system-unboundfate .items-list .item:last-child {
   border-bottom: none;
 }
-.unboundfate .items-list .item .item-name {
+.system-unboundfate .items-list .item .item-name {
   color: #191813;
 }
-.unboundfate .items-list .item .item-name .item-image {
+.system-unboundfate .items-list .item .item-name .item-image {
   flex: 0 0 30px;
   height: 30px;
   background-size: 30px;
   border: none;
   margin-right: 5px;
 }
-.unboundfate .items-list .item-prop {
+.system-unboundfate .items-list .item-prop {
   text-align: center;
   border-left: 1px solid #c9c7b8;
   border-right: 1px solid #c9c7b8;
   font-size: 12px;
 }
-.unboundfate .items-list .items-header {
+.system-unboundfate .items-list .items-header {
   height: 28px;
   margin: 2px 0;
   padding: 0;
@@ -341,62 +341,62 @@
   border: 2px groove #eeede0;
   font-weight: bold;
 }
-.unboundfate .items-list .items-header > * {
+.system-unboundfate .items-list .items-header > * {
   font-size: 12px;
   text-align: center;
 }
-.unboundfate .items-list .items-header .item-name {
+.system-unboundfate .items-list .items-header .item-name {
   padding-left: 5px;
   text-align: left;
 }
-.unboundfate .item-formula {
+.system-unboundfate .item-formula {
   flex: 0 0 200px;
   padding: 0 8px;
 }
-.unboundfate .effects .item .effect-source,
-.unboundfate .effects .item .effect-duration,
-.unboundfate .effects .item .effect-controls {
+.system-unboundfate .effects .item .effect-source,
+.system-unboundfate .effects .item .effect-duration,
+.system-unboundfate .effects .item .effect-controls {
   text-align: center;
   border-left: 1px solid #c9c7b8;
   border-right: 1px solid #c9c7b8;
   font-size: 12px;
 }
-.unboundfate .effects .item .effect-controls {
+.system-unboundfate .effects .item .effect-controls {
   border: none;
 }
-.unboundfate .chat-success-vs-target .roll-outcome {
+.system-unboundfate .chat-success-vs-target .roll-outcome {
   text-align: center;
 }
-.unboundfate .chat-success-vs-target .rolled-number {
+.system-unboundfate .chat-success-vs-target .rolled-number {
   text-align: center;
   font-size: x-large;
 }
-.unboundfate .chat-success-vs-target .rolled-number .success {
+.system-unboundfate .chat-success-vs-target .rolled-number .success {
   color: var(#4caf50);
 }
-.unboundfate .chat-success-vs-target .rolled-number .fail {
+.system-unboundfate .chat-success-vs-target .rolled-number .fail {
   color: var(#f44336);
 }
-.unboundfate .theme-unboundfate-dark {
+.system-unboundfate .theme-unboundfate-dark {
   background-color: #181a1b !important;
   color: #e0e0e0 !important;
 }
-.unboundfate .theme-unboundfate-dark .window-content, .unboundfate .theme-unboundfate-dark .sheet {
+.system-unboundfate .theme-unboundfate-dark .window-content, .system-unboundfate .theme-unboundfate-dark .sheet {
   background: #23272a !important;
   color: #e0e0e0 !important;
 }
-.unboundfate .theme-unboundfate-dark a, .unboundfate .theme-unboundfate-dark .button, .unboundfate .theme-unboundfate-dark .rollable {
+.system-unboundfate .theme-unboundfate-dark a, .system-unboundfate .theme-unboundfate-dark .button, .system-unboundfate .theme-unboundfate-dark .rollable {
   color: #8ecae6 !important;
 }
-.unboundfate .theme-unboundfate-cyberpunk {
+.system-unboundfate .theme-unboundfate-cyberpunk {
   background-color: #0f1021 !important;
   color: #ff00cc !important;
 }
-.unboundfate .theme-unboundfate-cyberpunk .window-content, .unboundfate .theme-unboundfate-cyberpunk .sheet {
+.system-unboundfate .theme-unboundfate-cyberpunk .window-content, .system-unboundfate .theme-unboundfate-cyberpunk .sheet {
   background: linear-gradient(135deg, #0f1021 60%, #232946 100%) !important;
   color: #ff00cc !important;
 }
-.unboundfate .theme-unboundfate-cyberpunk a, .unboundfate .theme-unboundfate-cyberpunk .button, .unboundfate .theme-unboundfate-cyberpunk .rollable {
+.system-unboundfate .theme-unboundfate-cyberpunk a, .system-unboundfate .theme-unboundfate-cyberpunk .button, .system-unboundfate .theme-unboundfate-cyberpunk .rollable {
   color: #00fff7 !important;
   text-shadow: 0 0 4px #ff00cc, 0 0 8px #00fff7;
 }

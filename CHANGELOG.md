@@ -262,3 +262,6 @@
 - Implemented themes and theme selection settings
 - updates to weapondodge roll and dialog
 
+## 1.0.75
+- Updated main css selector
+
