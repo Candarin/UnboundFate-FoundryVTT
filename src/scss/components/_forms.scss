@@ -53,3 +53,28 @@
     padding: 0 8px;
   }
 }
+
+// HP Bar Styles
+.hp-box {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2em;
+  height: 2em;
+  margin: 0 0.1em;
+  border: 2px solid #b0b0b0;
+  border-radius: 0.3em;
+  background: #fff;
+  color: #222;
+  font-weight: bold;
+  font-size: 1.1em;
+  transition: background 0.2s, color 0.2s, border-color 0.2s;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.08);
+}
+
+.hp-box-filled {
+  background: #c0392b;
+  color: #fff;
+  border-color: #a93226;
+  box-shadow: 0 0 6px #c0392b55;
+}

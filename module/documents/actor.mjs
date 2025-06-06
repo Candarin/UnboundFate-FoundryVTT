@@ -41,15 +41,16 @@ export class UnboundFateActor extends Actor {
     console.log(this);
   }
 
+  
   /**
    * Prepare Character type specific data
    */
   _prepareCharacterData(actorData) {
     if (actorData.type !== 'character') return;
+    const systemData = actorData.system;
+    this._calculateHitPoints(systemData);
 
     // Make modifications to data here. For example:
-    const systemData = actorData.system;
-
     // Loop through ability scores, and add their modifiers to our sheet output.
     //for (let [key, ability] of Object.entries(systemData.abilities)) {
       // Calculate the modifier using d20 rules.
@@ -62,10 +63,11 @@ export class UnboundFateActor extends Actor {
    */
   _prepareNpcData(actorData) {
     if (actorData.type !== 'npc') return;
-
-    // Make modifications to data here. For example:
     const systemData = actorData.system;
     systemData.xp = systemData.cr * systemData.cr * 100;
+    this._calculateHitPoints(systemData);
+
+    // Make modifications to data here. For example:
   }
 
   /**
@@ -110,4 +112,22 @@ export class UnboundFateActor extends Actor {
 
     // Process additional NPC data here.
   }
+
+
+   /**
+   * Calculate and set hit points based on ability scores.
+   * This should be called from both character and NPC data prep.
+   */
+  _calculateHitPoints(systemData) {
+    // Current Calculation: maxHP = ((STR + END) x 3) + Grit
+    const str = systemData.abilities?.str?.value || 0;
+    const end = systemData.abilities?.end?.value || 0;
+    if (!systemData.hitPoints) systemData.hitPoints = {};
+    systemData.hitPoints.maxHP = ((systemData.abilities.str.value || 0) + (systemData.abilities.end.value || 0) * 3) + (systemData.specialAbilites.grt.value || 0);
+    // Clamp currentHP to maxHP if needed
+    if (systemData.hitPoints.currentHP > systemData.hitPoints.maxHP) {
+      systemData.hitPoints.currentHP = systemData.hitPoints.maxHP;
+    }
+  }
+
 }

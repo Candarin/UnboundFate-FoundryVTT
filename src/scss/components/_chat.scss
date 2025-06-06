@@ -6,14 +6,17 @@
     }
 
     .rolled-number {
-        text-align: center;
-        font-size: x-large;
-        
-        .success {
+        text-align: center;        
+
+        label {
+            font-size: x-large;
+        }
+
+        .success span {
             color: var($c-success);
         }
 
-        .fail {
+        .fail span {
             color: var($c-fail);
         }
     }

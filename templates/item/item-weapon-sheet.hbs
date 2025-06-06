@@ -28,12 +28,12 @@
           {{!-- Weight --}}
           <div class="flexrow nowrap">
             <label class="resource-label">Weight</label>
-            <input type="number" name="system.weight" value="{{system.weight}}" data-dtype="Number" step="any" />
+            <input type="number" name="system.weight" value="{{system.weight}}" data-dtype="Number" step="0.5" />
           </div>
           {{!-- Cost --}}
           <div class="flexrow nowrap">
             <label class="resource-label">Cost</label>
-            <input type="number" name="system.cost" value="{{system.cost}}" data-dtype="Number" step="any" />              
+            <input type="number" name="system.cost" value="{{system.cost}}" data-dtype="Number" step="0.5" />              
           </div>
           {{!-- Weapon Type --}}
           <div class="flexrow nowrap">
@@ -48,12 +48,12 @@
           {{!-- Is Melee --}}
           <div class="flexrow nowrap">
             <label class="resource-label">Is Melee</label>
-            <input type="checkbox" name="system.isMelee" {{#if system.isMelee}}checked{{/if}} />  
+            <input type="checkbox" name="system.allowsMelee" {{#if system.allowsMelee}}checked{{/if}} />  
           </div>          
           {{!-- Is Ranged --}}
           <div class="flexrow nowrap">
             <label class="resource-label">Is Ranged</label>
-            <input type="checkbox" name="system.isRanged" {{#if system.isRanged}}checked{{/if}} />
+            <input type="checkbox" name="system.allowsRanged" {{#if system.allowsRanged}}checked{{/if}} />
           </div>
           {{!-- Is Equipped --}}  
           <div class="flexrow nowrap">
@@ -101,7 +101,12 @@
           <div class="flexrow nowrap">
             <label class="resource-label">Skill Specialisation</label>
             <input type="text" name="system.melee.skillSpec" value="{{system.melee.skillSpec}}" />
-          </div>                      
+          </div>
+          {{!-- Melee: Held In Two Hands --}}
+          <div class="flexrow nowrap">  
+            <label class="resource-label">Held In Two Hands</label>
+            <input type="checkbox" name="system.melee.held2H" {{#if system.melee.held2H}}checked{{/if}} />
+           </div>                       
       </div>
     </div>
     {{!-- Ranged Tab --}}

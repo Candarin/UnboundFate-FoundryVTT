@@ -69,8 +69,8 @@ export class UnboundFateItemSheet extends ItemSheet {
     context.config = CONFIG.UNBOUNDFATE;
 
     // Add flags for melee/ranged tab visibility
-    context.showMeleeTab = !!itemData.system.isMelee;
-    context.showRangedTab = !!itemData.system.isRanged;
+    context.showMeleeTab = itemData.system.isMelee;
+    context.showRangedTab = itemData.system.isRanged;
 
     // Prepare active effects for easier access
     context.effects = prepareActiveEffectCategories(this.item.effects);

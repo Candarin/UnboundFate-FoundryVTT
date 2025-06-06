@@ -262,6 +262,12 @@
 - Implemented themes and theme selection settings
 - updates to weapondodge roll and dialog
 
-## 1.0.75
+## 1.0.76
 - Updated main css selector
+
+## 1.0.77
+- added hit point calc
+- corrected some template errors
+- added some initial css for HP
+- minor changes on weapon sheet
 

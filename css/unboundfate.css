@@ -249,6 +249,28 @@
 .system-unboundfate .tox .tox-edit-area {
   padding: 0 8px;
 }
+.system-unboundfate .hp-box {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2em;
+  height: 2em;
+  margin: 0 0.1em;
+  border: 2px solid #b0b0b0;
+  border-radius: 0.3em;
+  background: #fff;
+  color: #222;
+  font-weight: bold;
+  font-size: 1.1em;
+  transition: background 0.2s, color 0.2s, border-color 0.2s;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
+}
+.system-unboundfate .hp-box-filled {
+  background: #c0392b;
+  color: #fff;
+  border-color: #a93226;
+  box-shadow: 0 0 6px rgba(192, 57, 43, 0.3333333333);
+}
 .system-unboundfate .resource-label {
   font-weight: bold;
 }
@@ -369,12 +391,14 @@
 }
 .system-unboundfate .chat-success-vs-target .rolled-number {
   text-align: center;
+}
+.system-unboundfate .chat-success-vs-target .rolled-number label {
   font-size: x-large;
 }
-.system-unboundfate .chat-success-vs-target .rolled-number .success {
+.system-unboundfate .chat-success-vs-target .rolled-number .success span {
   color: var(#4caf50);
 }
-.system-unboundfate .chat-success-vs-target .rolled-number .fail {
+.system-unboundfate .chat-success-vs-target .rolled-number .fail span {
   color: var(#f44336);
 }
 .system-unboundfate .theme-unboundfate-dark {
