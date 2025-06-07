@@ -153,7 +153,7 @@ export function launchWeaponDialog({ weapon, attackType, actor }) {
 
           // Update displayed ability value display
           const abilityValueElem = form.querySelector('#ability-value');
-          if (abilityValueElem) abilityValueElem.textContent = abilityValue;
+          if (abilityValueElem) abilityValueElem.value = abilityValue;
 
 
           // Update displayed Skill Rating

@@ -274,3 +274,8 @@
 ## 1.0.78
 - Added range hbs helpers
 - fixed issue with grit in HP calc
+
+## 1.0.79
+- dodge dialog - armour fix
+- character sheet layout changes
+- weapon changes (skills)

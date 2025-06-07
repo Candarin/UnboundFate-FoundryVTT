@@ -75,6 +75,16 @@ export class UnboundFateItemSheet extends ItemSheet {
     // Prepare active effects for easier access
     context.effects = prepareActiveEffectCategories(this.item.effects);
 
+    // Add skill options for melee.skill if this is a weapon
+    if (this.item.type === 'weapon') {
+      const skillDefs = CONFIG.UNBOUNDFATE.skillDefinitions || {};
+      context.skillOptions = Object.keys(skillDefs).map((key) => ({
+        key,
+        label: game.i18n.localize(CONFIG.UNBOUNDFATE.skills[key] || key),
+        selected: itemData.system?.melee?.skill === key,
+      }));
+    }
+
     return context;
   }
 

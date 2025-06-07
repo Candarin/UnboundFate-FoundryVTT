@@ -95,7 +95,11 @@
           {{!-- Melee: Skill --}}
           <div class="flexrow nowrap">
             <label class="resource-label">Skill</label>
-            <input type="text" name="system.melee.skill" value="{{system.melee.skill}}" />
+            <select name="system.melee.skill">
+              {{#each skillOptions}}
+                <option value="{{this.key}}" {{#if this.selected}}selected{{/if}}>{{this.label}}</option>
+              {{/each}}
+            </select>
           </div>
           {{!-- Melee: Skill Specialisation --}}
           <div class="flexrow nowrap">

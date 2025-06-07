@@ -51,10 +51,10 @@ export function launchWeaponDodgeDialog({ actor, attackingActor, options = {} })
   const actorWeaponSkillRating = actor.system.skills?.[actorWeaponSkillKey]?.rating || 0; // Use the weapon's skill rating if available
   const actorParry = Math.min(actorWeaponParry, actor.system.skills?.[actorWeaponSkillKey]?.rating || 0); // Use the weapon's parry or the skill rating, whichever is lower
 
-  // Armor (deflect rating from armor items)
-  const actorArmorList = actor.items.filter(i => i.type === 'armor' && i.system.isEquipped); 
-  const actorArmorDeflect = actorArmorList.reduce((total, armor) => total + (armor.system.deflect || 0), 0);
-  const actorArmorListString = actorArmorList.map(armor => `${armor.name} (Deflect: ${armor.system.deflect || 0})`).join(', ');
+  // Armor (deflect rating from armour items)
+  const actorArmourList = actor.items.filter(i => i.type === 'armour' && i.system.isEquipped); 
+  const actorArmourDeflect = actorArmourList.reduce((total, armour) => total + (armour.system.deflect || 0), 0);
+  const actorArmourListString = actorArmourList.map(armour => `${armour.name} (Deflect: ${armour.system.deflect || 0})`).join(', ');
   
   // Shield
   const actorShieldList = actor.items.filter(i => i.type === 'shield' && i.system.isEquipped);
@@ -75,8 +75,8 @@ export function launchWeaponDodgeDialog({ actor, attackingActor, options = {} })
   if (actorParry) {
     modifiersText.push(`Parry ${actorParry >= 0 ? '+' : ''}${actorParry}`);
   }
-  if (actorArmorDeflect) {
-    modifiersText.push(`Armor Deflect ${actorArmorDeflect >= 0 ? '+' : ''}${actorArmorDeflect}`);
+  if (actorArmourDeflect) {
+    modifiersText.push(`Armor Deflect ${actorArmourDeflect >= 0 ? '+' : ''}${actorArmourDeflect}`);
   }
   if (actorShieldRating && actorShieldReadied) {
     modifiersText.push(`Shield Rating ${actorShieldRating >= 0 ? '+' : ''}${actorShieldRating}`);
@@ -109,8 +109,8 @@ export function launchWeaponDodgeDialog({ actor, attackingActor, options = {} })
     actorWeaponSkillKey,
     actorWeaponSkillRating,
     actorParry,
-    actorArmorDeflect,
-    actorArmorListString,
+    actorArmourDeflect,
+    actorArmourListString,
     actorShieldList,
     actorShieldReadied,
     actorShieldRating,
@@ -178,7 +178,7 @@ export function launchWeaponDodgeDialog({ actor, attackingActor, options = {} })
           
 
           // Armor deflect          
-          const actorArmorDeflect = form.actorArmorDeflect.value || 0; // Use the total deflect from equipped armor
+          const actorArmorDeflect = form.actorArmorDeflect.value || 0; // Use the total deflect from equipped armour
           // Shield rating
           const actorShieldRating = actorShieldReadied?.system?.shieldRating || 0; // Use the highest block rating from readied shields
 

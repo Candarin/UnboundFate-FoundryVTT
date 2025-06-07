@@ -29,12 +29,14 @@
   <!-- Ability -->
   <div class="form-group">
     <label for="abilityKey">Ability</label>
-    <select name="abilityKey">
-      {{#each abilityOptions}}
-        <option value="{{this.key}}" {{#if this.selected}}selected{{/if}}>{{this.label}}</option>
-      {{/each}}
-    </select>
-    <span> (<span id="ability-value">{{abilityValue}}</span>)</span>
+    <div class="flexrow"></div>
+      <select class="flex2" name="abilityKey">
+        {{#each abilityOptions}}
+          <option value="{{this.key}}" {{#if this.selected}}selected{{/if}}>{{this.label}}</option>
+        {{/each}}
+      </select>
+      <input class="flex0 statvaluebox" id="ability-value" value="{{abilityValue}}" style="width: 40px" disabled />
+    </div>
   </div>
   <!-- Skill -->
   <div class="form-group">
@@ -45,7 +47,7 @@
         <option value="{{this.key}}" {{#if this.selected}}selected{{/if}}>{{this.label}}</option>
       {{/each}}
       </select>
-      <input class="flex0" id="skill-rating" value="{{skillRating}}" style="width: 30px" disabled />
+      <input class="flex0 statvaluebox" id="skill-rating" value="{{skillRating}}" style="width: 40px" disabled />
     </div>   
   </div>
   <div class="form-group">
