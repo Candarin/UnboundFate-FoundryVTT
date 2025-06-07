@@ -181,8 +181,20 @@ export function launchWeaponDialog({ weapon, attackType, actor }) {
           if (modifiersElem) modifiersElem.textContent = modifiersString;         
         }
         // Add listeners for each editable field, matching skill-dialog style
-        form.abilityKey.addEventListener('change', updateTotal);
-        form.skillKey.addEventListener('change', function() {          
+        form.abilityKey.addEventListener('change', function() {
+          const selectedAbilityKey = form.abilityKey?.value || '';
+
+          // Update ability value display
+          const abilityValueElem = form.querySelector('#ability-value');
+          if (abilityValueElem) {
+            abilityValueElem.value = actor.system.abilities[selectedAbilityKey]?.value || 0;
+          }
+          // Update total pool
+          updateTotal;        
+        });
+
+        // Skill change listener
+        form.skillKey.addEventListener('select', function() {          
           const selectedSkillKey = form.skillKey?.value || '';
           // update the skill specialisation field based on the selected skill
           const specElem = form.querySelector('#skillSpec');

@@ -279,3 +279,7 @@
 - dodge dialog - armour fix
 - character sheet layout changes
 - weapon changes (skills)
+
+## 1.0.80
+- HP updates (layout/css)
+- weapon dialog fix

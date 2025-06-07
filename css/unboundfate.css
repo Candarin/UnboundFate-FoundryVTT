@@ -255,15 +255,24 @@
   justify-content: center;
   width: 2em;
   height: 2em;
-  margin: 0 0.1em;
-  border: 2px solid #b0b0b0;
+  border: 1px 0px solid #b0b0b0;
   border-radius: 0.3em;
-  background: #fff;
+  background: #ccc;
   color: #222;
   font-weight: bold;
-  font-size: 1.1em;
+  font-size: 0.9em;
   transition: background 0.2s, color 0.2s, border-color 0.2s;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
+}
+.system-unboundfate .hp-box:first-child {
+  border-left: 1px solid #b0b0b0;
+  border-top-left-radius: 3px;
+  border-bottom-left-radius: 3px;
+}
+.system-unboundfate .hp-box:last-child {
+  border-right: 1px solid #b0b0b0;
+  border-top-right-radius: 3px;
+  border-bottom-right-radius: 3px;
 }
 .system-unboundfate .hp-box-filled {
   background: #c0392b;
