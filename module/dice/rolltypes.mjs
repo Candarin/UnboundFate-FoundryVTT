@@ -1,5 +1,6 @@
 import { UFRoll } from './UFRoll.mjs';
 import { launchWeaponDodgeDialog } from '../dialogs/weapondodge-dialog.mjs';
+import { damageArrayToString } from '../helpers/actor-utils.mjs';
 
 /**
  * Rolls a skill pool and sends the result to chat.
@@ -62,7 +63,7 @@ export async function rollWeaponAttack({ weapon, actor, targets = [], totalPool,
     : '<em>None</em>';
 
   
-  
+  const damageString = Array.isArray(damageArray) && damageArray.length > 0 ? damageArrayToString(damageArray) : '';
 
   const formula = `${totalPool}d6cs>=5`;
   const roll = new UFRoll(formula, actor.getRollData(), { targetNumber: 0 });
@@ -70,15 +71,8 @@ export async function rollWeaponAttack({ weapon, actor, targets = [], totalPool,
   const successes = roll.hits;
   const rollHTML = (await roll.render()).replace(/<div class="dice-total">[\s\S]*?<\/div>/, '');
 
-  // Build chat content with a Dodge button for each target
-  let dodgeButtons = '';
-  if (targets && targets.length) {
-    dodgeButtons = '<div class="dodge-buttons" style="margin-top:0.5em;">';
-    for (const t of targets) {
-      dodgeButtons += `<button class="dodge-roll" data-token-id="${t.id}" data-actor-id="${t.actor?.id || ''}">Dodge (${t.name})</button> `;
-    }
-    dodgeButtons += '</div>';
-  }
+  // Build chat content with a single Dodge button (global, not per target)
+  const dodgeButtons = '<div class="dodge-buttons" style="margin-top:0.5em;"><button class="dodge-roll">Dodge</button></div>';
 
   // Generate handlebars templates
   const actorHeader = await renderTemplate('systems/unboundfate/templates/chat/chat-actor.hbs', { actor, actorType: 'attacker' });
@@ -93,6 +87,8 @@ export async function rollWeaponAttack({ weapon, actor, targets = [], totalPool,
   rollContent += `<hr>`;
   rollContent += weaponHeader;
   rollContent += `${modifierList ? `<div class="modifiers-string">${modifierList}</div>` : ''}`;
+  rollContent += `<hr>`;
+  rollContent += `<div class="damage-string">Damage:<span>${damageString}</span></div>`;
   rollContent += `<hr>`;
   rollContent += `<h4>Targets:</h4>`;
   rollContent += targets.length > 1 ? `${targetNames}` : targetContent;
@@ -176,14 +172,13 @@ export async function rollWeaponDodge({ actor, attackingActor, options = {} }) {
   });
 
   // If the dodge failed, roll damage from the attacking actor
-  if (targetNumber > 0 && !roll.isSuccess()) {
+  if (!outcome) {
     const weapon = options.weapon || (options.chatMessageData?.flags?.weapon ?? null);
     // Prefer structured damageArray if present
     const damageArray = options.damageArray || options.chatMessageData?.flags?.damageArray || [];
     const attacker = attackingActor;
     if (attacker && weapon && Array.isArray(damageArray) && damageArray.length > 0) {
       // Create a chat message with a button to roll damage
-      const { damageArrayToString } = await import('../helpers/actor-utils.mjs');
       const damageString = damageArrayToString(damageArray);
       const label = `<strong>${weapon.name}</strong> Damage to ${actor?.name || 'Target'}`;
       const buttonId = `roll-damage-${randomID()}`;
@@ -258,7 +253,6 @@ export async function rollDamageArray({ weapon, attacker, target, damageArray })
     return;
   }
   // Import the utility for string conversion
-  const { damageArrayToString } = await import('../helpers/actor-utils.mjs');
   const damageString = damageArrayToString(damageArray);
   // Combine all formulas for a single roll, or roll each separately as needed
   const formulas = damageArray.map(d => d.formula).join(' + ');

@@ -159,8 +159,7 @@ export function launchWeaponDodgeDialog({ actor, attackingActor, options = {} })
           }
         },
         cancel: {
-          label: 'Cancel',
-          callback: () => resolve(null)
+          label: 'Cancel'
         }
       },
       default: 'roll',

@@ -89,4 +89,17 @@ export function registerUnboundFateChatListeners() {
       });
     });
   });
+  // Add global listener for chat-select-link
+  $(document).on('click', '.chat-select-link', function (event) {
+    event.preventDefault();
+    const tokenId = $(this).data('token-id');
+    if (!tokenId) return;
+    const token = canvas.tokens?.get(tokenId);
+    if (token) {
+      canvas.tokens?.releaseAll();
+      token.control({ releaseOthers: true, pan: true });
+    } else {
+      ui.notifications.error('Token not found on the current scene.');
+    }
+  });
 }
