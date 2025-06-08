@@ -283,3 +283,7 @@
 ## 1.0.80
 - HP updates (layout/css)
 - weapon dialog fix
+
+## 1.0.81
+- added damage roll
+- HP css tweaks

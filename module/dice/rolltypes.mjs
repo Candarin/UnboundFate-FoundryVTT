@@ -45,7 +45,7 @@ export async function rollSkillPool({ skillKey, skillRating, abilityKey, ability
  * @param {string} params.totalPool - The total pool of dice to roll (required)
  * @param {string} params.modifierList - A concatenated string of modifiers (optional) to display on the chat message
  */
-export async function rollWeaponAttack({ weapon, actor, targets = [], totalPool, modifierList = '', attackType}) {
+export async function rollWeaponAttack({ weapon, actor, targets = [], totalPool, modifierList = '', attackType, damageArray }) {
   // Get weapon and skill info
   const weaponName = weapon.name;
   const damage1H = weapon.system.damage1H || '';
@@ -105,7 +105,11 @@ export async function rollWeaponAttack({ weapon, actor, targets = [], totalPool,
     speaker: ChatMessage.getSpeaker({ actor }),
     flavor: rollContent,
     content: rollHTML,
-    roll: roll
+    roll: roll,
+    flags: {
+      weapon,
+      damageArray // Pass the array for downstream dialogs (dodge, damage, etc.)
+    }
   });
 }
 
@@ -174,9 +178,42 @@ export async function rollWeaponDodge({ actor, attackingActor, options = {} }) {
   // If the dodge failed, roll damage from the attacking actor
   if (targetNumber > 0 && !roll.isSuccess()) {
     const weapon = options.weapon || (options.chatMessageData?.flags?.weapon ?? null);
-    const damage = options.damage || weapon?.system?.damage1H || weapon?.system?.damage || '';
-    if (attackingActor && weapon && damage) {
-      await rollWeaponDamage({ weapon, attacker: attackingActor, target: actor, damage });
+    // Prefer structured damageArray if present
+    const damageArray = options.damageArray || options.chatMessageData?.flags?.damageArray || [];
+    const attacker = attackingActor;
+    if (attacker && weapon && Array.isArray(damageArray) && damageArray.length > 0) {
+      // Create a chat message with a button to roll damage
+      const { damageArrayToString } = await import('../helpers/actor-utils.mjs');
+      const damageString = damageArrayToString(damageArray);
+      const label = `<strong>${weapon.name}</strong> Damage to ${actor?.name || 'Target'}`;
+      const buttonId = `roll-damage-${randomID()}`;
+      const content = `
+        <div><strong>Damage:</strong> <span>${damageString}</span></div>
+        <button class="roll-damage-btn" id="${buttonId}">Roll Damage</button>
+      `;
+      const msg = await ChatMessage.create({
+        speaker: ChatMessage.getSpeaker({ actor: attacker }),
+        flavor: label,
+        content,
+        flags: {
+          weapon,
+          damageArray,
+          attackerId: attacker.id,
+          targetId: actor.id
+        }
+      });
+      Hooks.once('renderChatMessage', (chatMsg, html) => {
+        if (chatMsg.id !== msg.id) return;
+        html.find(`#${buttonId}`).on('click', async () => {
+          await rollDamageArray({ weapon, attacker, target: actor, damageArray });
+        });
+      });
+    } else {
+      // Fallback to old logic if no array
+      const damage = options.damage || weapon?.system?.damage1H || weapon?.system?.damage || '';
+      if (attacker && weapon && damage) {
+        await rollWeaponDamage({ weapon, attacker, target: actor, damage });
+      }
     }
   }
 }
@@ -203,6 +240,35 @@ export async function rollWeaponDamage({ weapon, attacker, target, damage }) {
     flavor: label,
     content: rollHTML,
     roll: roll,
+    style: CONST.CHAT_MESSAGE_STYLES.ROLL
+  });
+}
+
+/**
+ * Rolls a structured damage array and sends the result to chat.
+ * @param {object} params
+ * @param {object} params.weapon - The weapon item object
+ * @param {Actor} params.attacker - The attacking actor
+ * @param {Actor} params.target - The defending actor
+ * @param {Array} params.damageArray - Array of damage objects {label, formula, type, source}
+ */
+export async function rollDamageArray({ weapon, attacker, target, damageArray }) {
+  if (!Array.isArray(damageArray) || damageArray.length === 0) {
+    ui.notifications.warn('No valid damage array provided.');
+    return;
+  }
+  // Import the utility for string conversion
+  const { damageArrayToString } = await import('../helpers/actor-utils.mjs');
+  const damageString = damageArrayToString(damageArray);
+  // Combine all formulas for a single roll, or roll each separately as needed
+  const formulas = damageArray.map(d => d.formula).join(' + ');
+  const roll = new Roll(formulas, attacker.getRollData());
+  await roll.evaluate();
+  let rollHTML = await roll.render();
+  ChatMessage.create({
+    speaker: ChatMessage.getSpeaker({ actor: attacker }),
+    flavor: `<strong>${weapon.name}</strong> Damage Roll to ${target?.name || 'Target'}<br><span>${damageString}</span>`,
+    content: rollHTML,
     style: CONST.CHAT_MESSAGE_STYLES.ROLL
   });
 }

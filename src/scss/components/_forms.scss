@@ -61,8 +61,7 @@
   justify-content: center;
   width: 2em;
   height: 2em;
-  border: 1px 0px solid #b0b0b0;
-  border-radius: 0.3em;
+  border: 1px 0px solid #8d8d8d;  
   background: #ccc;
   color: #222;
   font-weight: bold;
@@ -73,19 +72,19 @@
 
 .hp-box:first-child {
   border-left: 1px solid #b0b0b0;
-  border-top-left-radius: 3px;
-  border-bottom-left-radius: 3px;
+  border-top-left-radius: 7px;
+  border-bottom-left-radius: 7px;
 }
 
 .hp-box:last-child {
   border-right: 1px solid #b0b0b0;
-  border-top-right-radius: 3px;
-  border-bottom-right-radius: 3px;
+  border-top-right-radius: 7px;
+  border-bottom-right-radius: 7px;
 }
 
 .hp-box-filled {
-  background: #c0392b;
-  color: #fff;
-  border-color: #a93226;
+  background: #992d21;
+  color: #d4d4d4;
+  border-color: #641d17;
   box-shadow: 0 0 6px #c0392b55;
 }

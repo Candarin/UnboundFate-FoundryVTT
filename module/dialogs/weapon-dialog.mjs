@@ -1,4 +1,5 @@
 import { rollWeaponAttack } from '../dice/rolltypes.mjs';
+import { damageArrayToString } from '../helpers/actor-utils.mjs';
 
 /**
  * Launches a dialog for a weapon attack roll and handles the result.
@@ -72,18 +73,53 @@ export function launchWeaponDialog({ weapon, attackType, actor }) {
   const modifiersString = modifiersText.join(', ');
 
   // Determine weaponDamage based on attackType and held2H (for melee)
-  let weaponDamage = '';
+  let weaponDamageFormula = '';
+  let damageArray = [];
+
   if (attackType === 'melee') {
     const held2H = weapon.system.melee?.held2H || false;
-    weaponDamage = held2H ? (weapon.system.melee?.damage2H || weapon.system.melee?.damage1H || '') : (weapon.system.melee?.damage1H || '');
+    weaponDamageFormula = held2H ? (weapon.system.melee?.damage2H || weapon.system.melee?.damage1H || '') : (weapon.system.melee?.damage1H || '');
+    // Add weapon base damage
+    if (weaponDamageFormula) {
+      damageArray.push({
+        label: 'Weapon Damage',
+        formula: weaponDamageFormula,
+        type: weapon.system.melee?.damageType || weapon.system.damageType || 'slashing',
+        source: 'weapon'
+      });
+    }
   } else if (attackType === 'ranged') {
-    weaponDamage = weapon.system.ranged?.damage || '';
+    weaponDamageFormula = weapon.system.ranged?.damage || '';
+    if (weaponDamageFormula) {
+      damageArray.push({
+        label: 'Weapon Damage',
+        formula: weaponDamageFormula,
+        type: weapon.system.ranged?.damageType || weapon.system.damageType || 'piercing',
+        source: 'weapon'
+      });
+    }
   }
+
+  // Add ability bonus as a separate entry in the array
+  if (abilityValue > 0) {
+    damageArray.push({
+      label: `${game.i18n.localize(abilities[abilityKey])} Bonus`,
+      formula: `+${abilityValue}`,
+      type: (attackType === 'melee') ? (weapon.system.melee?.damageType || weapon.system.damageType || 'slashing') : (weapon.system.ranged?.damageType || weapon.system.damageType || 'piercing'),
+      source: 'ability'
+    });
+    weaponDamageFormula += ` +${abilityValue}`;
+  }
+
+  // Use the utility to generate the display string
+  const weaponDamageString = damageArrayToString(damageArray);
 
   // Prepare data for the template
   const templateData = {
     weaponName,
-    weaponDamage,
+    weaponDamageFormula,
+    weaponDamageString,
+    damageArray, // Pass the array for downstream dialogs
     attackType,
     skillKey,
     skillRating,
@@ -116,8 +152,8 @@ export function launchWeaponDialog({ weapon, attackType, actor }) {
             const modifier = parseInt(form.modifier.value, 10) || 0;
             const modifierList = form.querySelector('#modifiers-string')?.textContent || '';
             const attackType = form.querySelector('#attackType')?.textContent || 'melee'; // Default to melee if not set
-            // You can extract other fields similarly if needed
-            await rollWeaponAttack({ weapon, actor, targets, totalPool, modifierList, attackType });
+            // Pass damageArray to rollWeaponAttack
+            await rollWeaponAttack({ weapon, actor, targets, totalPool, modifierList, attackType, damageArray });
           }
         },
         cancel: {

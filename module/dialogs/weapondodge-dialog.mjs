@@ -16,6 +16,9 @@ export function launchWeaponDodgeDialog({ actor, attackingActor, options = {} })
   const targetNumber = options.successes ?? 0;
   const chatMessageData = options.chatMessageData || {};
 
+  // Access damageArray from options or chatMessageData.flags
+  const damageArray = options.damageArray || chatMessageData.flags?.damageArray || [];
+
     // Ability 1: Agility
   const ability1Key = 'agl';
   const ability1Value = actor.system.abilities?.[ability1Key]?.value || 0;
@@ -51,7 +54,7 @@ export function launchWeaponDodgeDialog({ actor, attackingActor, options = {} })
   const actorWeaponSkillRating = actor.system.skills?.[actorWeaponSkillKey]?.rating || 0; // Use the weapon's skill rating if available
   const actorParry = Math.min(actorWeaponParry, actor.system.skills?.[actorWeaponSkillKey]?.rating || 0); // Use the weapon's parry or the skill rating, whichever is lower
 
-  // Armor (deflect rating from armour items)
+  // Armour (deflect rating from armour items)
   const actorArmourList = actor.items.filter(i => i.type === 'armour' && i.system.isEquipped); 
   const actorArmourDeflect = actorArmourList.reduce((total, armour) => total + (armour.system.deflect || 0), 0);
   const actorArmourListString = actorArmourList.map(armour => `${armour.name} (Deflect: ${armour.system.deflect || 0})`).join(', ');
@@ -76,7 +79,7 @@ export function launchWeaponDodgeDialog({ actor, attackingActor, options = {} })
     modifiersText.push(`Parry ${actorParry >= 0 ? '+' : ''}${actorParry}`);
   }
   if (actorArmourDeflect) {
-    modifiersText.push(`Armor Deflect ${actorArmourDeflect >= 0 ? '+' : ''}${actorArmourDeflect}`);
+    modifiersText.push(`Armour Deflect ${actorArmourDeflect >= 0 ? '+' : ''}${actorArmourDeflect}`);
   }
   if (actorShieldRating && actorShieldReadied) {
     modifiersText.push(`Shield Rating ${actorShieldRating >= 0 ? '+' : ''}${actorShieldRating}`);
@@ -89,7 +92,7 @@ export function launchWeaponDodgeDialog({ actor, attackingActor, options = {} })
 
 
   // Calculate current total pool
-  const totalPool = ability1Value + ability2Value + actorParry + actorArmorDeflect + actorShieldRating + modifier; //
+  const totalPool = ability1Value + ability2Value + actorParry + actorArmourDeflect + actorShieldRating + modifier; //
 
 
   // Set Template Data
@@ -116,7 +119,8 @@ export function launchWeaponDodgeDialog({ actor, attackingActor, options = {} })
     actorShieldRating,
     modifier,
     modifiersString,
-    totalPool
+    totalPool,
+    damageArray, // Add to template if needed for downstream dialogs
   };
 
   // Render the dialog template
@@ -148,7 +152,8 @@ export function launchWeaponDodgeDialog({ actor, attackingActor, options = {} })
                 modifier,
                 totalPool,
                 modifiersString,        
-                targetNumber: finalTargetNumber
+                targetNumber: finalTargetNumber,
+                damageArray // Pass to dodge roll for later use
               }                            
             });
           }
@@ -177,8 +182,8 @@ export function launchWeaponDodgeDialog({ actor, attackingActor, options = {} })
           const actorData = actor;                 
           
 
-          // Armor deflect          
-          const actorArmorDeflect = form.actorArmorDeflect.value || 0; // Use the total deflect from equipped armour
+          // Armour deflect          
+          const actorArmourDeflect = form.actorArmourDeflect.value || 0; // Use the total deflect from equipped armour
           // Shield rating
           const actorShieldRating = actorShieldReadied?.system?.shieldRating || 0; // Use the highest block rating from readied shields
 
@@ -193,8 +198,8 @@ export function launchWeaponDodgeDialog({ actor, attackingActor, options = {} })
           if (actorParry) {
             modifiersText.push(`Parry ${actorParry >= 0 ? '+' : ''}${actorParry}`);
           }
-          if (actorArmorDeflect) {
-            modifiersText.push(`Armor Deflect ${actorArmorDeflect >= 0 ? '+' : ''}${actorArmorDeflect}`);
+          if (actorArmourDeflect) {
+            modifiersText.push(`Armour Deflect ${actorArmourDeflect >= 0 ? '+' : ''}${actorArmourDeflect}`);
           }
           if (actorShieldRating && actorShieldReadied) {
             modifiersText.push(`Shield Rating ${actorShieldRating >= 0 ? '+' : ''}${actorShieldRating}`);
@@ -205,7 +210,7 @@ export function launchWeaponDodgeDialog({ actor, attackingActor, options = {} })
           const modifiersString = modifiersText.join(', ');
 
           // Calculate total pool
-          const totalPool = ability1Value + ability2Value + actorParry + actorArmorDeflect + actorShieldRating + modifier;
+          const totalPool = ability1Value + ability2Value + actorParry + actorArmourDeflect + actorShieldRating + modifier;
 
           // Update total pool and modifier string in the form
           html.find('#totalPool').val(totalPool);

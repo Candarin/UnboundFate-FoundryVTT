@@ -29,3 +29,18 @@ export function getReadiedShieldWithHighestRating(actor) {
     return block > maxBlock ? s : max;
   }, shields[0]);
 }
+
+/**
+ * Converts a damage array to a readable string for display or chat.
+ * @param {Array} damageArray - Array of damage objects {label, formula, type, source}
+ * @returns {string} - Human-readable damage string
+ */
+export function damageArrayToString(damageArray) {
+  if (!Array.isArray(damageArray) || damageArray.length === 0) return '';
+  return damageArray.map(dmg => {
+    let str = dmg.formula || '';
+    if (dmg.type) str += ` ${dmg.type}`;
+    if (dmg.label) str = `${dmg.label}: ${str}`;
+    return str;
+  }).join(' + ');
+}
