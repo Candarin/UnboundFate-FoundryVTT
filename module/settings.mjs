@@ -1,5 +1,5 @@
 import { THEME_CONFIG } from './helpers/config.mjs';
-import { ufLog } from '../helpers/system-utils.mjs';
+import { ufLog } from './helpers/system-utils.mjs';
 
 // Register module settings for Foundry VTT
 export const registerSystemSettings = () => {

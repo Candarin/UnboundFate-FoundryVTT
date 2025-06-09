@@ -299,3 +299,6 @@
 
 ## 1.0.84
 - Fixed reference errors
+
+## 1.0.85
+- Fixed reference errors
