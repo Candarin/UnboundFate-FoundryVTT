@@ -14,7 +14,7 @@ import { UFRoll } from './dice/UFRoll.mjs';
 // Import chat listeners
 import { registerUnboundFateChatListeners } from './helpers/listeners.mjs';
 // Import logging utility
-import { ufLog } from '../helpers/system-utils.mjs';
+import { ufLog } from './helpers/system-utils.mjs';
 
 /* -------------------------------------------- */
 /*  Init Hook                                   */

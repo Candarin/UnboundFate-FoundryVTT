@@ -296,3 +296,6 @@
 - chat message css updates
 - fixed errors in weapon dialog
 - added logging function
+
+## 1.0.84
+- Fixed reference errors

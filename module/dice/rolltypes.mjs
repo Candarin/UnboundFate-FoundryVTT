@@ -1,6 +1,7 @@
 import { UFRoll } from './UFRoll.mjs';
 import { launchWeaponDodgeDialog } from '../dialogs/weapondodge-dialog.mjs';
 import { damageArrayToString } from '../helpers/actor-utils.mjs';
+import { ufLog } from '../helpers/system-utils.mjs';
 
 /**
  * Rolls a skill pool and sends the result to chat.
@@ -13,7 +14,7 @@ import { damageArrayToString } from '../helpers/actor-utils.mjs';
  * @param {Actor} params.actor
  */
 export async function rollSkillPool({ skillKey, skillRating, abilityKey, abilityValue, modifier, targetNumber = 0, actor, rollMode, useSpec, specialisation, modifiersString }) {
-  console.log('Unbound Fate - Rolling Skill Pool:', { skillKey, skillRating, abilityKey, abilityValue, modifier, targetNumber, actor, rollMode, useSpec, specialisation, modifiersString });
+  ufLog('Rolling Skill Pool:', { skillKey, skillRating, abilityKey, abilityValue, modifier, targetNumber, actor, rollMode, useSpec, specialisation, modifiersString });
   const totalPool = skillRating + abilityValue + modifier + (useSpec ? 2 : 0);
   const formula = `${totalPool}d6cs>=5`;
   const label = `${skillKey.capitalize()} + ${abilityKey ? abilityKey.capitalize() : ''} (${skillRating}+${abilityValue}${modifier ? `+${modifier}` : ''})`;
@@ -48,7 +49,7 @@ export async function rollSkillPool({ skillKey, skillRating, abilityKey, ability
  * @param {string} params.modifierList - A concatenated string of modifiers (optional) to display on the chat message
  */
 export async function rollWeaponAttack({ weapon, actor, targets = [], totalPool, modifierList = '', attackType, damageArray }) {
-  console.log('Unbound Fate - Rolling Weapon Attack:', { weapon, actor, targets, totalPool, modifierList, attackType, damageArray });
+  ufLog('Rolling Weapon Attack:', { weapon, actor, targets, totalPool, modifierList, attackType, damageArray });
   // Get weapon and skill info
   const weaponName = weapon.name;
   const damage1H = weapon.system.damage1H || '';
@@ -72,7 +73,7 @@ export async function rollWeaponAttack({ weapon, actor, targets = [], totalPool,
   await roll.evaluate();
   const successes = roll.hits;
   const rollHTML = (await roll.render()).replace(/<div class="dice-total">[\s\S]*?<\/div>/, '');
-
+  
   // Build chat content with a single Dodge button (global, not per target)
   const dodgeButtons = '<div class="dodge-buttons" style="margin-top:0.5em;"><button class="dodge-roll">Dodge</button></div>';
 
