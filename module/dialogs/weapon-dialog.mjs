@@ -245,7 +245,7 @@ export function launchWeaponDialog({ weapon, attackType, actor }) {
           // Update skill rating for selected skill
           const skillRatingElem = form.querySelector('#skill-rating');    
           if (skillRatingElem) {
-            skillRatingElem.textContent = actor.system.skills[selectedSkillKey]?.rating || 0;
+            skillRatingElem.value = actor.system.skills[selectedSkillKey]?.rating || 0;
           }
 
           updateTotal();

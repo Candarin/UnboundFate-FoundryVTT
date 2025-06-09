@@ -2,22 +2,22 @@
 <div class="chat-success-vs-target">
   <div class="flexcol">
     
-    <div class="flexrow" style="border-bottom: 1px solid #ddd; padding-bottom: 3px;">
-        <div class="flexcol target-number" style="border-right: 1px solid #ddd;">
-            <label class="flex0">Target Number</label>
-            <span>{{targetNumber}}</span>
+    <div class="flexrow roll-container" style="border-bottom: 1px solid #ddd; padding-bottom: 3px;">
+        <div class="flexcol target-number">
+            <label class="flex0 target-number-label">Target Number</label>
+            <span class="target-number-value">{{targetNumber}}</span>
         </div>
         <div class="flexcol rolled-number {{#if outcome}}success{{else}}fail{{/if}}">
-            <label class="flex0">Successes</label>
-            <span>{{successes}}</span>
+            <label class="flex0 rolled-number-label {{#if outcome}}success{{else}}fail{{/if}}">Successes</label>
+            <span class="rolled-number-value {{#if outcome}}success{{else}}fail{{/if}}">{{successes}}</span>
         </div>    
     </div>
       
     <div class="roll-outcome">
         {{#if outcome}}
-        <span>{{successMessage}}</span>
+        <span class="roll-outcome-success">{{successMessage}}</span>
         {{else}}
-        <span>{{failMessage}}</span>
+        <span class="roll-outcome-fail">{{failMessage}}</span>
         {{/if}}
     </div>
 

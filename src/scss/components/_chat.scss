@@ -1,23 +1,69 @@
 
 .chat-success-vs-target {
 
-    .roll-outcome {
-        text-align: center;
-    }
+    .roll-container {       
+        border-bottom: 1px solid #888; 
+        padding-bottom: 3px;
 
-    .rolled-number {
-        text-align: center;        
+        .target-number {
+            border-right: 1px solid #888;
 
-        label {
-            font-size: x-large;
+            .target-number-label {
+
+            }
+
+            .target-number-value {
+                font-size: x-large;                
+            }
         }
 
-        .success span {
+
+        .rolled-number {
+            text-align: center;        
+
+            .rolled-number-label {
+                
+            }
+
+            .rolled-number-value {
+                font-size: x-large;
+            }
+
+            .rolled-number-value.success {
+                color: var($c-success);
+            }
+
+            .rolled-number-value.fail {
+                color: var($c-fail);
+            }
+        }
+
+    }
+
+    .roll-outcome {
+        text-align: center;
+        font-size: large;
+
+        .roll-outcome-success {
             color: var($c-success);
         }
 
-        .fail span {
+        .roll-outcome-fail {
             color: var($c-fail);
         }
+    }
+}
+
+.chat-actor-container {
+    .chat-select-link img{
+        border: none;
+        max-width: none;
+        width:30px; 
+        height:30px;
+    }
+
+    .chat-actor-name {
+        font-weight: bold;    
+        margin-left: 5px;        
     }
 }

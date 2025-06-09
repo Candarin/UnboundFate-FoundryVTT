@@ -13,6 +13,8 @@ import { UNBOUNDFATE, THEME_CONFIG } from './helpers/config.mjs';
 import { UFRoll } from './dice/UFRoll.mjs';
 // Import chat listeners
 import { registerUnboundFateChatListeners } from './helpers/listeners.mjs';
+// Import logging utility
+import { ufLog } from '../helpers/system-utils.mjs';
 
 /* -------------------------------------------- */
 /*  Init Hook                                   */
@@ -31,7 +33,7 @@ Hooks.once('init', function () {
   CONFIG.UNBOUNDFATE = UNBOUNDFATE;
 
   // Register System Settings
-  console.log("Unbound Fate | Initializing System settings...");
+  ufLog("Initializing System settings...");
   registerSystemSettings();
 
   // Apply the current theme setting on system load
@@ -188,7 +190,7 @@ function setUnboundFateTheme(themeKey) {
     // Add the selected theme class
     body.classList.add(themeConfig.class);
     // Log the theme change
-    console.log(`Unbound Fate | Theme changed to: ${themeKey} (${themeConfig.label})`);
+    ufLog(`Theme changed to: ${themeKey} (${themeConfig.label})`);
 }
 
 

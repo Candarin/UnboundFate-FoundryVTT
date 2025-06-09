@@ -291,3 +291,8 @@
 ## 1.0.82
 - adjustments to damage process
 - added first cut of clickable chat actor portraits
+
+## 1.0.83
+- chat message css updates
+- fixed errors in weapon dialog
+- added logging function

@@ -13,6 +13,7 @@ import { damageArrayToString } from '../helpers/actor-utils.mjs';
  * @param {Actor} params.actor
  */
 export async function rollSkillPool({ skillKey, skillRating, abilityKey, abilityValue, modifier, targetNumber = 0, actor, rollMode, useSpec, specialisation, modifiersString }) {
+  console.log('Unbound Fate - Rolling Skill Pool:', { skillKey, skillRating, abilityKey, abilityValue, modifier, targetNumber, actor, rollMode, useSpec, specialisation, modifiersString });
   const totalPool = skillRating + abilityValue + modifier + (useSpec ? 2 : 0);
   const formula = `${totalPool}d6cs>=5`;
   const label = `${skillKey.capitalize()} + ${abilityKey ? abilityKey.capitalize() : ''} (${skillRating}+${abilityValue}${modifier ? `+${modifier}` : ''})`;
@@ -47,6 +48,7 @@ export async function rollSkillPool({ skillKey, skillRating, abilityKey, ability
  * @param {string} params.modifierList - A concatenated string of modifiers (optional) to display on the chat message
  */
 export async function rollWeaponAttack({ weapon, actor, targets = [], totalPool, modifierList = '', attackType, damageArray }) {
+  console.log('Unbound Fate - Rolling Weapon Attack:', { weapon, actor, targets, totalPool, modifierList, attackType, damageArray });
   // Get weapon and skill info
   const weaponName = weapon.name;
   const damage1H = weapon.system.damage1H || '';

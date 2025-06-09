@@ -1,4 +1,5 @@
 import { THEME_CONFIG } from './helpers/config.mjs';
+import { ufLog } from '../helpers/system-utils.mjs';
 
 // Register module settings for Foundry VTT
 export const registerSystemSettings = () => {
@@ -10,7 +11,7 @@ export const registerSystemSettings = () => {
         type: String, // Data type: String, Number, Boolean, etc.
         default: "default value", // Default value
         onChange: value => {
-            console.log(`Unbound Fate | Example Setting changed to: ${value}`);
+            ufLog(`Example Setting changed to: ${value}`);
         }
     });
 
@@ -22,7 +23,7 @@ export const registerSystemSettings = () => {
         type: Boolean,
         default: false,
         onChange: value => {
-            console.log(`Unbound Fate | Enable Feature setting changed to: ${value}`);
+            ufLog(`Enable Feature setting changed to: ${value}`);
         }
     });
 

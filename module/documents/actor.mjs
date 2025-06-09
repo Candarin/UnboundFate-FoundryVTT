@@ -1,3 +1,5 @@
+import { ufLog } from '../helpers/system-utils.mjs';
+
 /**
  * Extend the base Actor document by defining a custom roll data structure which is ideal for the Simple system.
  * @extends {Actor}
@@ -38,7 +40,7 @@ export class UnboundFateActor extends Actor {
     this._prepareNpcData(actorData);
 
     // Debug: Log the actor
-    console.log(this);
+    ufLog(this);
   }
 
   
