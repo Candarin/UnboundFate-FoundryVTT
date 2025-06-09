@@ -302,3 +302,7 @@
 
 ## 1.0.85
 - Fixed reference errors
+
+## 1.0.86
+- css updates
+- dialog changes for tokenId

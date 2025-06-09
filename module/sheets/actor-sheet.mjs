@@ -265,9 +265,16 @@ export class UnboundFateActorSheet extends ActorSheet {
             const isRanged = item.system.isRanged;
             let attackType = 'melee';
             if (isRanged && !isMelee) attackType = 'ranged';
-            // If both are true or both false, default to melee
+            // Determine the correct tokenId for this actor
+            let attackerTokenId = null;
+            const controlledTokens = canvas.tokens.controlled.filter(t => t.actor?.id === this.actor.id);
+            if (controlledTokens.length === 1) {
+              attackerTokenId = controlledTokens[0].id;
+            } else if (this.actor.getActiveTokens().length === 1) {
+              attackerTokenId = this.actor.getActiveTokens()[0].id;
+            }
             const { launchWeaponDialog } = await import('../dialogs/weapon-dialog.mjs');
-            launchWeaponDialog({ weapon: item, actor: this.actor, attackType });
+            launchWeaponDialog({ weapon: item, actor: this.actor, attackType, attackerTokenId });
             return;
           } else {
             return item.roll();

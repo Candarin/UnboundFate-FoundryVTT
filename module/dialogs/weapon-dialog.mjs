@@ -8,7 +8,7 @@ import { damageArrayToString } from '../helpers/actor-utils.mjs';
  * @param {string} params.attackType - The type of attack (e.g., 'melee', 'ranged')
  * @param {Actor} params.actor - The attacking actor instance
  */
-export function launchWeaponDialog({ weapon, attackType, actor }) {
+export function launchWeaponDialog({ weapon, attackType, actor, attackerTokenId = null }) {
   const attackTypeText = game.i18n.localize(`UNBOUNDFATE.AttackType.${attackType}`) || attackType;
 
   // Weapon fields
@@ -135,7 +135,8 @@ export function launchWeaponDialog({ weapon, attackType, actor }) {
     abilityValue,
     useSpec,
     modifier,
-    modifiersString
+    modifiersString,
+    attackerTokenId // Pass to templateData
   };
 
   renderTemplate('systems/unboundfate/templates/dialogs/weapon-dialog.hbs', templateData).then(content => {
@@ -152,8 +153,18 @@ export function launchWeaponDialog({ weapon, attackType, actor }) {
             const modifier = parseInt(form.modifier.value, 10) || 0;
             const modifierList = form.querySelector('#modifiers-string')?.textContent || '';
             const attackType = form.querySelector('#attackType')?.textContent || 'melee'; // Default to melee if not set
-            // Pass damageArray to rollWeaponAttack
-            await rollWeaponAttack({ weapon, actor, targets, totalPool, modifierList, attackType, damageArray });
+            // Only compute attackerTokenId if not provided
+            let finalAttackerTokenId = attackerTokenId;
+            if (!finalAttackerTokenId) {
+              const controlledTokens = canvas.tokens.controlled.filter(t => t.actor?.id === actor.id);
+              if (controlledTokens.length === 1) {
+                finalAttackerTokenId = controlledTokens[0].id;
+              } else if (actor.getActiveTokens().length === 1) {
+                finalAttackerTokenId = actor.getActiveTokens()[0].id;
+              }
+            }
+            // Pass attackerTokenId to rollWeaponAttack
+            await rollWeaponAttack({ weapon, actor, targets, totalPool, modifierList, attackType, damageArray, attackerTokenId: finalAttackerTokenId });
           }
         },
         cancel: {

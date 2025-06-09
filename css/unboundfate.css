@@ -397,8 +397,10 @@
 .system-unboundfate .chat-success-vs-target .roll-container {
   border-bottom: 1px solid #888;
   padding-bottom: 3px;
+  text-align: center;
 }
 .system-unboundfate .chat-success-vs-target .roll-container .target-number {
+  text-align: center;
   border-right: 1px solid #888;
 }
 .system-unboundfate .chat-success-vs-target .roll-container .target-number .target-number-value {
@@ -411,25 +413,26 @@
   font-size: x-large;
 }
 .system-unboundfate .chat-success-vs-target .roll-container .rolled-number .rolled-number-value.success {
-  color: var(#4caf50);
+  color: #4caf50;
 }
 .system-unboundfate .chat-success-vs-target .roll-container .rolled-number .rolled-number-value.fail {
-  color: var(#f44336);
+  color: #f44336;
 }
 .system-unboundfate .chat-success-vs-target .roll-outcome {
   text-align: center;
   font-size: large;
 }
 .system-unboundfate .chat-success-vs-target .roll-outcome .roll-outcome-success {
-  color: var(#4caf50);
+  color: #4caf50;
 }
 .system-unboundfate .chat-success-vs-target .roll-outcome .roll-outcome-fail {
-  color: var(#f44336);
+  color: #f44336;
 }
 .system-unboundfate .chat-actor-container .chat-select-link img {
   border: none;
   width: 30px;
   height: 30px;
+  max-width: none;
 }
 .system-unboundfate .chat-actor-container .chat-actor-name {
   font-weight: bold;

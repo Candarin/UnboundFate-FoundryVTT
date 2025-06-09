@@ -4,8 +4,10 @@
     .roll-container {       
         border-bottom: 1px solid #888; 
         padding-bottom: 3px;
+        text-align: center;       
 
         .target-number {
+            text-align: center;       
             border-right: 1px solid #888;
 
             .target-number-label {
@@ -30,11 +32,11 @@
             }
 
             .rolled-number-value.success {
-                color: var($c-success);
+                color: $c-success;
             }
 
             .rolled-number-value.fail {
-                color: var($c-fail);
+                color: $c-fail;
             }
         }
 
@@ -45,21 +47,21 @@
         font-size: large;
 
         .roll-outcome-success {
-            color: var($c-success);
+            color: $c-success;
         }
 
         .roll-outcome-fail {
-            color: var($c-fail);
+            color: $c-fail;
         }
     }
 }
 
 .chat-actor-container {
     .chat-select-link img{
-        border: none;
-        max-width: none;
+        border: none;        
         width:30px; 
         height:30px;
+        max-width: none;
     }
 
     .chat-actor-name {

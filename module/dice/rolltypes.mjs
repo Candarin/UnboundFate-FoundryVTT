@@ -48,8 +48,8 @@ export async function rollSkillPool({ skillKey, skillRating, abilityKey, ability
  * @param {string} params.totalPool - The total pool of dice to roll (required)
  * @param {string} params.modifierList - A concatenated string of modifiers (optional) to display on the chat message
  */
-export async function rollWeaponAttack({ weapon, actor, targets = [], totalPool, modifierList = '', attackType, damageArray }) {
-  ufLog('Rolling Weapon Attack:', { weapon, actor, targets, totalPool, modifierList, attackType, damageArray });
+export async function rollWeaponAttack({ weapon, actor, targets = [], totalPool, modifierList = '', attackType, damageArray, attackerTokenId }) {
+  ufLog('Rolling Weapon Attack:', { weapon, actor, targets, totalPool, modifierList, attackType, damageArray, attackerTokenId });
   // Get weapon and skill info
   const weaponName = weapon.name;
   const damage1H = weapon.system.damage1H || '';
@@ -78,11 +78,18 @@ export async function rollWeaponAttack({ weapon, actor, targets = [], totalPool,
   const dodgeButtons = '<div class="dodge-buttons" style="margin-top:0.5em;"><button class="dodge-roll">Dodge</button></div>';
 
   // Generate handlebars templates
-  const actorHeader = await renderTemplate('systems/unboundfate/templates/chat/chat-actor.hbs', { actor, actorType: 'attacker' });
+  // Use attackerTokenId if provided, else fallback to first active token
+  const attackerTokenIdFinal = attackerTokenId || actor.getActiveTokens()[0]?.id || null;
+  const actorHeader = await renderTemplate('systems/unboundfate/templates/chat/chat-actor.hbs', { actor, actorType: 'attacker', tokenId: attackerTokenIdFinal });
   const weaponHeader = await renderTemplate('systems/unboundfate/templates/chat/chat-weapon.hbs', { weapon });
-  const targetContent = (targets.length === 1)
-    ? await renderTemplate('systems/unboundfate/templates/chat/chat-actor.hbs', { actor: targets[0].actor, actorType: 'target' })
-    : '';
+  // For single target, get their tokenId (if targets is array of tokens)
+  let targetContent = '';
+  if (targets.length === 1) {
+    const targetToken = targets[0];
+    let targetActor = targetToken.actor;
+    let targetTokenId = targetToken.id || (targetActor?.getActiveTokens?.()[0]?.id) || null;
+    targetContent = await renderTemplate('systems/unboundfate/templates/chat/chat-actor.hbs', { actor: targetActor, actorType: 'target', tokenId: targetTokenId });
+  }
   
   // Build content for chat message
   let rollContent = `<h3>${attackType} Attack</h3>`; 
