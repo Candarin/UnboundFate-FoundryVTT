@@ -359,6 +359,26 @@ export class UnboundFateActorSheet extends ActorSheet {
         li.addEventListener('dragstart', handler, false);
       });
     }
+
+    // HP Log dialog button
+    html.on('click', '.uf-hp-log-btn', (ev) => {
+      ev.preventDefault();
+      const system = this.actor.system;
+      renderTemplate('systems/unboundfate/templates/actor/parts/actor-hp-log.hbs', { system }).then(content => {
+        new Dialog({
+          title: 'HP Log',
+          content,
+          buttons: {
+            close: {
+              label: 'Close',
+              callback: () => {}
+            }
+          },
+          default: 'close',
+          classes: ['uf-hp-log-dialog']
+        }).render(true);
+      });
+    });
   }
 
   /**

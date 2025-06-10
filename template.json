@@ -68,10 +68,16 @@
             "specialisation": ""              
           }              
         }
+      },
+      "log-hitpoints-template": {
+        "logHitpoints": {
+          "enabled": false,
+          "log": []
+        }
       }
     },
     "character": {
-      "templates": ["base-template", "abilities-template", "creation-template", "fatePoints-template", "grit-template", "skills-template"],
+      "templates": ["base-template", "abilities-template", "creation-template", "fatePoints-template", "grit-template", "skills-template", "log-hitpoints-template"],
       "attributes": {
         "level": {
           "value": 1
@@ -79,7 +85,7 @@
       }      
     },
     "npc": {
-      "templates": ["base-template", "abilities-template", "fatePoints-template", "skills-template"],
+      "templates": ["base-template", "abilities-template", "fatePoints-template", "skills-template", "log-hitpoints-template"],
       "cr": 0
     }
   },

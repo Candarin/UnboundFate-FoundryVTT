@@ -27,6 +27,7 @@ export function registerUnboundFateChatListeners() {
         ui.notifications.warn('Selected token does not have an associated actor.');
         return;
       }
+      const dodgeTokenId = selectedToken.id;
 
       // Get the chat message ID from the DOM
       const chatMessageElem = html.closest('.chat-message');
@@ -83,7 +84,8 @@ export function registerUnboundFateChatListeners() {
         actor: selectedActor,
         successes: successes,
         attackType: attackType,
-        chatMessageData: chatMessage?.toObject?.() || {}
+        chatMessageData: chatMessage?.toObject?.() || {},
+        dodgeTokenId
       });
 
       // Call the dodge dialog (which will call rollWeaponDodge internally)
@@ -93,7 +95,8 @@ export function registerUnboundFateChatListeners() {
         options: {          
           successes,
           attackType,
-          chatMessageData: chatMessage?.toObject?.() || {}
+          chatMessageData: chatMessage?.toObject?.() || {},
+          dodgeTokenId
         }
       });
     });

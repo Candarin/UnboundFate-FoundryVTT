@@ -306,3 +306,8 @@
 ## 1.0.86
 - css updates
 - dialog changes for tokenId
+
+## 1.0.87
+- added hp logging (+ datetime handlebars helper)
+- shifted damage roll to attack dialog
+- updated stat-box-value css

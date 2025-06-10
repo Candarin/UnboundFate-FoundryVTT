@@ -15,6 +15,7 @@ export function launchWeaponDodgeDialog({ actor, attackingActor, options = {} })
   const attackSuccesses = options.successes ?? 0;
   const targetNumber = options.successes ?? 0;
   const chatMessageData = options.chatMessageData || {};
+  const dodgeTokenId = options.dodgeTokenId || null;
 
   // Access damageArray from options or chatMessageData.flags
   const damageArray = options.damageArray || chatMessageData.flags?.damageArray || [];
@@ -121,6 +122,7 @@ export function launchWeaponDodgeDialog({ actor, attackingActor, options = {} })
     modifiersString,
     totalPool,
     damageArray, // Add to template if needed for downstream dialogs
+    dodgeTokenId // Pass to template for chat-actor.hbs
   };
 
   // Render the dialog template
@@ -153,7 +155,8 @@ export function launchWeaponDodgeDialog({ actor, attackingActor, options = {} })
                 totalPool,
                 modifiersString,        
                 targetNumber: finalTargetNumber,
-                damageArray // Pass to dodge roll for later use
+                damageArray, // Pass to dodge roll for later use
+                dodgeTokenId // Forward to rollWeaponDodge for chat rendering
               }                            
             });
           }
@@ -220,13 +223,13 @@ export function launchWeaponDodgeDialog({ actor, attackingActor, options = {} })
         html.find('select[name="ability1Key"]').on('change', function() {
           const ability1Key = html.find('select[name="ability1Key"]').val();
           const ability1Value = actor.system.abilities?.[ability1Key]?.value || 0;
-          html.find('#ability1Value').text(ability1Value);
+          html.find('#ability1Value').value(ability1Value);
           updateTotal();
         });
         html.find('select[name="ability2Key"]').on('change', function() {
           const ability2Key = html.find('select[name="ability2Key"]').val();
           const ability2Value = actor.system.abilities?.[ability2Key]?.value || 0;
-          html.find('#ability2Value').text(ability2Value);          
+          html.find('#ability2Value').value(ability2Value);          
           updateTotal();
         });
         html.find('select[name="weaponId"]').on('change', function() {

@@ -65,8 +65,21 @@ export async function rollWeaponAttack({ weapon, actor, targets = [], totalPool,
     ? targets.map(t => t.name).join(', ')
     : '<em>None</em>';
 
-  
-  const damageString = Array.isArray(damageArray) && damageArray.length > 0 ? damageArrayToString(damageArray) : '';
+  // --- Roll damage for each component in damageArray ---
+  let rolledDamageArray = [];
+  if (Array.isArray(damageArray) && damageArray.length > 0) {
+    for (let dmg of damageArray) {
+      let roll = new Roll(dmg.formula, actor.getRollData());
+      await roll.evaluate();
+      rolledDamageArray.push({
+        ...dmg,
+        roll: roll, // store the Roll object
+        total: roll.total // store the rolled value
+      });
+    }
+  }
+
+  const damageString = rolledDamageArray.length > 0 ? damageArrayToString(rolledDamageArray) : '';
 
   const formula = `${totalPool}d6cs>=5`;
   const roll = new UFRoll(formula, actor.getRollData(), { targetNumber: 0 });
@@ -90,7 +103,7 @@ export async function rollWeaponAttack({ weapon, actor, targets = [], totalPool,
     let targetTokenId = targetToken.id || (targetActor?.getActiveTokens?.()[0]?.id) || null;
     targetContent = await renderTemplate('systems/unboundfate/templates/chat/chat-actor.hbs', { actor: targetActor, actorType: 'target', tokenId: targetTokenId });
   }
-  
+
   // Build content for chat message
   let rollContent = `<h3>${attackType} Attack</h3>`; 
   rollContent += actorHeader;
@@ -98,7 +111,7 @@ export async function rollWeaponAttack({ weapon, actor, targets = [], totalPool,
   rollContent += weaponHeader;
   rollContent += `${modifierList ? `<div class="modifiers-string">${modifierList}</div>` : ''}`;
   rollContent += `<hr>`;
-  rollContent += `<div class="damage-string">Damage:<span>${damageString}</span></div>`;
+  rollContent += `<div class="damage-string">Damage: <span>${damageString}</span></div>`;
   rollContent += `<hr>`;
   rollContent += `<h4>Targets:</h4>`;
   rollContent += targets.length > 1 ? `${targetNames}` : targetContent;
@@ -114,7 +127,7 @@ export async function rollWeaponAttack({ weapon, actor, targets = [], totalPool,
     roll: roll,
     flags: {
       weapon,
-      damageArray // Pass the array for downstream dialogs (dodge, damage, etc.)
+      damageArray: rolledDamageArray // Pass the rolled array for downstream dialogs (dodge, damage, etc.)
     }
   });
 }
@@ -135,6 +148,7 @@ export async function rollWeaponDodge({ actor, attackingActor, options = {} }) {
   const totalPool = options.totalPool || 0;  
   const modifiersString = options.modifiersString || '';
   const targetNumber = options.targetNumber || options.attackSuccesses || 0;
+  const rolledDamageArray = options.damageArray || [];
 
 
   // Formula for the dodge roll
@@ -153,7 +167,9 @@ export async function rollWeaponDodge({ actor, attackingActor, options = {} }) {
   const successMessage = "Dodged!";
   const failMessage = "Failed to dodge!";
 
-  const rollActor = await renderTemplate('systems/unboundfate/templates/chat/chat-actor.hbs', { actor, actorType: 'defender' });
+  // Use dodgeTokenId if provided, else fallback to first active token
+  const dodgeTokenId = options.dodgeTokenId || actor.getActiveTokens()[0]?.id || null;
+  const rollActor = await renderTemplate('systems/unboundfate/templates/chat/chat-actor.hbs', { actor, actorType: 'defender', tokenId: dodgeTokenId });
   const rollOutcomeContent = await renderTemplate('systems/unboundfate/templates/chat/chat-success-vs-target.hbs', {
     outcome,
     successMessage,
@@ -181,45 +197,21 @@ export async function rollWeaponDodge({ actor, attackingActor, options = {} }) {
     style: CONST.CHAT_MESSAGE_STYLES.ROLL
   });
 
-  // If the dodge failed, roll damage from the attacking actor
-  if (!outcome) {
-    const weapon = options.weapon || (options.chatMessageData?.flags?.weapon ?? null);
-    // Prefer structured damageArray if present
-    const damageArray = options.damageArray || options.chatMessageData?.flags?.damageArray || [];
-    const attacker = attackingActor;
-    if (attacker && weapon && Array.isArray(damageArray) && damageArray.length > 0) {
-      // Create a chat message with a button to roll damage
-      const damageString = damageArrayToString(damageArray);
-      const label = `<strong>${weapon.name}</strong> Damage to ${actor?.name || 'Target'}`;
-      const buttonId = `roll-damage-${randomID()}`;
-      const content = `
-        <div><strong>Damage:</strong> <span>${damageString}</span></div>
-        <button class="roll-damage-btn" id="${buttonId}">Roll Damage</button>
-      `;
-      const msg = await ChatMessage.create({
-        speaker: ChatMessage.getSpeaker({ actor: attacker }),
-        flavor: label,
-        content,
-        flags: {
-          weapon,
-          damageArray,
-          attackerId: attacker.id,
-          targetId: actor.id
-        }
-      });
-      Hooks.once('renderChatMessage', (chatMsg, html) => {
-        if (chatMsg.id !== msg.id) return;
-        html.find(`#${buttonId}`).on('click', async () => {
-          await rollDamageArray({ weapon, attacker, target: actor, damageArray });
-        });
-      });
-    } else {
-      // Fallback to old logic if no array
-      const damage = options.damage || weapon?.system?.damage1H || weapon?.system?.damage || '';
-      if (attacker && weapon && damage) {
-        await rollWeaponDamage({ weapon, attacker, target: actor, damage });
+  // If the dodge failed, display the damage the actor is taking
+  if (!outcome && rolledDamageArray.length > 0) {
+    let damageString = rolledDamageArray.map(d => `${d.label ? d.label + ': ' : ''}${d.total} (${d.formula}${d.type ? ' ' + d.type : ''})`).join(' + ');
+    let msgContent = `<div class="dodge-fail-damage"><strong>Failed Dodge!</strong> ${actor.name} takes <span class="dodge-damage-value">${damageString}</span></div>`;
+    ChatMessage.create({
+      speaker: ChatMessage.getSpeaker({ actor }),
+      flavor: msgContent,
+      flags: {
+        damageArray: rolledDamageArray,
+        attackerId: attackingActor?.id,
+        targetId: actor.id
       }
-    }
+    });
+    // Optionally, call applyDamageToActor here if you want auto-application
+    // await applyDamageToActor(actor, rolledDamageArray, attackingActor);
   }
 }
 

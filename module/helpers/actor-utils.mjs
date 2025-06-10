@@ -44,3 +44,46 @@ export function damageArrayToString(damageArray) {
     return str;
   }).join(' + ');
 }
+
+/**
+ * Updates the HP log for an actor, appending a new entry and trimming to the configured max size.
+ * @param {Actor} actor - The actor whose HP log to update.
+ * @param {number} hpChange - The amount of HP changed (positive or negative).
+ * @param {string} message - A message or template describing the change.
+ * @param {object} [options] - Optional extra data (e.g., source, timestamp override).
+ */
+export async function updateHpLog(actor, hpChange, message, options = {}) {
+  if (!actor || !actor.system?.logHitpoints?.enabled) return;
+  const log = Array.isArray(actor.system.logHitpoints.log) ? [...actor.system.logHitpoints.log] : [];
+  const maxEntries = game.settings.get("unboundfate", "hpLogMaxEntries") || 20;
+  const entry = {
+    timestamp: options.timestamp || Date.now(),
+    hpChange,
+    message,
+    // Prefer explicit newCurrentHP if provided, else use options.currentHP, else actor's currentHP
+    currentHP: options.newCurrentHP ?? options.currentHP ?? actor.system.hitPoints?.currentHP ?? null,
+    ...options
+  };
+  log.push(entry);
+  while (log.length > maxEntries) log.shift();
+  await actor.update({ "system.logHitpoints.log": log });
+}
+
+/**
+ * Applies rolled damage to an actor and logs the HP change.
+ * @param {Actor} actor - The actor to apply damage to.
+ * @param {Array} rolledDamageArray - Array of rolled damage objects (must include .total).
+ * @param {Actor|null} sourceActor - The source of the damage (optional).
+ * @param {string} message - Optional message for the HP log.
+ */
+export async function applyDamageToActor(actor, rolledDamageArray, sourceActor = null, message = '') {
+  if (!actor || !Array.isArray(rolledDamageArray) || rolledDamageArray.length === 0) return;
+  const totalDamage = rolledDamageArray.reduce((sum, d) => sum + (typeof d.total === 'number' ? d.total : 0), 0);
+  const prevHP = actor.system.hitPoints?.currentHP ?? 0;
+  const newHP = Math.max((prevHP - totalDamage), 0);
+  await actor.update({ 'system.hitPoints.currentHP': newHP });
+  // Log the HP change
+  if (actor.system?.logHitpoints?.enabled) {
+    await updateHpLog(actor, -totalDamage, message || `Took ${totalDamage} damage`, { newCurrentHP: newHP, sourceActorId: sourceActor?.id });
+  }
+}

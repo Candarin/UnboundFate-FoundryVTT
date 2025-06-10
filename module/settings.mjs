@@ -39,4 +39,17 @@ export const registerSystemSettings = () => {
             if (window.setUnboundFateTheme) window.setUnboundFateTheme(value);
         }
     });
+
+    game.settings.register("unboundfate", "hpLogMaxEntries", {
+        name: "HP Log Maximum Entries",
+        hint: "Maximum number of HP log entries to keep per actor/NPC. Older entries will be trimmed.",
+        scope: "world",
+        config: true,
+        type: Number,
+        default: 20,
+        range: { min: 1, max: 100, step: 1 },
+        onChange: value => {
+            ufLog(`HP Log max entries changed to: ${value}`);
+        }
+    });
 };

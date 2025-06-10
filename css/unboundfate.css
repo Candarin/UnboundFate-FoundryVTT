@@ -279,6 +279,12 @@
   border-color: #641d17;
   box-shadow: 0 0 6px rgba(192, 57, 43, 0.3333333333);
 }
+.system-unboundfate .uf-dialog .stat-value-box {
+  text-align: center;
+  width: 40px;
+  font-size: medium;
+  border: 1px solid #4d4d4d;
+}
 .system-unboundfate .resource-label {
   font-weight: bold;
 }

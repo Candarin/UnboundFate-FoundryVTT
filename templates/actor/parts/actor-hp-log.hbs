@@ -1,0 +1,23 @@
+<div class="hp-log-container">
+  <h4>HP Log</h4>
+  {{#if system.logHitpoints.enabled}}
+    {{#if system.logHitpoints.log.length}}
+      <ul class="hp-log-list">
+        {{#each system.logHitpoints.log as |entry|}}
+          <li class="hp-log-entry">
+            <span class="hp-log-timestamp">{{formatDate entry.timestamp}}</span>
+            <span class="hp-log-change {{#if (lt entry.hpChange 0)}}hp-log-damage{{else}}hp-log-heal{{/if}}">
+              {{#if (lt entry.hpChange 0)}}-{{else}}+{{/if}}{{abs entry.hpChange}}
+            </span>
+            <span class="hp-log-message">{{entry.message}}</span>
+            <span class="hp-log-current">(HP: {{entry.currentHP}})</span>
+          </li>
+        {{/each}}
+      </ul>
+    {{else}}
+      <div class="hp-log-empty">No HP changes logged.</div>
+    {{/if}}
+  {{else}}
+    <div class="hp-log-disabled">HP logging is disabled.</div>
+  {{/if}}
+</div>

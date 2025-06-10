@@ -25,8 +25,6 @@
 
       <div class="hitpoints-container">
         {{!-- PDF Reference Input --}}
-
-      
         <div class="flexcol">
           <div class="flexrow nowrap">
             <label class="resource-label">Hit Points</label>  
@@ -34,6 +32,7 @@
               <label class="resource-label">Current HP</label>  
               <input type="number" name="system.hitPoints.currentHP" value="{{system.hitPoints.currentHP}}" data-dtype="Number" />
               <span> / {{system.hitPoints.maxHP}}</span>
+              <button type="button" class="uf-hp-log-btn" title="Show HP Log"><i class="fas fa-history"></i> HP Log</button>
             </div>            
           </div>          
           <div class="resource-content flexrow flex-center flex-between nowrap">
@@ -47,9 +46,7 @@
             {{/each}}
           </div>
         </div>  
-
-
-
+        {{!-- HP log dialog now, not inline --}}
       </div>
     
     </div>   

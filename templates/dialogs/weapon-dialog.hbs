@@ -1,4 +1,4 @@
-<form>
+<form class="uf-dialog uf-weapon-dialog">
   <div class="flexcol">
     <div class="flexrow">    
       <label>Weapon</label>     
@@ -35,7 +35,7 @@
           <option value="{{this.key}}" {{#if this.selected}}selected{{/if}}>{{this.label}}</option>
         {{/each}}
       </select>
-      <input class="flex0 statvaluebox" id="ability-value" value="{{abilityValue}}" style="width: 40px" disabled />
+      <input class="flex0 stat-value-box" id="ability-value" value="{{abilityValue}}" disabled />
     </div>
   </div>
   <!-- Skill -->
@@ -47,7 +47,7 @@
         <option value="{{this.key}}" {{#if this.selected}}selected{{/if}}>{{this.label}}</option>
       {{/each}}
       </select>
-      <input class="flex0 statvaluebox" id="skill-rating" value="{{skillRating}}" style="width: 40px" disabled />
+      <input class="flex0 stat-value-box" id="skill-rating" value="{{skillRating}}" style="width: 40px" disabled />
     </div>   
   </div>
   <div class="form-group">

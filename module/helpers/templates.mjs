@@ -15,6 +15,7 @@ export const preloadHandlebarsTemplates = async function () {
     'systems/unboundfate/templates/actor/parts/actor-effects.hbs',
     'systems/unboundfate/templates/actor/parts/actor-skills.hbs',
     'systems/unboundfate/templates/actor/parts/actor-abilities.hbs',
+    'systems/unboundfate/templates/actor/parts/actor-hp-log.hbs',
     // Item partials
     'systems/unboundfate/templates/item/parts/item-effects.hbs',    
     // Chat partials
