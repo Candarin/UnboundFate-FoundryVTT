@@ -3,46 +3,46 @@
   {{!-- Sheet Header --}}
   <header class="sheet-header">
     <img class="profile-img" src="{{actor.img}}" data-edit="img" title="{{actor.name}}" height="100" width="100"/>
-    <div class="header-fields">
-      <h1 class="charname"><input name="name" type="text" value="{{actor.name}}" placeholder="Name"/></h1>
-      {{!-- The grid classes are defined in scss/global/_grid.scss. To use,
-      use both the "grid" and "grid-Ncol" class where "N" can be any number
-      from 1 to 12 and will create that number of columns.  --}}
-      <div class="resources grid grid-3col">
-
-        {{!-- "flex-group-center" is also defined in the _grid.scss file
-        and it will add a small amount of padding, a border, and will
-        center all of its child elements content and text. --}}
-        <div class="resource flex-group-center">
-          <label for="system.health.value" class="resource-label">Health</label>
-          <div class="resource-content flexrow flex-center flex-between">
-            <input type="text" name="system.health.value" value="{{system.health.value}}" data-dtype="Number"/>
-            <span> / </span>
-            <input type="text" name="system.health.max" value="{{system.health.max}}" data-dtype="Number"/>
-          </div>
-          {{> "systems/unboundfate/templates/actor/parts/actor-hp-log.hbs"}}
-        </div>
-
-        <div class="resource flex-group-center">
-          <label for="system.power.value" class="resource-label">Power</label>
-          <div class="resource-content flexrow flex-center flex-between">
-            <input type="text" name="system.power.value" value="{{system.power.value}}" data-dtype="Number"/>
-            <span> / </span>
-            <input type="text" name="system.power.max" value="{{system.power.max}}" data-dtype="Number"/>
-          </div>
-        </div>
-
-        <div class="resource flex-group-center">
-          <label for="system.cr" class="resource-label">CR / XP</label>
-          <div class="resource-content flexrow flex-center flex-between">
-            <input type="text" name="system.cr" value="{{system.cr}}" data-dtype="Number"/>
-            <span> / </span>
-            <input type="text" disabled="true" name="system.xp" value="{{system.xp}}" data-dtype="Number"/>
-          </div>
-        </div>
-
+   
+    <div class="flexcol header-fields">
+           
+      <div class="character-name-container">
+        {{!-- Character Name Input --}}
+        <h1 class="charname"><input name="name" type="text" value="{{actor.name}}" placeholder="Name"/></h1>
       </div>
+
+      <div class="hitpoints-container">        
+        <div class="flexcol">
+          <div class="flexrow nowrap">
+            <label class="resource-label">Hit Points</label>  
+            <div class="flexrow nowrap flex-align-right">
+              <label class="resource-label">Current HP</label>  
+              <input type="number" name="system.hitPoints.currentHP" value="{{system.hitPoints.currentHP}}" data-dtype="Number" />
+              <span> / {{system.hitPoints.maxHP}}</span>
+              <button type="button" class="uf-hp-log-btn" title="Show HP Log"><i class="fas fa-history"></i> HP Log</button>
+            </div>            
+          </div>          
+          <div class="resource-content flexrow flex-center flex-between nowrap">
+            {{#each (range 1 system.hitPoints.maxHP)}}
+              {{!-- Calculate the HP index (1-based) --}}
+              {{#if (gt this ../system.hitPoints.currentHP)}}
+                <div class="hp-box hp-box-filled" title="HP {{this}}"></div>
+              {{else}}
+                <div class="hp-box" title="HP {{this}}"></div>
+              {{/if}}
+            {{/each}}
+          </div>
+        </div>  
+       
+      </div>
+    
+    </div>   
+
+    <div>
+      {{!-- other resources can be added here --}}
+      Todo
     </div>
+
   </header>
   
   {{!-- Sheet Tab Navigation --}}

@@ -40,6 +40,18 @@ export const registerSystemSettings = () => {
         }
     });
 
+    game.settings.register("unboundfate", "hpLogEnabled", {
+        name: "Enable HP Logging",
+        hint: "Enable or disable hit point logging for all actors and NPCs.",
+        scope: "world",
+        config: true,
+        type: Boolean,
+        default: true,
+        onChange: value => {
+            ufLog(`HP Logging enabled: ${value}`);
+        }
+    });
+
     game.settings.register("unboundfate", "hpLogMaxEntries", {
         name: "HP Log Maximum Entries",
         hint: "Maximum number of HP log entries to keep per actor/NPC. Older entries will be trimmed.",

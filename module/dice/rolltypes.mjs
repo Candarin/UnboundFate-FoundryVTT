@@ -199,17 +199,7 @@ export async function rollWeaponDodge({ actor, attackingActor, options = {} }) {
 
   // If the dodge failed, display the damage the actor is taking
   if (!outcome && rolledDamageArray.length > 0) {
-    let damageString = rolledDamageArray.map(d => `${d.label ? d.label + ': ' : ''}${d.total} (${d.formula}${d.type ? ' ' + d.type : ''})`).join(' + ');
-    let msgContent = `<div class="dodge-fail-damage"><strong>Failed Dodge!</strong> ${actor.name} takes <span class="dodge-damage-value">${damageString}</span></div>`;
-    ChatMessage.create({
-      speaker: ChatMessage.getSpeaker({ actor }),
-      flavor: msgContent,
-      flags: {
-        damageArray: rolledDamageArray,
-        attackerId: attackingActor?.id,
-        targetId: actor.id
-      }
-    });
+    postDodgeDamageMessage(actor, rolledDamageArray, attackingActor, options.dodgeTokenId, options.attackingTokenId);
     // Optionally, call applyDamageToActor here if you want auto-application
     // await applyDamageToActor(actor, rolledDamageArray, attackingActor);
   }
@@ -266,5 +256,46 @@ export async function rollDamageArray({ weapon, attacker, target, damageArray })
     flavor: `<strong>${weapon.name}</strong> Damage Roll to ${target?.name || 'Target'}<br><span>${damageString}</span>`,
     content: rollHTML,
     style: CONST.CHAT_MESSAGE_STYLES.ROLL
+  });
+}
+
+/**
+ * Posts a chat message showing the damage an actor takes after a failed dodge.
+ * @param {Actor} actor - The actor taking damage.
+ * @param {Array} rolledDamageArray - Array of rolled damage objects (must include .total).
+ * @param {Actor|null} attackingActor - The source of the damage (optional).
+ * @param {string|null} tokenId - The tokenId for the defender (optional).
+ * @param {string|null} attackingTokenId - The tokenId for the attacker (optional).
+ */
+export async function postDodgeDamageMessage(actor, rolledDamageArray, attackingActor = null, tokenId = null, attackingTokenId = null) {
+  if (!actor || !Array.isArray(rolledDamageArray) || rolledDamageArray.length === 0) return;
+  let damageString = rolledDamageArray.map(d => `${d.label ? d.label + ': ' : ''}${d.total} (${d.formula}${d.type ? ' ' + d.type : ''})`).join(' + ');
+  // Render actor header partials for both defender and attacker if tokenIds are provided
+  let defenderHeader = '';
+  let attackerHeader = '';
+  if (tokenId) {
+    defenderHeader = await renderTemplate('systems/unboundfate/templates/chat/chat-actor.hbs', { actor, actorType: 'defender', tokenId });
+  }
+  if (attackingActor && attackingTokenId) {
+    attackerHeader = await renderTemplate('systems/unboundfate/templates/chat/chat-actor.hbs', { actor: attackingActor, actorType: 'attacker', tokenId: attackingTokenId });
+  }
+  
+  let msgContent = '';
+  msgContent += `<div class="dodge-fail-damage"><strong>Failed Dodge!</strong> ${actor.name} takes <span class="dodge-damage-value">${damageString}</span></div>`;
+  msgContent += `${defenderHeader}`;  
+  msgContent += `<hr>`;
+  msgContent += '<h4>Attacker:</h4>'
+  msgContent += `${attackerHeader}`;
+  
+  ChatMessage.create({
+    speaker: ChatMessage.getSpeaker({ actor }),
+    flavor: msgContent,
+    flags: {
+      damageArray: rolledDamageArray,
+      attackerId: attackingActor?.id,
+      targetId: actor.id,
+      tokenId,
+      attackingTokenId
+    }
   });
 }

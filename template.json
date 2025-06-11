@@ -71,7 +71,6 @@
       },
       "log-hitpoints-template": {
         "logHitpoints": {
-          "enabled": false,
           "log": []
         }
       }

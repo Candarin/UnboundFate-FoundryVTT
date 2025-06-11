@@ -33,16 +33,22 @@ export function getReadiedShieldWithHighestRating(actor) {
 /**
  * Converts a damage array to a readable string for display or chat.
  * @param {Array} damageArray - Array of damage objects {label, formula, type, source}
+ * @param {boolean} [longform=false] - Whether to include labels and types in the output.
  * @returns {string} - Human-readable damage string
  */
-export function damageArrayToString(damageArray) {
+export function damageArrayToString(damageArray, longform = false) {
   if (!Array.isArray(damageArray) || damageArray.length === 0) return '';
-  return damageArray.map(dmg => {
-    let str = dmg.formula || '';
-    if (dmg.type) str += ` ${dmg.type}`;
-    if (dmg.label) str = `${dmg.label}: ${str}`;
-    return str;
-  }).join(' + ');
+  if (longform) {
+    return damageArray.map(dmg => {
+      let str = dmg.formula || '';
+      if (dmg.type) str += ` ${dmg.type}`;
+      if (dmg.label) str = `${dmg.label}: ${str}`;
+      return str;
+    }).join(' + ');
+  } else {
+    // Short form: only the formula fields
+    return damageArray.map(dmg => dmg.formula || '').join(' + ');
+  }
 }
 
 /**
@@ -53,8 +59,9 @@ export function damageArrayToString(damageArray) {
  * @param {object} [options] - Optional extra data (e.g., source, timestamp override).
  */
 export async function updateHpLog(actor, hpChange, message, options = {}) {
-  if (!actor || !actor.system?.logHitpoints?.enabled) return;
-  const log = Array.isArray(actor.system.logHitpoints.log) ? [...actor.system.logHitpoints.log] : [];
+  // Only log if the system-wide HP logging setting is enabled
+  if (!actor || !game.settings.get("unboundfate", "hpLogEnabled")) return;
+  const log = Array.isArray(actor.system.logHitpoints?.log) ? [...actor.system.logHitpoints.log] : [];
   const maxEntries = game.settings.get("unboundfate", "hpLogMaxEntries") || 20;
   const entry = {
     timestamp: options.timestamp || Date.now(),
@@ -83,7 +90,5 @@ export async function applyDamageToActor(actor, rolledDamageArray, sourceActor =
   const newHP = Math.max((prevHP - totalDamage), 0);
   await actor.update({ 'system.hitPoints.currentHP': newHP });
   // Log the HP change
-  if (actor.system?.logHitpoints?.enabled) {
-    await updateHpLog(actor, -totalDamage, message || `Took ${totalDamage} damage`, { newCurrentHP: newHP, sourceActorId: sourceActor?.id });
-  }
+  await updateHpLog(actor, -totalDamage, message || `Took ${totalDamage} damage`, { newCurrentHP: newHP, sourceActorId: sourceActor?.id });
 }

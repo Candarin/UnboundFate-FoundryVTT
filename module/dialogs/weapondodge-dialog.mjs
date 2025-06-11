@@ -1,5 +1,5 @@
 import { rollWeaponDodge } from '../dice/rolltypes.mjs';
-import { getEquippedWeaponWithHighestParry, getReadiedShieldWithHighestRating } from '../helpers/actor-utils.mjs';
+import { damageArrayToString, getEquippedWeaponWithHighestParry, getReadiedShieldWithHighestRating } from '../helpers/actor-utils.mjs';
 
 /**
  * Launches a dialog for a weapon dodge roll, allowing the user to select ability, weapon, and modifiers.
@@ -18,7 +18,9 @@ export function launchWeaponDodgeDialog({ actor, attackingActor, options = {} })
   const dodgeTokenId = options.dodgeTokenId || null;
 
   // Access damageArray from options or chatMessageData.flags
-  const damageArray = options.damageArray || chatMessageData.flags?.damageArray || [];
+  const damageArray = optiondamageArray.map(dmg => dmg.formula || '').join(' + ');s.damageArray || chatMessageData.flags?.damageArray || [];
+  const damageString = damageArrayToString(damageArray, false); //
+  const damageStringLong = damageArrayToString(damageArray, true); // Long form for display
 
     // Ability 1: Agility
   const ability1Key = 'agl';
@@ -121,6 +123,8 @@ export function launchWeaponDodgeDialog({ actor, attackingActor, options = {} })
     modifier,
     modifiersString,
     totalPool,
+    damageString,
+    damageStringLong,
     damageArray, // Add to template if needed for downstream dialogs
     dodgeTokenId // Pass to template for chat-actor.hbs
   };

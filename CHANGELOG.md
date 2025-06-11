@@ -311,3 +311,17 @@
 - added hp logging (+ datetime handlebars helper)
 - shifted damage roll to attack dialog
 - updated stat-box-value css
+
+## v1.0.88
+- add system setting to toggle HP logging
+- remove hp logging toggle from character and just use system setting
+- style damage box
+- update NPC to be the same as character
+- update damage string creation
+- add damage to dodge dialog
+- add short form damage string
+
+
+TODO
+- add damage to attack message
+- add tooltip to damage string display
