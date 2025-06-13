@@ -1,5 +1,6 @@
 import { rollWeaponDodge } from '../dice/rolltypes.mjs';
-import { damageArrayToString, getEquippedWeaponWithHighestParry, getReadiedShieldWithHighestRating } from '../helpers/actor-utils.mjs';
+import { getEquippedWeaponWithHighestParry, getReadiedShieldWithHighestRating } from '../helpers/actor-utils.mjs';
+import { Damage } from '../helpers/damage.mjs';
 
 /**
  * Launches a dialog for a weapon dodge roll, allowing the user to select ability, weapon, and modifiers.
@@ -17,10 +18,10 @@ export function launchWeaponDodgeDialog({ actor, attackingActor, options = {} })
   const chatMessageData = options.chatMessageData || {};
   const dodgeTokenId = options.dodgeTokenId || null;
 
-  // Access damageArray from options or chatMessageData.flags
-  const damageArray = chatMessageData.flags?.damageArray || options.damageArray || [];
-  const damageString = damageArrayToString(damageArray, false); //
-  const damageStringLong = damageArrayToString(damageArray, true); // Long form for display
+  // Access damage from options or chatMessageData.flags
+  const damage = chatMessageData.flags?.damage || options.damage || new Damage();
+  const damageString = damage.toString();
+  const damageStringLong = damage.toString(true); // Long form for display
 
     // Ability 1: Agility
   const ability1Key = 'agl';
@@ -123,9 +124,9 @@ export function launchWeaponDodgeDialog({ actor, attackingActor, options = {} })
     modifier,
     modifiersString,
     totalPool,
+    damage, // Pass the Damage instance for downstream dialogs
     damageString,
     damageStringLong,
-    damageArray, // Add to template if needed for downstream dialogs
     dodgeTokenId // Pass to template for chat-actor.hbs
   };
 
@@ -159,7 +160,7 @@ export function launchWeaponDodgeDialog({ actor, attackingActor, options = {} })
                 totalPool,
                 modifiersString,        
                 targetNumber: finalTargetNumber,
-                damageArray, // Pass to dodge roll for later use
+                damage, // Pass to dodge roll for later use
                 dodgeTokenId // Forward to rollWeaponDodge for chat rendering
               }                            
             });

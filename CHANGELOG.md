@@ -330,6 +330,9 @@
 - Added Damage class and refactored damage process
 - add tooltip to damage string display
 
+## 1.0.91
+- Fixed issue in dodge dialog
+
 TODO
 - add damage to attack message
 - Weapon dialog. correct update of skill rating
