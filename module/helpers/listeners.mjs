@@ -102,6 +102,22 @@ export function registerUnboundFateChatListeners() {
     });
   });
 
+  // Listen for Apply Damage button in chat
+  Hooks.on('renderChatMessage', (message, html, data) => {
+    html.find('.uf-apply-damage-btn').off('click').on('click', async function (ev) {
+      ev.preventDefault();
+      const btn = ev.currentTarget;
+      const actorId = btn.dataset.actorId;
+      const damage = Number(btn.dataset.damage);
+      const actor = game.actors.get(actorId);
+      if (actor && !isNaN(damage)) {
+        // Use the same structure as applyDamageToActor expects
+        await game.unboundfate?.applyDamageToActor?.(actor, [{ total: damage }]);
+        ufLog(`Applied ${damage} damage to ${actor.name}.`);
+      }
+    });
+  });
+
   // Add global listener for chat-select-link
   $(document).on('click', '.chat-select-link', function (event) {
     ufLog('Chat select link clicked:', this);

@@ -1,9 +1,7 @@
-import {
-  onManageActiveEffect,
-  prepareActiveEffectCategories,
-} from '../helpers/effects.mjs';
+import { onManageActiveEffect, prepareActiveEffectCategories } from '../helpers/effects.mjs';
 import { launchSkillDialog } from '../dialogs/skill-dialog.mjs';
 import { UNBOUNDFATE as CONFIG_UNBOUNDFATE } from '../helpers/config.mjs';
+import { updateHpLog } from '../helpers/actor-utils.mjs';
 
 /**
  * Extend the basic ActorSheet with some very simple modifications
@@ -379,6 +377,18 @@ export class UnboundFateActorSheet extends ActorSheet {
           classes: ['uf-hp-log-dialog']
         }).render(true);
       });
+    });
+
+    // Detect manual HP changes and log them
+    html.on('change', 'input[name="system.hitPoints.currentHP"]', async (ev) => {
+      const input = ev.currentTarget;
+      const newHP = parseInt(input.value, 10);
+      const prevHP = this.actor.system.hitPoints?.currentHP ?? 0;
+      if (newHP !== prevHP) {
+        const diff = newHP - prevHP;
+        const msg = diff > 0 ? `Manual heal: +${diff}` : `Manual damage: ${diff}`;
+        await updateHpLog(this.actor, diff, msg, { newCurrentHP: newHP });
+      }
     });
   }
 

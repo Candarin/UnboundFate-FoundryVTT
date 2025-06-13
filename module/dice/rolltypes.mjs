@@ -1,7 +1,7 @@
 import { UFRoll } from './UFRoll.mjs';
 import { launchWeaponDodgeDialog } from '../dialogs/weapondodge-dialog.mjs';
-import { damageArrayToString } from '../helpers/actor-utils.mjs';
 import { ufLog } from '../helpers/system-utils.mjs';
+import { Damage, DamageComponent } from '../helpers/damage.mjs';
 
 /**
  * Rolls a skill pool and sends the result to chat.
@@ -47,39 +47,30 @@ export async function rollSkillPool({ skillKey, skillRating, abilityKey, ability
  * @param {Array<Token>} params.targets - Array of targeted tokens
  * @param {string} params.totalPool - The total pool of dice to roll (required)
  * @param {string} params.modifierList - A concatenated string of modifiers (optional) to display on the chat message
+ * @param {string} params.attackType
+ * @param {Damage} params.damage - A Damage instance representing the attack's damage
+ * @param {string} params.attackerTokenId
  */
-export async function rollWeaponAttack({ weapon, actor, targets = [], totalPool, modifierList = '', attackType, damageArray, attackerTokenId }) {
-  ufLog('Rolling Weapon Attack:', { weapon, actor, targets, totalPool, modifierList, attackType, damageArray, attackerTokenId });
+export async function rollWeaponAttack({ weapon, actor, targets = [], totalPool, modifierList = '', attackType, damage, attackerTokenId }) {
+  ufLog('Rolling Weapon Attack:', { weapon, actor, targets, totalPool, modifierList, attackType, damage, attackerTokenId });
   // Get weapon and skill info
   const weaponName = weapon.name;
   const damage1H = weapon.system.damage1H || '';
   const damage2H = weapon.system.damage2H || '';
   const weaponType = weapon.system.weaponType || '';
-  
-
-  // For now, use 1H damage
-  const damage = damage1H;
 
   // Compose target names for chat
   const targetNames = (targets && targets.length)
     ? targets.map(t => t.name).join(', ')
     : '<em>None</em>';
 
-  // --- Roll damage for each component in damageArray ---
-  let rolledDamageArray = [];
-  if (Array.isArray(damageArray) && damageArray.length > 0) {
-    for (let dmg of damageArray) {
-      let roll = new Roll(dmg.formula, actor.getRollData());
-      await roll.evaluate();
-      rolledDamageArray.push({
-        ...dmg,
-        roll: roll, // store the Roll object
-        total: roll.total // store the rolled value
-      });
-    }
+  // Roll all damage components if not already rolled
+  if (damage && !damage.isRolled()) {
+    await damage.rollAll(actor);
   }
 
-  const damageString = rolledDamageArray.length > 0 ? damageArrayToString(rolledDamageArray) : '';
+  const damageString = damage.toString();
+  const damageStringLong = damage.toString(true);
 
   const formula = `${totalPool}d6cs>=5`;
   const roll = new UFRoll(formula, actor.getRollData(), { targetNumber: 0 });
@@ -111,7 +102,7 @@ export async function rollWeaponAttack({ weapon, actor, targets = [], totalPool,
   rollContent += weaponHeader;
   rollContent += `${modifierList ? `<div class="modifiers-string">${modifierList}</div>` : ''}`;
   rollContent += `<hr>`;
-  rollContent += `<div class="damage-string">Damage: <span>${damageString}</span></div>`;
+  rollContent += `<div class="damage-string">Damage: <span title="${damageStringLong}">${damageString}</span></div>`;
   rollContent += `<hr>`;
   rollContent += `<h4>Targets:</h4>`;
   rollContent += targets.length > 1 ? `${targetNames}` : targetContent;
@@ -127,7 +118,7 @@ export async function rollWeaponAttack({ weapon, actor, targets = [], totalPool,
     roll: roll,
     flags: {
       weapon,
-      damageArray: rolledDamageArray // Pass the rolled array for downstream dialogs (dodge, damage, etc.)
+      damage: damage // Pass the Damage instance for downstream dialogs (dodge, damage, etc.)
     }
   });
 }
@@ -148,7 +139,7 @@ export async function rollWeaponDodge({ actor, attackingActor, options = {} }) {
   const totalPool = options.totalPool || 0;  
   const modifiersString = options.modifiersString || '';
   const targetNumber = options.targetNumber || options.attackSuccesses || 0;
-  const rolledDamageArray = options.damageArray || [];
+  const rolledDamage = options.damage instanceof Damage ? options.damage : new Damage(options.damage || []);
 
 
   // Formula for the dodge roll
@@ -198,10 +189,10 @@ export async function rollWeaponDodge({ actor, attackingActor, options = {} }) {
   });
 
   // If the dodge failed, display the damage the actor is taking
-  if (!outcome && rolledDamageArray.length > 0) {
-    postDodgeDamageMessage(actor, rolledDamageArray, attackingActor, options.dodgeTokenId, options.attackingTokenId);
+  if (!outcome && rolledDamage.components.length > 0) {
+    postDodgeDamageMessage(actor, rolledDamage, attackingActor, options.dodgeTokenId, options.attackingTokenId);
     // Optionally, call applyDamageToActor here if you want auto-application
-    // await applyDamageToActor(actor, rolledDamageArray, attackingActor);
+    await applyDamageToActor(actor, rolledDamage, attackingActor);
   }
 }
 
@@ -232,23 +223,21 @@ export async function rollWeaponDamage({ weapon, attacker, target, damage }) {
 }
 
 /**
- * Rolls a structured damage array and sends the result to chat.
+ * Rolls a structured damage instance and sends the result to chat.
  * @param {object} params
  * @param {object} params.weapon - The weapon item object
  * @param {Actor} params.attacker - The attacking actor
  * @param {Actor} params.target - The defending actor
- * @param {Array} params.damageArray - Array of damage objects {label, formula, type, source}
+ * @param {Damage} params.damage - A Damage instance representing the attack's damage
  */
-export async function rollDamageArray({ weapon, attacker, target, damageArray }) {
-  if (!Array.isArray(damageArray) || damageArray.length === 0) {
-    ui.notifications.warn('No valid damage array provided.');
+export async function rollDamageInstance({ weapon, attacker, target, damage }) {
+  if (!(damage instanceof Damage) || !damage.components.length) {
+    ui.notifications.warn('No valid damage provided.');
     return;
   }
-  // Import the utility for string conversion
-  const damageString = damageArrayToString(damageArray);
-  // Combine all formulas for a single roll, or roll each separately as needed
-  const formulas = damageArray.map(d => d.formula).join(' + ');
-  const roll = new Roll(formulas, attacker.getRollData());
+  await damage.rollAll(attacker);
+  const damageString = Damage.toStringArray(damage);
+  const roll = new Roll(damage.components.map(d => d.formula).join(' + '), attacker.getRollData());
   await roll.evaluate();
   let rollHTML = await roll.render();
   ChatMessage.create({
@@ -267,9 +256,11 @@ export async function rollDamageArray({ weapon, attacker, target, damageArray })
  * @param {string|null} tokenId - The tokenId for the defender (optional).
  * @param {string|null} attackingTokenId - The tokenId for the attacker (optional).
  */
-export async function postDodgeDamageMessage(actor, rolledDamageArray, attackingActor = null, tokenId = null, attackingTokenId = null) {
-  if (!actor || !Array.isArray(rolledDamageArray) || rolledDamageArray.length === 0) return;
-  let damageString = rolledDamageArray.map(d => `${d.label ? d.label + ': ' : ''}${d.total} (${d.formula}${d.type ? ' ' + d.type : ''})`).join(' + ');
+export async function postDodgeDamageMessage(actor, rolledDamage, attackingActor = null, tokenId = null, attackingTokenId = null) {
+  if (!actor || !rolledDamage || !rolledDamage.components || rolledDamage.components.length === 0) return;
+  let damageString = damageArrayToStringNew(rolledDamage);
+  let damageStringLong = damageArrayToStringNew(rolledDamage, true);
+
   // Render actor header partials for both defender and attacker if tokenIds are provided
   let defenderHeader = '';
   let attackerHeader = '';
@@ -279,19 +270,26 @@ export async function postDodgeDamageMessage(actor, rolledDamageArray, attacking
   if (attackingActor && attackingTokenId) {
     attackerHeader = await renderTemplate('systems/unboundfate/templates/chat/chat-actor.hbs', { actor: attackingActor, actorType: 'attacker', tokenId: attackingTokenId });
   }
-  
+  // Render the apply damage button partial
+  const totalDamage = rolledDamage.getTotal();
+  const applyDamageButton = await renderTemplate('systems/unboundfate/templates/chat/apply-damage-button.hbs', {
+    actorId: actor.id,
+    damage: totalDamage
+  });
+
   let msgContent = '';
-  msgContent += `<div class="dodge-fail-damage"><strong>Failed Dodge!</strong> ${actor.name} takes <span class="dodge-damage-value">${damageString}</span></div>`;
+  msgContent += `<div class="dodge-fail-damage"><strong>Failed Dodge!</strong> ${actor.name} takes <span class="dodge-damage-value" title="${damageStringLong}">${damageString}</span></div>`;
   msgContent += `${defenderHeader}`;  
   msgContent += `<hr>`;
   msgContent += '<h4>Attacker:</h4>'
   msgContent += `${attackerHeader}`;
-  
+  msgContent += applyDamageButton;
+
   ChatMessage.create({
     speaker: ChatMessage.getSpeaker({ actor }),
     flavor: msgContent,
     flags: {
-      damageArray: rolledDamageArray,
+      damage: rolledDamage,
       attackerId: attackingActor?.id,
       targetId: actor.id,
       tokenId,

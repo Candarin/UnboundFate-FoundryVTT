@@ -236,12 +236,12 @@ export function launchWeaponDialog({ weapon, attackType, actor, attackerTokenId 
           if (abilityValueElem) {
             abilityValueElem.value = actor.system.abilities[selectedAbilityKey]?.value || 0;
           }
-          // Update total pool
-          updateTotal;        
+          // Update total pool and modifiers string
+          updateTotal();
         });
 
         // Skill change listener
-        form.skillKey.addEventListener('select', function() {          
+        form.skillKey.addEventListener('change', function() {          
           const selectedSkillKey = form.skillKey?.value || '';
           // update the skill specialisation field based on the selected skill
           const specElem = form.querySelector('#skillSpec');

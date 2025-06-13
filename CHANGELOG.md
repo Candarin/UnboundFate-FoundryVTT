@@ -326,6 +326,10 @@
 - Fixed issue with HP logging
 - minor css tweaks
 
+## 1.0.90
+- Added Damage class and refactored damage process
+- add tooltip to damage string display
+
 TODO
 - add damage to attack message
-- add tooltip to damage string display
+- Weapon dialog. correct update of skill rating

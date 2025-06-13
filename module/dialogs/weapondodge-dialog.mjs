@@ -227,13 +227,13 @@ export function launchWeaponDodgeDialog({ actor, attackingActor, options = {} })
         html.find('select[name="ability1Key"]').on('change', function() {
           const ability1Key = html.find('select[name="ability1Key"]').val();
           const ability1Value = actor.system.abilities?.[ability1Key]?.value || 0;
-          html.find('#ability1Value').value(ability1Value);
+          html.find('#ability1Value').val(ability1Value);
           updateTotal();
         });
         html.find('select[name="ability2Key"]').on('change', function() {
           const ability2Key = html.find('select[name="ability2Key"]').val();
           const ability2Value = actor.system.abilities?.[ability2Key]?.value || 0;
-          html.find('#ability2Value').value(ability2Value);          
+          html.find('#ability2Value').val(ability2Value);          
           updateTotal();
         });
         html.find('select[name="weaponId"]').on('change', function() {

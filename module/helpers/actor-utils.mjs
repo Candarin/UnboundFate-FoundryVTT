@@ -31,27 +31,6 @@ export function getReadiedShieldWithHighestRating(actor) {
 }
 
 /**
- * Converts a damage array to a readable string for display or chat.
- * @param {Array} damageArray - Array of damage objects {label, formula, type, source}
- * @param {boolean} [longform=false] - Whether to include labels and types in the output.
- * @returns {string} - Human-readable damage string
- */
-export function damageArrayToString(damageArray, longform = false) {
-  if (!Array.isArray(damageArray) || damageArray.length === 0) return '';
-  if (longform) {
-    return damageArray.map(dmg => {
-      let str = dmg.formula || '';
-      if (dmg.type) str += ` ${dmg.type}`;
-      if (dmg.label) str = `${dmg.label}: ${str}`;
-      return str;
-    }).join(' + ');
-  } else {
-    // Short form: only the formula fields
-    return damageArray.map(dmg => dmg.formula || '').join(' + ');
-  }
-}
-
-/**
  * Updates the HP log for an actor, appending a new entry and trimming to the configured max size.
  * @param {Actor} actor - The actor whose HP log to update.
  * @param {number} hpChange - The amount of HP changed (positive or negative).
