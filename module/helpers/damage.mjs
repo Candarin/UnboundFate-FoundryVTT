@@ -1,5 +1,5 @@
 // filepath: module/helpers/damage.mjs
-import { Roll } from "../../../../systems/unboundfate/module/dice/UFRoll.mjs";
+import { UFRoll } from '../dice/UFRoll.mjs';
 
 /**
  * Represents a single component of damage (e.g., fire, slashing, etc.)
@@ -79,7 +79,7 @@ export class Damage {
   async rollAll(actor = null) {
     for (let comp of this.components) {
       if (comp.formula && (typeof comp.total !== 'number')) {
-        let roll = new Roll(comp.formula, actor?.getRollData ? actor.getRollData() : {});
+        let roll = new UFRoll(comp.formula, actor?.getRollData ? actor.getRollData() : {});
         await roll.evaluate();
         comp.total = roll.total;
         comp.roll = roll;
@@ -125,15 +125,4 @@ export class Damage {
     return (components || []).reduce((sum, c) => sum + (c?.getTotal?.() ?? c?.total ?? 0), 0);
   }
 
-  /**
-   * Utility to convert an array of DamageComponent or Damage instance to short/long string
-   */
-  static toStringArray(damageArray, longform = false) {
-    if (damageArray instanceof Damage) return damageArray.toString(longform);
-    if (!Array.isArray(damageArray) || damageArray.length === 0) return '';
-    return damageArray.map(d => {
-      const comp = d instanceof DamageComponent ? d : DamageComponent.fromObject(d);
-      return longform ? comp.toLongString() : comp.toShortString();
-    }).join(' + ');
-  }
 }

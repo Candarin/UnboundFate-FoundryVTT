@@ -236,7 +236,7 @@ export async function rollDamageInstance({ weapon, attacker, target, damage }) {
     return;
   }
   await damage.rollAll(attacker);
-  const damageString = Damage.toStringArray(damage);
+  const damageString = Damage.toString();
   const roll = new Roll(damage.components.map(d => d.formula).join(' + '), attacker.getRollData());
   await roll.evaluate();
   let rollHTML = await roll.render();
