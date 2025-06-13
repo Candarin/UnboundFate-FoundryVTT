@@ -312,7 +312,7 @@
 - shifted damage roll to attack dialog
 - updated stat-box-value css
 
-## v1.0.88
+## 1.0.88
 - add system setting to toggle HP logging
 - remove hp logging toggle from character and just use system setting
 - style damage box
@@ -321,6 +321,10 @@
 - add damage to dodge dialog
 - add short form damage string
 
+## 1.0.89
+- Fixed issue on dodge dialog
+- Fixed issue with HP logging
+- minor css tweaks
 
 TODO
 - add damage to attack message

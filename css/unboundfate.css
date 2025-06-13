@@ -284,6 +284,7 @@
   width: 40px;
   font-size: medium;
   border: 1px solid #4d4d4d;
+  border-radius: 3px;
 }
 .system-unboundfate .resource-label {
   font-weight: bold;

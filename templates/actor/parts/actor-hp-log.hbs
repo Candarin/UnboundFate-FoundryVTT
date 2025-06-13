@@ -1,6 +1,6 @@
 <div class="hp-log-container">
   <h4>HP Log</h4>
-  {{#if system.logHitpoints.enabled}}
+  {{#if hpLogEnabled}}
     {{#if system.logHitpoints.log.length}}
       <ul class="hp-log-list">
         {{#each system.logHitpoints.log as |entry|}}

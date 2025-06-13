@@ -364,7 +364,8 @@ export class UnboundFateActorSheet extends ActorSheet {
     html.on('click', '.uf-hp-log-btn', (ev) => {
       ev.preventDefault();
       const system = this.actor.system;
-      renderTemplate('systems/unboundfate/templates/actor/parts/actor-hp-log.hbs', { system }).then(content => {
+      const hpLogEnabled = game.settings.get('unboundfate', 'hpLogEnabled');
+      renderTemplate('systems/unboundfate/templates/actor/parts/actor-hp-log.hbs', { system, hpLogEnabled }).then(content => {
         new Dialog({
           title: 'HP Log',
           content,

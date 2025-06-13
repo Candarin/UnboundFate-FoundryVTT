@@ -18,7 +18,7 @@ export function launchWeaponDodgeDialog({ actor, attackingActor, options = {} })
   const dodgeTokenId = options.dodgeTokenId || null;
 
   // Access damageArray from options or chatMessageData.flags
-  const damageArray = optiondamageArray.map(dmg => dmg.formula || '').join(' + ');s.damageArray || chatMessageData.flags?.damageArray || [];
+  const damageArray = chatMessageData.flags?.damageArray || options.damageArray || [];
   const damageString = damageArrayToString(damageArray, false); //
   const damageStringLong = damageArrayToString(damageArray, true); // Long form for display
 
