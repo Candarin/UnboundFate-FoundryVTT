@@ -217,9 +217,10 @@
   margin-bottom: 10px;
 }
 .system-unboundfate .sheet-header .profile-img {
-  flex: 0 0 100px;
-  height: 100px;
+  flex: 0 0 80px;
+  height: 80px;
   margin-right: 10px;
+  border: none;
 }
 .system-unboundfate .sheet-header .header-fields {
   flex: 1;

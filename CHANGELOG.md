@@ -336,6 +336,10 @@
 ## 1.0.92
 - Fixed issue in damage class
 
+## 1.0.93
+- add Handlebars helpers, and adjust weapon dialog damage handling
+
+
 TODO
 - add damage to attack message
 - Weapon dialog. correct update of skill rating

@@ -15,6 +15,8 @@ import { UFRoll } from './dice/UFRoll.mjs';
 import { registerUnboundFateChatListeners } from './helpers/listeners.mjs';
 // Import logging utility
 import { ufLog } from './helpers/system-utils.mjs';
+// Import Handlebars helpers
+import { registerUnboundFateHandlebarsHelpers } from './helpers/handlebars-helpers.mjs';
 
 /* -------------------------------------------- */
 /*  Init Hook                                   */
@@ -76,40 +78,14 @@ Hooks.once('init', function () {
   // Register UFRoll with CONFIG.Dice.rolls to allow rehydration from chat data
   CONFIG.Dice.rolls.push(UFRoll);
 
+  // Register Handlebars helpers
+  registerUnboundFateHandlebarsHelpers();
+
   // Preload Handlebars templates.
   return preloadHandlebarsTemplates();
 });
 
-/* -------------------------------------------- */
-/*  Handlebars Helpers                          */
-/* -------------------------------------------- */
 
-// If you need to add Handlebars helpers, here is a useful example:
-Handlebars.registerHelper('toLowerCase', function (str) {
-  return str.toLowerCase();
-});
-
-// Handlebars helper: range(start, end) => [start, ..., end]
-Handlebars.registerHelper('range', function(start, end) {
-  start = Number(start);
-  end = Number(end);
-  let result = [];
-  for (let i = start; i <= end; i++) result.push(i);
-  return result;
-});
-
-// Handlebars helper: formatDate(timestamp) => formatted date string
-Handlebars.registerHelper('formatDate', function(timestamp) {
-  if (!timestamp) return '';
-  const date = new Date(timestamp);
-  // Format as YYYY-MM-DD HH:mm (24h)
-  const yyyy = date.getFullYear();
-  const mm = String(date.getMonth() + 1).padStart(2, '0');
-  const dd = String(date.getDate()).padStart(2, '0');
-  const hh = String(date.getHours()).padStart(2, '0');
-  const min = String(date.getMinutes()).padStart(2, '0');
-  return `${yyyy}-${mm}-${dd} ${hh}:${min}`;
-});
 
 /* -------------------------------------------- */
 /*  Ready Hook                                  */

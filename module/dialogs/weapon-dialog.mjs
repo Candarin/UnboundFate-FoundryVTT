@@ -1,5 +1,6 @@
 import { rollWeaponAttack } from '../dice/rolltypes.mjs';
 import { damageArrayToString } from '../helpers/actor-utils.mjs';
+import { Damage } from '../helpers/damage.mjs';
 
 /**
  * Launches a dialog for a weapon attack roll and handles the result.
@@ -74,14 +75,14 @@ export function launchWeaponDialog({ weapon, attackType, actor, attackerTokenId 
 
   // Determine weaponDamage based on attackType and held2H (for melee)
   let weaponDamageFormula = '';
-  let damageArray = [];
+  let damage = new Damage();
 
   if (attackType === 'melee') {
     const held2H = weapon.system.melee?.held2H || false;
     weaponDamageFormula = held2H ? (weapon.system.melee?.damage2H || weapon.system.melee?.damage1H || '') : (weapon.system.melee?.damage1H || '');
     // Add weapon base damage
     if (weaponDamageFormula) {
-      damageArray.push({
+      damage.addComponent({
         label: 'Weapon Damage',
         formula: weaponDamageFormula,
         type: weapon.system.melee?.damageType || weapon.system.damageType || 'slashing',
@@ -91,7 +92,7 @@ export function launchWeaponDialog({ weapon, attackType, actor, attackerTokenId 
   } else if (attackType === 'ranged') {
     weaponDamageFormula = weapon.system.ranged?.damage || '';
     if (weaponDamageFormula) {
-      damageArray.push({
+      damage.addComponent({
         label: 'Weapon Damage',
         formula: weaponDamageFormula,
         type: weapon.system.ranged?.damageType || weapon.system.damageType || 'piercing',
@@ -102,7 +103,7 @@ export function launchWeaponDialog({ weapon, attackType, actor, attackerTokenId 
 
   // Add ability bonus as a separate entry in the array
   if (abilityValue > 0) {
-    damageArray.push({
+    damage.addComponent({
       label: `${game.i18n.localize(abilities[abilityKey])} Bonus`,
       formula: `+${abilityValue}`,
       type: (attackType === 'melee') ? (weapon.system.melee?.damageType || weapon.system.damageType || 'slashing') : (weapon.system.ranged?.damageType || weapon.system.damageType || 'piercing'),
@@ -112,14 +113,14 @@ export function launchWeaponDialog({ weapon, attackType, actor, attackerTokenId 
   }
 
   // Use the utility to generate the display string
-  const weaponDamageString = damageArrayToString(damageArray);
+  const weaponDamageString = damage.toString();
 
   // Prepare data for the template
   const templateData = {
     weaponName,
     weaponDamageFormula,
     weaponDamageString,
-    damageArray, // Pass the array for downstream dialogs
+    damage, // Pass the Damage instance for downstream dialogs
     attackType,
     skillKey,
     skillRating,
@@ -164,7 +165,7 @@ export function launchWeaponDialog({ weapon, attackType, actor, attackerTokenId 
               }
             }
             // Pass attackerTokenId to rollWeaponAttack
-            await rollWeaponAttack({ weapon, actor, targets, totalPool, modifierList, attackType, damageArray, attackerTokenId: finalAttackerTokenId });
+            await rollWeaponAttack({ weapon, actor, targets, totalPool, modifierList, attackType, damage, attackerTokenId: finalAttackerTokenId });
           }
         },
         cancel: {
