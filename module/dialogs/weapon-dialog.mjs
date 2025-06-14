@@ -1,5 +1,4 @@
 import { rollWeaponAttack } from '../dice/rolltypes.mjs';
-import { damageArrayToString } from '../helpers/actor-utils.mjs';
 import { Damage } from '../helpers/damage.mjs';
 
 /**

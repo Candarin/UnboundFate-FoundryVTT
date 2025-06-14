@@ -339,6 +339,9 @@
 ## 1.0.93
 - add Handlebars helpers, and adjust weapon dialog damage handling
 
+## 1.0.94
+- refactor: update HP log button from button to link for improved UI consistency 
+- Fixed import statement on weapon dialog
 
 TODO
 - add damage to attack message
