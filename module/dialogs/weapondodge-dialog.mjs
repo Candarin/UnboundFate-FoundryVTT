@@ -59,6 +59,10 @@ export function launchWeaponDodgeDialog({ actor, attackingActor, options = {} })
   const actorWeaponSkillRating = actor.system.skills?.[actorWeaponSkillKey]?.rating || 0; // Use the weapon's skill rating if available
   const actorParry = Math.min(actorWeaponParry, actor.system.skills?.[actorWeaponSkillKey]?.rating || 0); // Use the weapon's parry or the skill rating, whichever is lower
 
+  // Get localized skill label for the equipped weapon's skill
+  const skills = CONFIG.UNBOUNDFATE.skills || {};
+  const actorWeaponSkillLabel = skills[actorWeaponSkillKey] ? game.i18n.localize(skills[actorWeaponSkillKey]) : '';
+
   // Armour (deflect rating from armour items)
   const actorArmourList = actor.items.filter(i => i.type === 'armour' && i.system.isEquipped); 
   const actorArmourDeflect = actorArmourList.reduce((total, armour) => total + (armour.system.deflect || 0), 0);
@@ -243,11 +247,17 @@ export function launchWeaponDodgeDialog({ actor, attackingActor, options = {} })
           const skillRating = actor.system.skills?.[skillKey]?.rating || 0;
           const actorParry = Math.min(weaponParry, skillRating);
 
-          //update the parry and skill rating fields
-          form.actorWeaponSkill.value = skillKey ? `${skillKey} (Rating: ${skillRating})` : 'None';
-          form.actorParry.value = actorParry || 0;
+          // Get localized skill label
+          const skills = CONFIG.UNBOUNDFATE.skills || {};
+          const skillLabel = skillKey && skills[skillKey] ? game.i18n.localize(skills[skillKey]) : '';
 
-          html.find('#actorWeaponParry').text(weaponParry);
+          // Update the skill label and rating fields
+          html.find('#actorWeaponSkill').val(skillLabel);
+          html.find('#actorWeaponSkillRating').val(skillRating);
+
+          // Update the parry fields
+          html.find('#actorWeaponParry').val(weaponParry);
+          html.find('#actorParry').val(actorParry);
 
           updateTotal();
         });

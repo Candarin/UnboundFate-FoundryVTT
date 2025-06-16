@@ -1,3 +1,5 @@
+import { Damage } from './damage.mjs';
+
 /**
  * Returns the equipped weapon with the highest parry rating for the given actor.
  * @param {Actor} actor - The actor to search for equipped weapons.
@@ -58,13 +60,13 @@ export async function updateHpLog(actor, hpChange, message, options = {}) {
 /**
  * Applies rolled damage to an actor and logs the HP change.
  * @param {Actor} actor - The actor to apply damage to.
- * @param {Array} rolledDamageArray - Array of rolled damage objects (must include .total).
+ * @param {Damage} damageInstance - A Damage instance representing the rolled damage.
  * @param {Actor|null} sourceActor - The source of the damage (optional).
  * @param {string} message - Optional message for the HP log.
  */
-export async function applyDamageToActor(actor, rolledDamageArray, sourceActor = null, message = '') {
-  if (!actor || !Array.isArray(rolledDamageArray) || rolledDamageArray.length === 0) return;
-  const totalDamage = rolledDamageArray.reduce((sum, d) => sum + (typeof d.total === 'number' ? d.total : 0), 0);
+export async function applyDamageToActor(actor, damageInstance, sourceActor = null, message = '') {
+  if (!actor || !(damageInstance instanceof Damage) || !damageInstance.components.length) return;
+  const totalDamage = damageInstance.getTotal();
   const prevHP = actor.system.hitPoints?.currentHP ?? 0;
   const newHP = Math.max((prevHP - totalDamage), 0);
   await actor.update({ 'system.hitPoints.currentHP': newHP });

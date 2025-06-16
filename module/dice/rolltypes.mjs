@@ -2,6 +2,7 @@ import { UFRoll } from './UFRoll.mjs';
 import { launchWeaponDodgeDialog } from '../dialogs/weapondodge-dialog.mjs';
 import { ufLog } from '../helpers/system-utils.mjs';
 import { Damage, DamageComponent } from '../helpers/damage.mjs';
+import { applyDamageToActor } from '../helpers/actor-utils.mjs';
 
 /**
  * Rolls a skill pool and sends the result to chat.
@@ -236,7 +237,8 @@ export async function rollDamageInstance({ weapon, attacker, target, damage }) {
     return;
   }
   await damage.rollAll(attacker);
-  const damageString = Damage.toString();
+  const damageString = damage.toString();
+  const damageStringLong = damage.toString(true);
   const roll = new Roll(damage.components.map(d => d.formula).join(' + '), attacker.getRollData());
   await roll.evaluate();
   let rollHTML = await roll.render();
@@ -251,15 +253,15 @@ export async function rollDamageInstance({ weapon, attacker, target, damage }) {
 /**
  * Posts a chat message showing the damage an actor takes after a failed dodge.
  * @param {Actor} actor - The actor taking damage.
- * @param {Array} rolledDamageArray - Array of rolled damage objects (must include .total).
+ * @param {Damage} rolledDamage - A Damage instance representing the rolled damage.
  * @param {Actor|null} attackingActor - The source of the damage (optional).
  * @param {string|null} tokenId - The tokenId for the defender (optional).
  * @param {string|null} attackingTokenId - The tokenId for the attacker (optional).
  */
 export async function postDodgeDamageMessage(actor, rolledDamage, attackingActor = null, tokenId = null, attackingTokenId = null) {
   if (!actor || !rolledDamage || !rolledDamage.components || rolledDamage.components.length === 0) return;
-  let damageString = damageArrayToStringNew(rolledDamage);
-  let damageStringLong = damageArrayToStringNew(rolledDamage, true);
+  let damageString = rolledDamage.toString();
+  let damageStringLong = rolledDamage.toString(true);
 
   // Render actor header partials for both defender and attacker if tokenIds are provided
   let defenderHeader = '';

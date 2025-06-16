@@ -347,6 +347,9 @@
 - Fixed issue damage handling
 - Updated weapon dodge dialog
 
+## 1.0.96
+- Bug fixes in dodge roll and damage class
+
 TODO
 - add damage to attack message
 - Weapon dialog. correct update of skill rating
