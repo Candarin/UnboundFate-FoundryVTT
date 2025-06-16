@@ -19,7 +19,7 @@ export function launchWeaponDodgeDialog({ actor, attackingActor, options = {} })
   const dodgeTokenId = options.dodgeTokenId || null;
 
   // Access damage from options or chatMessageData.flags
-  const damage = chatMessageData.flags?.damage || options.damage || new Damage();
+  const damage = new Damage(chatMessageData.flags?.damage || options.damage);
   const damageString = damage.toString();
   const damageStringLong = damage.toString(true); // Long form for display
 
@@ -48,9 +48,10 @@ export function launchWeaponDodgeDialog({ actor, attackingActor, options = {} })
   // Weapon and Parry
   const actorWeaponList = actor.items.filter(i => i.type === 'weapon' && i.system.isEquipped);
   const actorWeaponEquipped = getEquippedWeaponWithHighestParry(actor);
+  // Refactor weapon label to remove parry rating
   const actorWeaponOptions = actorWeaponList.map(weapon => ({
     key: weapon.id,
-    label: `${weapon.name} (Parry: ${weapon.system.parry || 0})`,
+    label: weapon.name, // No parry in label
     selected: weapon.id === actorWeaponEquipped?.id
   }));
   const actorWeaponParry = actorWeaponEquipped?.system?.parry || 0;
@@ -114,6 +115,7 @@ export function launchWeaponDodgeDialog({ actor, attackingActor, options = {} })
     actorWeaponOptions,
     actorWeaponParry,
     actorWeaponSkillKey,
+    actorWeaponSkillLabel,
     actorWeaponSkillRating,
     actorParry,
     actorArmourDeflect,
@@ -178,21 +180,14 @@ export function launchWeaponDodgeDialog({ actor, attackingActor, options = {} })
         function updateTotal() {
           // Get current values from the form
           const ability1Key = form.ability1Key.value;
-          const ability1Value = actor.system.abilities?.[ability1Key]?.value || 0;
+          const ability1Value = Number(actor.system.abilities?.[ability1Key]?.value || 0);
           const ability2Key = form.ability2Key.value;
-          const ability2Value = actor.system.abilities?.[ability2Key]?.value || 0;
+          const ability2Value = Number(actor.system.abilities?.[ability2Key]?.value || 0);
           const weaponId = html.find('select[name="weaponId"]').val();
           const modifier = Number(html.find('input[name="modifier"]').val()) || 0;
-          const actorParry = form.actorParry.value || 0;
-
-          // Get actor data from closure
-          const actorData = actor;                 
-          
-
-          // Armour deflect          
-          const actorArmourDeflect = form.actorArmourDeflect.value || 0; // Use the total deflect from equipped armour
-          // Shield rating
-          const actorShieldRating = actorShieldReadied?.system?.shieldRating || 0; // Use the highest block rating from readied shields
+          const actorParry = Number(form.actorParry.value || 0);
+          const actorArmourDeflect = Number(form.actorArmourDeflect.value || 0);
+          const actorShieldRating = Number(actorShieldReadied?.system?.shieldRating || 0);
 
           // Calcuate Modrifier String
           let modifiersText = [];  
@@ -217,7 +212,7 @@ export function launchWeaponDodgeDialog({ actor, attackingActor, options = {} })
           const modifiersString = modifiersText.join(', ');
 
           // Calculate total pool
-          const totalPool = ability1Value + ability2Value + actorParry + actorArmourDeflect + actorShieldRating + modifier;
+          const totalPool = Number(ability1Value) + Number(ability2Value) + Number(actorParry) + Number(actorArmourDeflect) + Number(actorShieldRating) + Number(modifier);
 
           // Update total pool and modifier string in the form
           html.find('#totalPool').val(totalPool);
@@ -227,13 +222,13 @@ export function launchWeaponDodgeDialog({ actor, attackingActor, options = {} })
         // Listeners for editable fields
         html.find('select[name="ability1Key"]').on('change', function() {
           const ability1Key = html.find('select[name="ability1Key"]').val();
-          const ability1Value = actor.system.abilities?.[ability1Key]?.value || 0;
+          const ability1Value = Number(actor.system.abilities?.[ability1Key]?.value || 0);
           html.find('#ability1Value').val(ability1Value);
           updateTotal();
         });
         html.find('select[name="ability2Key"]').on('change', function() {
           const ability2Key = html.find('select[name="ability2Key"]').val();
-          const ability2Value = actor.system.abilities?.[ability2Key]?.value || 0;
+          const ability2Value = Number(actor.system.abilities?.[ability2Key]?.value || 0);
           html.find('#ability2Value').val(ability2Value);          
           updateTotal();
         });

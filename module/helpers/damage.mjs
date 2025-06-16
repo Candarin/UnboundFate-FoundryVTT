@@ -58,10 +58,26 @@ export class DamageComponent {
  */
 export class Damage {
   /**
-   * @param {Array<object|DamageComponent>} components - Array of damage components
+   * @param {Array<object|DamageComponent>|object|Damage|null|undefined} components - Array of damage components, a single component, a Damage instance, or null/undefined
    */
   constructor(components = []) {
-    this.components = (components || []).map(c => c instanceof DamageComponent ? c : new DamageComponent(c));
+    // If already a Damage instance, clone its components
+    if (components instanceof Damage) {
+      this.components = components.components.map(c => c instanceof DamageComponent ? c : new DamageComponent(c));
+    } else if (Array.isArray(components)) {
+      this.components = components.map(c => c instanceof DamageComponent ? c : new DamageComponent(c));
+    } else if (components && typeof components === 'object') {
+      // If it's a plain object (not array), treat as single component or serialized Damage
+      if (Array.isArray(components.components)) {
+        // Looks like a serialized Damage instance
+        this.components = components.components.map(c => c instanceof DamageComponent ? c : new DamageComponent(c));
+      } else {
+        // Treat as a single component object
+        this.components = [new DamageComponent(components)];
+      }
+    } else {
+      this.components = [];
+    }
     this.rolled = this.components.some(c => typeof c.total === 'number');
   }
 

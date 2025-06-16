@@ -343,6 +343,10 @@
 - refactor: update HP log button from button to link for improved UI consistency 
 - Fixed import statement on weapon dialog
 
+## 1.0.95
+- Fixed issue damage handling
+- Updated weapon dodge dialog
+
 TODO
 - add damage to attack message
 - Weapon dialog. correct update of skill rating

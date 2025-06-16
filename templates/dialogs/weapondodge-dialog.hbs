@@ -1,4 +1,4 @@
-<form>
+<form class="uf-dialog">
   {{!-- Attack Details --}}
   <h3>Incoming Attack</h3>
   
@@ -36,7 +36,7 @@
   <div class="form-group">
     <label>Ability 2</label>
       <div class="flexrow">
-        <select name="ability2Key" id="ability2Key">    
+        <select class="flex2" name="ability2Key" id="ability2Key">    
           {{#each ability2Options}}
             <option value="{{this.key}}" {{#if this.selected}}selected{{/if}}>{{this.label}}</option>
           {{/each}}
@@ -48,18 +48,26 @@
   {{!-- Parry Details --}}
   <hr>
   <div class="form-group">
-    <label>Equipped Weapon (Parry)</label>
-    <select name="weaponId">
-      <option value="">None</option>
-      {{#each actorWeaponOptions}}
-        <option value="{{this.key}}" {{#if this.selected}}selected{{/if}}>{{this.label}}</option>
-      {{/each}}
-    </select>
-  </div>
+    <label>Equipped Weapon</label>
+    <div class="flexrow">
+      <select class="flex2" name="weaponId">
+        <option value="">None</option>
+        {{#each actorWeaponOptions}}
+          <option value="{{this.key}}" {{#if this.selected}}selected{{/if}}>{{this.label}}</option>
+        {{/each}}
+      </select>
+      <input class="flex0 stat-value-box" id="actorWeaponParry" name="actorWeaponParry" value="{{actorWeaponParry}}" disabled />
+    </div> 
+  </div>  
+
   <div class="form-group">
-    <label>Linked Skill</label>   
-    <input name="actorWeaponSkill" id="actorWeaponSkill" value="{{actorWeaponSkillKey}} (Rating: {{actorWeaponSkillRating}})" disabled />  
+    <label>Linked Skill</label>  
+    <div class="flexrow">
+      <input name="flex2 actorWeaponSkill" id="actorWeaponSkill" value="{{actorWeaponSkillLabel}}" disabled />  
+      <input class="flex0 stat-value-box" id="actorWeaponSkillRating" value="{{actorWeaponSkillRating}}" disabled />
+    </div>
   </div>
+
   <div class="form-group">
     <label>Parry (min of skill and weapon parry)</label>
     <input type="number" name="actorParry" value="{{actorParry}}" disabled id="actorParry"/>
