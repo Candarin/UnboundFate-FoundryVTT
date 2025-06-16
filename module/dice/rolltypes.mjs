@@ -96,6 +96,9 @@ export async function rollWeaponAttack({ weapon, actor, targets = [], totalPool,
     targetContent = await renderTemplate('systems/unboundfate/templates/chat/chat-actor.hbs', { actor: targetActor, actorType: 'target', tokenId: targetTokenId });
   }
 
+  // Render the damage components partial
+  const damageContent = await renderTemplate('systems/unboundfate/templates/chat/chat-damage.hbs', { damage });
+
   // Build content for chat message
   let rollContent = `<h3>${attackType} Attack</h3>`; 
   rollContent += actorHeader;
@@ -103,7 +106,7 @@ export async function rollWeaponAttack({ weapon, actor, targets = [], totalPool,
   rollContent += weaponHeader;
   rollContent += `${modifierList ? `<div class="modifiers-string">${modifierList}</div>` : ''}`;
   rollContent += `<hr>`;
-  rollContent += `<div class="damage-string">Damage: <span title="${damageStringLong}">${damageString}</span></div>`;
+  rollContent += damageContent;
   rollContent += `<hr>`;
   rollContent += `<h4>Targets:</h4>`;
   rollContent += targets.length > 1 ? `${targetNames}` : targetContent;

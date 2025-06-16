@@ -47,16 +47,17 @@
         <option value="{{this.key}}" {{#if this.selected}}selected{{/if}}>{{this.label}}</option>
       {{/each}}
       </select>
-      <input class="flex0 stat-value-box" id="skill-rating" value="{{skillRating}}" style="width: 40px" disabled />
+      <input class="flex0 stat-value-box" id="skill-rating" value="{{skillRating}}" disabled />
     </div>   
   </div>
-  <div class="form-group">
-    <label for="useSpec">Apply Specialisation</label>
-    <input type="checkbox" id="useSpec" name="useSpec" {{#if useSpec}}checked{{/if}} disabled/>
-  </div>
+  <!-- Specialisation --> 
   <div class="form-group">
     <label for="specialisation">Specialisation</label>
-    <input type="text" name="skillSpec" id="skillSpec" value="{{skillSpec}}" disabled />
+    <div class="flexrow">
+      <input class="flex0" type="checkbox" id="useSpec" name="useSpec" {{#if useSpec}}checked{{/if}} disabled/>
+      <input class="flex2" type="text" name="skillSpec" id="skillSpec" value="{{skillSpec}}" disabled />
+      <input class="flex0 stat-value-box" id="skill-rating" value="{{#if useSpec}}2{{/if}}" disabled />
+    </div>
   </div>
   <!-- Modifier -->
   <div class="form-group">

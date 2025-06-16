@@ -350,6 +350,12 @@
 ## 1.0.96
 - Bug fixes in dodge roll and damage class
 
+## 1.0.97
+- Added rendering for damage components in chat messages.
+- Created a new dialog for editing skills on actors.
+- Updated HP log button to improve UI consistency across actor sheets.
+- Adjusted damage string formatting and fixed minor UI issues.
+
 TODO
 - add damage to attack message
 - Weapon dialog. correct update of skill rating

@@ -123,7 +123,7 @@ export class Damage {
    * Get a string representation (short or long form)
    */
   toString(longform = false) {
-    return this.components.map(c => longform ? c.toLongString() : c.toShortString()).join(' + ');
+    return this.components.map(c => longform ? c.toLongString() : c.toShortString()).join(' ');
   }
 
   /**

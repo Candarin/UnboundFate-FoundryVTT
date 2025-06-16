@@ -77,14 +77,16 @@
 
   {{!-- Shield Details --}}
   <hr>
-  <h3>Shield</h3>
   <div class="form-group">
-    <label>Readied Shield</label>
+    <label>Shield</label>
+    <div class="flexrow">
     {{#if actorShieldReadied}}
-      <span id="actorShieldRating">{{actorShieldReadied.name}} (Block: {{actorShieldReadied.system.shieldRating}})</span>
+      <label class="flex2" id="actorShieldRating">{{actorShieldReadied.name}}</span>
+      <input class="flex0 stat-value-box" id="actorShieldRatingValue" value="{{actorShieldReadied.system.shieldRating}}" disabled />
     {{else}}
-      <span>None</span>
+      <span>No shield readied</span>
     {{/if}}
+    </div>
   </div>
 
 

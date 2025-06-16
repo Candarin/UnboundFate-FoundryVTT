@@ -1,0 +1,13 @@
+<div class="uf-damage-components">
+  <div class="flexrow uf-damage-component-list">
+    {{#each damage.components}}
+      <span class="flex0 uf-damage-component">
+        {{#if label}}<strong>{{label}}:</strong> {{/if}}{{formula}}{{#if type}} <em>({{type}})</em>{{/if}}
+      </span>
+    {{/each}}
+  </div>
+  <div class="flexrow uf-damage-result-row">
+    <span class="uf-damage-result-label">Total:</span>
+    <span class="uf-damage-result-value">{{damage.getTotal}}</span>
+  </div>
+</div>

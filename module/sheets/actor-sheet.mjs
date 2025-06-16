@@ -1,5 +1,6 @@
 import { onManageActiveEffect, prepareActiveEffectCategories } from '../helpers/effects.mjs';
 import { launchSkillDialog } from '../dialogs/skill-dialog.mjs';
+import { launchSkillEditDialog } from '../dialogs/skill-edit-dialog.mjs';
 import { UNBOUNDFATE as CONFIG_UNBOUNDFATE } from '../helpers/config.mjs';
 import { updateHpLog } from '../helpers/actor-utils.mjs';
 
@@ -160,58 +161,22 @@ export class UnboundFateActorSheet extends ActorSheet {
     // Skill modal
     html.on('click', '.skill-edit', (ev) => {
       console.log("Unbound Fate | Skill Edit");
-
-      // Launch a custom dialog for editing skills
       const li = $(ev.currentTarget).parents('.item');
       const skillKey = li.data('itemId');
-      //const skillKey = $(ev.currentTarget).data('skill');  
-      console.log(ev);      
       const skill = this.actor.system.skills[skillKey];
-
       if (!skill) {
         console.error(`Unbound Fate | Skill ${skillKey} not found on actor.`);
         return;
       }
-
-      // Create a custom dialog
-      new Dialog({
-        title: `Edit Skill: ${skillKey}`,
-        content: `
-          <form>
-            <div class="form-group">
-              <label for="skill-name">Name</label>              
-            </div>
-            <div class="form-group">
-              <label for="skill-rating">Rating</label>
-              <input type="number" id="skill-rating" name="rating" value="${skill.rating}" />
-            </div>
-            <div class="form-group">
-              <label for="skill-specialisation">Specialisation</label>
-              <input type="text" id="skill-specialisation" name="specialisation" value="${skill.specialisation}" />
-            </div>                 
-          </form>
-        `,
-        buttons: {
-          save: {
-            label: "Save",
-            callback: (html) => {
-              const formData = new FormData(html[0].querySelector('form'));
-              const updatedSkill = {              
-                rating: parseInt(formData.get('rating'), 10),     
-                specialisation: formData.get('specialisation')           
-              };
-
-              // Update the actor's skill data
-              const updateData = { [`system.skills.${skillKey}`]: updatedSkill };
-              this.actor.update(updateData);
-            },
-          },
-          cancel: {
-            label: "Cancel",
-          },
-        },
-      }).render(true);
-
+      launchSkillEditDialog({
+        actor: this.actor,
+        skillKey,
+        skill,
+        onSave: (updatedSkill) => {
+          // Update the actor's skill
+          this.actor.update({ [`system.skills.${skillKey}`]: updatedSkill });
+        }
+      });
     });
 
     // -------------------------------------------------------------

@@ -15,17 +15,16 @@
         <div class="flexcol">
           <div class="flexrow nowrap">
             <label class="resource-label">Hit Points</label>  
-            <div class="flexrow nowrap flex-align-right">
-              <label class="resource-label">Current HP</label>  
+            <div class="flexrow nowrap flex-align-right">              
               <input type="number" name="system.hitPoints.currentHP" value="{{system.hitPoints.currentHP}}" data-dtype="Number" />
-              <span> / {{system.hitPoints.maxHP}}</span>
-              <button type="button" class="uf-hp-log-btn" title="Show HP Log"><i class="fas fa-history"></i> HP Log</button>
+              <span class="flex0"> / {{system.hitPoints.maxHP}}</span>
+              <a class="flex0 uf-hp-log-btn" title="Show HP Log"><i class="fas fa-history"></i></a>
             </div>            
           </div>          
           <div class="resource-content flexrow flex-center flex-between nowrap">
             {{#each (range 1 system.hitPoints.maxHP)}}
               {{!-- Calculate the HP index (1-based) --}}
-              {{#if (gt this ../system.hitPoints.currentHP)}}
+              {{#if (lt this ../system.hitPoints.currentHP)}}
                 <div class="hp-box hp-box-filled" title="HP {{this}}"></div>
               {{else}}
                 <div class="hp-box" title="HP {{this}}"></div>
