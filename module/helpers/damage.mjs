@@ -116,6 +116,7 @@ export class Damage {
    * Get the total damage (sum of all components)
    */
   getTotal() {
+    if (!Array.isArray(this.components)) return 0;
     return this.components.reduce((sum, c) => sum + c.getTotal(), 0);
   }
 

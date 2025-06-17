@@ -356,6 +356,10 @@
 - Updated HP log button to improve UI consistency across actor sheets.
 - Adjusted damage string formatting and fixed minor UI issues.
 
+## 1.0.98
+- Fixed error in damage handling
+- Fixed issue in spec bonus on weapon dialog
+
 TODO
 - add damage to attack message
 - Weapon dialog. correct update of skill rating

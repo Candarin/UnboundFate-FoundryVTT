@@ -207,6 +207,12 @@ export function launchWeaponDialog({ weapon, attackType, actor, attackerTokenId 
           const skillRatingElem = form.querySelector('#skill-rating');
           if (skillRatingElem) skillRatingElem.value = skillRating;
 
+          // Update displayed skillSpecBonus
+          const skillSpecElem = form.querySelector('#skillSpecBonus');
+          if (skillSpecElem) {
+            skillSpecElem.value = useSpec ? '2' : '0';
+          }
+
           // Calculate modifiers string
           let modifiersText = [];
           if (abilityKey && abilityValue !== 0) {
