@@ -1,8 +1,8 @@
-<div class="uf-damage-components">
+<div class="uf-damage-container">
   <div class="flexrow uf-damage-component-list">
     {{#each damage.components}}
-      <span class="flex0 uf-damage-component">
-        {{#if label}}<strong>{{label}}:</strong> {{/if}}{{formula}}{{#if type}} <em>({{type}})</em>{{/if}}
+      <span class="flex0 uf-damage-component" title="{{label}}"> 
+        {{/if}}{{formula}}{{#if type}} <em>{{type}}</em>{{/if}}
       </span>
     {{/each}}
   </div>

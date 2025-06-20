@@ -102,6 +102,10 @@
         "armourType": "light",
         "deflect": 0
       },
+      "fatePointCost-template": {
+        "fatePointCostStarting": 0,
+        "fatePointCostIngame": 0
+      },
       "parry-template": {
         "parry": 0
       },
@@ -144,6 +148,39 @@
       "quantity": 1,      
       "formula": "d20 + @str.mod + ceil(@lvl / 2)"
     },
+    "race": {
+      "templates": ["fatePoints-template"],
+      "abilities": {
+        "str": {
+          "minValue": 1,
+          "maxValue": 6
+        },
+        "agl": {
+          "minValue": 1,
+          "maxValue": 6
+        },
+        "end": {
+          "minValue": 1,
+          "maxValue": 6
+        },
+        "int": {
+          "minValue": 1,
+          "maxValue": 6
+        }, 
+        "wil": {
+          "minValue": 1,
+          "maxValue": 6
+        },
+        "prs": {
+          "minValue": 1,
+          "maxValue": 6
+        }, 
+        "awr": {
+          "minValue": 1,
+          "maxValue": 6
+        }
+      }
+    },
     "shield": {
       "templates": ["base-template", "physicalItem-template", "shield-template"],
       "parry": 0,
@@ -155,7 +192,7 @@
       "spellLevel": 1
     },
     "talent": {
-      "templates": ["base-template"]
+      "templates": ["base-template", "fatePoints-template"]
     },
     "weapon": {
       "templates": ["base-template", "parry-template", "physicalItem-template", "melee-weapon-template", "ranged-weapon-template"],      

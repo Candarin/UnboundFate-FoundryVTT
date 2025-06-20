@@ -360,6 +360,9 @@
 - Fixed error in damage handling
 - Fixed issue in spec bonus on weapon dialog
 
+## 1.0.99
+- Add race item template and enhance damage component styling
+
 TODO
 - add damage to attack message
 - Weapon dialog. correct update of skill rating
