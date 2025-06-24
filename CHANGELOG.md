@@ -363,6 +363,10 @@
 ## 1.0.99
 - Add race item template and enhance damage component styling
 
+## 1.0.100
+- Refactor weapon dialog layout 
+- Fix damage component rendering
+
 TODO
 - add damage to attack message
 - Weapon dialog. correct update of skill rating

@@ -1,29 +1,24 @@
 <form class="uf-dialog uf-weapon-dialog">
-  <div class="flexcol">
-    <div class="flexrow">    
-      <label>Weapon</label>     
-      <span name="weaponName">{{weaponName}}</span>    
+  <div class="flexrow">
+    <div class="item-portait">
+      <img src="{{weaponImage}}" alt="{{weaponName}}" />
     </div>
-    <div class="flexrow">
-      <label>Weapon Type</label>
-      <span name="weaponType" id="weaponType">{{weaponType}}</span>
+    <div class="flexcol">
+      <h3 class="item-name">{{weaponName}}</h3>
+      <div class="flexrow">
+        <label>Weapon Type</label>
+        <span name="weaponType" id="weaponType">{{weaponType}}</span>
+      </div>
+      <div class="flexrow">
+        <label>Attack Type</label>
+        <span name="attackType" id="attackType">{{attackType}}</span>
+      </div>
+      <div class="flexrow">
+        <label>Weapon Skill</label>
+        <span name="weaponSkillKey" id="weaponSkillKey">{{weaponSkillKey}} {{#if weaponSkillSpec}}({{weaponSkillSpec}}){{/if}}</span>
+      </div>
     </div>
-    <div class="flexrow">
-      <label>Attack Type</label>
-      <span name="attackType" id="attackType">{{attackType}}</span>
-    </div>
-    <div class="flexrow">
-      <label>Weapon Skill</label>
-      <span name="weaponSkillKey" id="weaponSkillKey">{{weaponSkillKey}} {{#if weaponSkillSpec}}({{weaponSkillSpec}}){{/if}}</span>
-    </div>
-
-
   </div>
- 
-
-  
-
- 
 
   <hr>
   <!-- Ability -->
