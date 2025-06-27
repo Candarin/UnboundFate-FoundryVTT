@@ -85,6 +85,12 @@ export class UnboundFateActorSheet extends ActorSheet {
       this.actor.allApplicableEffects()
     );
 
+    // Prepare available races for select dropdown
+    const allRaces = game.items?.filter(i => i.type === 'race') || [];
+    context.availableRaces = allRaces;
+    context.canHaveRace = context.system.canHaveRace ?? false;
+    context.assignedRaceId = context.system.assignedRaceId ?? null;
+
     return context;
   }
 
@@ -354,6 +360,56 @@ export class UnboundFateActorSheet extends ActorSheet {
         const msg = diff > 0 ? `Manual heal: +${diff}` : `Manual damage: ${diff}`;
         await updateHpLog(this.actor, diff, msg, { newCurrentHP: newHP });
       }
+    });
+
+    // Race select change
+    html.on('change', '#race-select', async (ev) => {
+      const newRaceId = ev.target.value;
+      const currentRaceId = this.actor.system.assignedRaceId;
+      if (!newRaceId) {
+        // Remove race
+        await this.actor.update({ 'system.assignedRaceId': null });
+        return;
+      }
+      if (currentRaceId && currentRaceId !== newRaceId) {
+        // Prompt to replace
+        const confirmed = await Dialog.confirm({
+          title: 'Replace Race?',
+          content: 'A race is already assigned. Replace it with the new one?',
+        });
+        if (!confirmed) {
+          // Revert select
+          html.find('#race-select').val(currentRaceId);
+          return;
+        }
+      }
+      await this.actor.update({ 'system.assignedRaceId': newRaceId });
+    });
+
+    // Show race item card
+    html.on('click', '.uf-show-race-item', (ev) => {
+      const raceId = ev.currentTarget.dataset.raceId;
+      const raceItem = game.items.get(raceId);
+      if (raceItem) raceItem.sheet.render(true);
+    });
+
+    // Drag-drop for race
+    html.on('drop', async (ev) => {
+      const data = JSON.parse(ev.originalEvent?.dataTransfer?.getData('text/plain') || '{}');
+      if (data.type !== 'Item' || data.data?.type !== 'race') return;
+      if (!this.actor.system.canHaveRace) {
+        ui.notifications.warn('This actor type cannot have a race.');
+        return;
+      }
+      const currentRaceId = this.actor.system.assignedRaceId;
+      if (currentRaceId) {
+        const confirmed = await Dialog.confirm({
+          title: 'Replace Race?',
+          content: 'A race is already assigned. Replace it with the new one?',
+        });
+        if (!confirmed) return;
+      }
+      await this.actor.update({ 'system.assignedRaceId': data.data._id });
     });
   }
 

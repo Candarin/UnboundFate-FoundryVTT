@@ -73,10 +73,14 @@
         "logHitpoints": {
           "log": []
         }
+      },
+      "race-template": {
+        "canHaveRace": true,
+        "assignedRaceId": null
       }
     },
     "character": {
-      "templates": ["base-template", "abilities-template", "creation-template", "fatePoints-template", "grit-template", "skills-template", "log-hitpoints-template"],
+      "templates": ["base-template", "abilities-template", "creation-template", "fatePoints-template", "grit-template", "skills-template", "log-hitpoints-template", "race-template"],
       "attributes": {
         "level": {
           "value": 1
@@ -84,12 +88,12 @@
       }      
     },
     "npc": {
-      "templates": ["base-template", "abilities-template", "fatePoints-template", "skills-template", "log-hitpoints-template"],
+      "templates": ["base-template", "abilities-template", "fatePoints-template", "skills-template", "log-hitpoints-template", "race-template"],
       "cr": 0
     }
   },
   "Item": {
-    "types": ["armour", "flaw", "item", "parry", "race", "shield", "spell", "talent", "weapon"],
+    "types": ["armour", "flaw", "item", "race", "shield", "spell", "talent", "weapon"],
     "templates": {
       "base-template": {
         "description": "",

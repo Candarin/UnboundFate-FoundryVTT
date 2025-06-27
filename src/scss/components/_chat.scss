@@ -71,9 +71,20 @@
 }
 
 .uf-damage-container {
-    .uf-damage-component {
-        border: 1px solid #888;
-        border-radius: 5px;
-        font-size: small;
+
+    .uf-damage-component-list {
+        gap: 2px;
+
+       .uf-damage-component {
+            border: 1px solid #888;
+            border-radius: 4px;
+            font-size: x-small;
+            white-space: nowrap;
+            padding: 0px 3px;
+            line-height: 14px;
+        }
     }
+
 }
+
+    

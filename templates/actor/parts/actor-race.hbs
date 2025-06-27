@@ -1,0 +1,12 @@
+<div class="form-group uf-race-select-group">
+  <label for="race-select">Race</label>
+  <select id="race-select" name="race-select" {{#unless canHaveRace}}disabled{{/unless}}>
+    <option value="">-- None --</option>
+    {{#each availableRaces}}
+      <option value="{{this._id}}" {{#if (eq ../assignedRaceId this._id)}}selected{{/if}}>{{this.name}}</option>
+    {{/each}}
+  </select>
+  {{#if assignedRaceId}}
+    <button type="button" class="uf-show-race-item" data-race-id="{{assignedRaceId}}">Show</button>
+  {{/if}}
+</div>

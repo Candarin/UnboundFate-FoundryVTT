@@ -446,6 +446,17 @@
   font-weight: bold;
   margin-left: 5px;
 }
+.system-unboundfate .uf-damage-container .uf-damage-component-list {
+  gap: 2px;
+}
+.system-unboundfate .uf-damage-container .uf-damage-component-list .uf-damage-component {
+  border: 1px solid #888;
+  border-radius: 4px;
+  font-size: x-small;
+  white-space: nowrap;
+  padding: 0px 3px;
+  line-height: 14px;
+}
 .system-unboundfate .theme-unboundfate-dark {
   background-color: #181a1b !important;
   color: #e0e0e0 !important;

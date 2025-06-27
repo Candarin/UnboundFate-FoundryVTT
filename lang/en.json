@@ -51,6 +51,8 @@
       "item": "Item",
       "feature": "Feature",
       "flaw": "Flaw",
+      "race": "Race",
+      "shield": "Shield",
       "spell": "Spell",
       "talent": "Talent",
       "weapon": "Weapon"

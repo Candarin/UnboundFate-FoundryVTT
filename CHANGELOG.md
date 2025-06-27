@@ -367,6 +367,10 @@
 - Refactor weapon dialog layout 
 - Fix damage component rendering
 
+## 1.0.101
+- Added race selection feature 
+- Minor update to damage component styling
+
 TODO
 - add damage to attack message
 - Weapon dialog. correct update of skill rating
