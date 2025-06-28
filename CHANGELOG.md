@@ -371,6 +371,10 @@
 - Added race selection feature 
 - Minor update to damage component styling
 
+## 1.0.102
+- Add actor race template registration
+- Refactor HP display in character sheets to hbs partial
+
 TODO
 - add damage to attack message
 - Weapon dialog. correct update of skill rating
