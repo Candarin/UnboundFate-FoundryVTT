@@ -12,6 +12,7 @@
       },
       "fatePoints-template": {
         "fatePoints": {
+          "hasFatePoints": true,
           "startingFP": 100,
           "spentFP": 0,
           "earnedFP": 0

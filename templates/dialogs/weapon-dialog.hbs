@@ -1,6 +1,6 @@
 <form class="uf-dialog uf-weapon-dialog">
   <div class="flexrow">
-    <div class="item-portait">
+    <div class="flex0 item-portait">
       <img src="{{weaponImage}}" alt="{{weaponName}}" />
     </div>
     <div class="flexcol">
@@ -11,11 +11,11 @@
       </div>
       <div class="flexrow">
         <label>Attack Type</label>
-        <span name="attackType" id="attackType">{{attackType}}</span>
+        <span name="attackType" id="attackType">{{localize (concat 'UNBOUNDFATE.AttackType.' attackType)}}</span>
       </div>
       <div class="flexrow">
         <label>Weapon Skill</label>
-        <span name="weaponSkillKey" id="weaponSkillKey">{{weaponSkillKey}} {{#if weaponSkillSpec}}({{weaponSkillSpec}}){{/if}}</span>
+        <span name="weaponSkillKey" id="weaponSkillKey">{{localize (concat 'UNBOUNDFATE.Skill.' weaponSkillKey)}} {{#if weaponSkillSpec}}({{weaponSkillSpec}}){{/if}}</span>
       </div>
     </div>
   </div>

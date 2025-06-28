@@ -136,7 +136,8 @@ export function launchWeaponDialog({ weapon, attackType, actor, attackerTokenId 
     useSpec,
     modifier,
     modifiersString,
-    attackerTokenId // Pass to templateData
+    attackerTokenId, // Pass to templateData
+    weaponImage: weapon.img,
   };
 
   renderTemplate('systems/unboundfate/templates/dialogs/weapon-dialog.hbs', templateData).then(content => {

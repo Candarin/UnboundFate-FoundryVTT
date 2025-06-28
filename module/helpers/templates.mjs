@@ -18,6 +18,7 @@ export const preloadHandlebarsTemplates = async function () {
     'systems/unboundfate/templates/actor/parts/actor-hp-log.hbs',
     'systems/unboundfate/templates/actor/parts/actor-race.hbs',
     'systems/unboundfate/templates/actor/parts/actor-hp-bar.hbs',
+    'systems/unboundfate/templates/actor/parts/actor-fatepoints.hbs',
     // Item partials
     'systems/unboundfate/templates/item/parts/item-effects.hbs',    
     // Chat partials

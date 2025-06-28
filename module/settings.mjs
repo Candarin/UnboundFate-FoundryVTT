@@ -64,4 +64,17 @@ export const registerSystemSettings = () => {
             ufLog(`HP Log max entries changed to: ${value}`);
         }
     });
+
+    game.settings.register("unboundfate", "fatePointsForNewCharacters", {
+        name: "Fate Points for New Characters",
+        hint: "The number of Fate Points new characters start with. Must be a number greater than 0.",
+        scope: "world",
+        config: true,
+        type: Number,
+        default: 100,
+        range: { min: 1, max: 10000, step: 1 },
+        onChange: value => {
+            ufLog(`Fate Points for New Characters changed to: ${value}`);
+        }
+    });
 };

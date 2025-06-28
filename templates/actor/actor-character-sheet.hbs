@@ -16,8 +16,8 @@
   <header class="sheet-header">
     <img class="profile-img" src="{{actor.img}}" data-edit="img" title="{{actor.name}}" height="100" width="100"/>
    
-    <div class="flexcol header-fields">
-      {{> "systems/unboundfate/templates/actor/parts/actor-race.hbs"}}
+    <div class="flexcol header-fields">      
+      
            
       <div class="character-name-container">
         {{!-- Character Name Input --}}
@@ -30,7 +30,13 @@
 
     <div>
       {{!-- other resources can be added here --}}
-      Todo
+      {{#if fatePoints.hasFatePoints}}
+        {{> "systems/unboundfate/templates/actor/parts/actor-fatepoints.hbs"}}
+      {{/if}}
+      
+      {{#if canHaveRace}}
+        {{> "systems/unboundfate/templates/actor/parts/actor-race.hbs"}}
+      {{/if}}
     </div>
 
   </header>

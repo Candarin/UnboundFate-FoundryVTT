@@ -182,4 +182,19 @@ function setUnboundFateTheme(themeKey) {
     ufLog(`Theme changed to: ${themeKey} (${themeConfig.label})`);
 }
 
+// Set fate points for new characters based on system setting
+Hooks.on('createActor', async (actor, options, userId) => {
+  if (actor.type === 'character' && actor.system?.fatePoints?.hasFatePoints) {
+    const startingFP = game.settings.get('unboundfate', 'fatePointsForNewCharacters');
+    // Only set if not already set (e.g., not imported or template)
+    if (!actor.system.fatePoints.startingFP || actor.system.fatePoints.startingFP === 0) {
+      await actor.update({ 'system.fatePoints.startingFP': startingFP });
+    }
+    // Optionally, also set currentFP to startingFP if you track current separately
+    if (actor.system.fatePoints.currentFP !== undefined) {
+      await actor.update({ 'system.fatePoints.currentFP': startingFP });
+    }
+  }
+});
+
 

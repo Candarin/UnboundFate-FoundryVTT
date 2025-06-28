@@ -375,6 +375,10 @@
 - Add actor race template registration
 - Refactor HP display in character sheets to hbs partial
 
+## 1.0.103
+- Add fate points feature for new characters 
+- Update templates
+
 TODO
 - add damage to attack message
 - Weapon dialog. correct update of skill rating
