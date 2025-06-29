@@ -1,22 +1,31 @@
 {{!-- templates/dialogs/skill-dialog.hbs --}}
 <form>
+  <!-- Skill -->
   <div class="form-group">
-    <label>Skill: </label>
-    <span>{{skillLabel}} ({{skillRating}})</span>
+    <label>Skill</label>
+    <div class="flexrow"></div>
+      <span>{{skillLabel}}</span>
+      <input class="flex0 stat-value-box" id="skillRating" value="{{skillRating}}" disabled />
+    </div>
   </div>
+  <!-- Ability -->
   <div class="form-group">
     <label for="abilityKey">Ability</label>
-    <select name="abilityKey">
-      {{#each abilityOptions}}
-        <option value="{{this.key}}" {{#if this.selected}}selected{{/if}}>{{this.label}}</option>
-      {{/each}}
-    </select>
-    <span> (<span id="ability-value">{{abilityValue}}</span>)</span>
+    <div class="flexrow">
+      <select name="abilityKey">
+        {{#each abilityOptions}}
+          <option value="{{this.key}}" {{#if this.selected}}selected{{/if}}>{{this.label}}</option>
+        {{/each}}
+      </select>      
+      <input class="flex0 stat-value-box" id="ability-value" value="{{ability-value}}" disabled />
+    </div>
   </div>
+  <!-- Modifuer -->
   <div class="form-group">
     <label for="modifier">Modifier</label>
     <input type="number" name="modifier" value="{{modifier}}" />
   </div>
+  <!-- Specialisation -->
   <div class="form-group">
     <label for="useSpec">Apply Specialisation</label>
     <input type="checkbox" id="useSpec" name="useSpec" {{#if useSpec}}checked{{/if}} />

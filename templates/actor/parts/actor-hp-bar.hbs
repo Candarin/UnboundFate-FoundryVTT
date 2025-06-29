@@ -8,7 +8,7 @@
         <a class="flex0 uf-hp-log-btn" title="Show HP Log"><i class="fas fa-history"></i></a>
       </div>
     </div>          
-    <div class="resource-content flexrow flex-center flex-between nowrap uf-hp-bar-bar">
+    <div class="resource-content flexrow flex-center flex-between flex-nowrap uf-hp-bar-bar">
       {{#each (range 1 system.hitPoints.maxHP)}}
         {{!-- Calculate the HP index (1-based) --}}
         {{#if (lt this ../system.hitPoints.currentHP)}}

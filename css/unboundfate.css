@@ -10,6 +10,10 @@
   cursor: pointer;
 }
 
+.nowrap {
+  white-space: nowrap;
+}
+
 .grid,
 .grid-2col {
   display: grid;
@@ -188,6 +192,10 @@
   flex: 2;
 }
 
+.flex-nowrap {
+  flex-wrap: nowrap;
+}
+
 .align-left {
   justify-content: flex-start;
   text-align: left;
@@ -291,22 +299,25 @@
   margin-right: 5px;
 }
 .system-unboundfate .uf-dialog .item-portrait img {
-  width: 50px;
-  height: 50px;
+  width: 80px;
+  height: 80px;
   border-radius: 5px;
   border: none;
+  max-width: unset;
 }
 .system-unboundfate .uf-hp-bar-container .uf-hp-bar-header {
   flex-wrap: none;
 }
 .system-unboundfate .uf-hp-bar-container .uf-hp-bar-header .uf-hp-bar-header-inputs {
-  flex-wrap: none;
+  flex-wrap: nowrap;
+  margin-left: 2px;
 }
 .system-unboundfate .uf-hp-bar-container .uf-hp-bar-header .uf-hp-bar-header-inputs input {
-  max-width: 40px;
+  width: 40px;
 }
 .system-unboundfate .uf-actor-dialog .actor-resources {
   justify-content: flex-start;
+  margin-left: 10px;
 }
 .system-unboundfate .resource-label {
   font-weight: bold;

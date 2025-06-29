@@ -383,6 +383,9 @@
 - Enhance UI component css
 - Localizations
 
+## 1.0.105
+- Enhance UI and stylings, and fix bindings
+
 TODO
 - add damage to attack message
 - Weapon dialog. correct update of skill rating

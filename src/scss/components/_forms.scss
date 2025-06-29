@@ -105,10 +105,11 @@
 
 
     img {
-      width: 50px;
-      height: 50px;
+      width: 80px;
+      height: 80px;
       border-radius: 5px;      
       border: none;
+      max-width: unset;
     }
   }
 }
@@ -123,10 +124,11 @@
     }
 
     .uf-hp-bar-header-inputs {
-      flex-wrap: none;
+      flex-wrap: nowrap;
+      margin-left: 2px;
 
       input {
-        max-width: 40px
+        width: 40px
       }
 
     }
@@ -137,5 +139,6 @@
 .uf-actor-dialog {
   .actor-resources {
     justify-content: flex-start;
+    margin-left: 10px;
   }
 }

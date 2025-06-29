@@ -81,7 +81,7 @@
     <label>Shield</label>
     <div class="flexrow">
     {{#if actorShieldReadied}}
-      <label class="flex2" id="actorShieldRating">{{actorShieldReadied.name}}</span>
+      <label class="flex2" id="actorShieldRating">{{actorShieldReadied.name}}</label>
       <input class="flex0 stat-value-box" id="actorShieldRatingValue" value="{{actorShieldReadied.system.shieldRating}}" disabled />
     {{else}}
       <span>No shield readied</span>
@@ -95,17 +95,16 @@
   <h3>Armour Deflection</h3>
   <div class="form-group">
     <label>Equipped Armour</label>
-    <span>
-      {{#if actorArmourListString}}
-        {{actorArmourListString}}
-      {{else}}
-        None
-      {{/if}}
-    </span>
-  </div>
-  <div class="form-group">
-    <label>Total Deflect</label>
-    <input type="number" name="actorArmourDeflect" value="{{actorArmourDeflect}}" disabled id="actorArmourDeflect"/>
+    <div class="flexrow">
+      <span>
+        {{#if actorArmourListString}}
+          {{actorArmourListString}}
+        {{else}}
+          None
+        {{/if}}
+      </span>
+      <input class="flex0 stat-value-box" type="number" name="actorArmourDeflect" value="{{actorArmourDeflect}}" disabled id="actorArmourDeflect"/>
+    </div>
   </div>
 
 

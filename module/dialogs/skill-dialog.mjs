@@ -123,7 +123,7 @@ export function launchSkillDialog({ skillKey, skill, abilityKey, ability, actor,
           form.total.value = skillRating + abilityValue + modifier + useSpec;
           // Also update the displayed ability value
           const abilityValueSpan = form.querySelector('#ability-value');
-          if (abilityValueSpan) abilityValueSpan.textContent = abilityValue;
+          if (abilityValueSpan) abilityValueSpan.value = abilityValue;
           // Update modifiers string
           let modifiersText = [];
           if (selectedKey && abilityValue !== 0) {
