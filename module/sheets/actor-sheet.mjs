@@ -14,7 +14,7 @@ export class UnboundFateActorSheet extends ActorSheet {
     return foundry.utils.mergeObject(super.defaultOptions, {
       classes: ['unboundfate', 'sheet', 'actor'],
       width: 700,
-      height: 600,
+      height: 700,
       tabs: [
         {
           navSelector: '.sheet-tabs',

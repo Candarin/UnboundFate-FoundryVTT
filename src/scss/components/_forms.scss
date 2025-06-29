@@ -102,7 +102,7 @@
 
   .item-portrait {
     margin-right: 5px;
-    
+
 
     img {
       width: 50px;
@@ -111,7 +111,31 @@
       border: none;
     }
   }
+}
 
+.uf-hp-bar-container {
 
+  .uf-hp-bar-header {
+    flex-wrap: none;
 
+    .uf-hp-bar-header-label {
+      
+    }
+
+    .uf-hp-bar-header-inputs {
+      flex-wrap: none;
+
+      input {
+        max-width: 40px
+      }
+
+    }
+  }
+
+}
+
+.uf-actor-dialog {
+  .actor-resources {
+    justify-content: flex-start;
+  }
 }

@@ -99,8 +99,11 @@ export async function rollWeaponAttack({ weapon, actor, targets = [], totalPool,
   // Render the damage components partial
   const damageContent = await renderTemplate('systems/unboundfate/templates/chat/chat-damage.hbs', { damage });
 
+  // Localize attackType for chat output
+  const attackTypeLabel = game.i18n.localize(`UNBOUNDFATE.AttackType.${attackType}`) || attackType;
+  
   // Build content for chat message
-  let rollContent = `<h3>${attackType} Attack</h3>`; 
+  let rollContent = `<h3>${attackTypeLabel} Attack</h3>`; 
   rollContent += actorHeader;
   rollContent += `<hr>`;
   rollContent += weaponHeader;

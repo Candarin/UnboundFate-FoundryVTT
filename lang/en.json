@@ -34,7 +34,7 @@
       "blades": "Blades",
       "stealth": "Stealth"
     },
-    "AttackTypes": {
+    "AttackType": {
       "melee": "Melee",
       "ranged": "Ranged",
       "magic": "Magic"

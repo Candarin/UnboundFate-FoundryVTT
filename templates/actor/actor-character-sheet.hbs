@@ -1,4 +1,4 @@
-<form class="{{cssClass}} {{actor.type}} flexcol" autocomplete="off">
+<form class="{{cssClass}} {{actor.type}} flexcol uf-dialog uf-actor-dialog" autocomplete="off">
   {{!-- Creation Mode Ribbon --}}
   <div class="creation-mode-ribbon flex0" style="background: {{#if isCreationMode}}#e67e22{{else}}#888{{/if}}; border-radius: 4px 4px 4px 4px;">
     <div class="flexcol" style="text-align: center;">
@@ -28,9 +28,9 @@
         
     </div>   
 
-    <div>
+    <div class="flexcol header-fields actor-resources">          
       {{!-- other resources can be added here --}}
-      {{#if fatePoints.hasFatePoints}}
+      {{#if system.fatePoints.hasFatePoints}}
         {{> "systems/unboundfate/templates/actor/parts/actor-fatepoints.hbs"}}
       {{/if}}
       

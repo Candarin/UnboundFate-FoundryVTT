@@ -287,6 +287,27 @@
   border: 1px solid #4d4d4d;
   border-radius: 3px;
 }
+.system-unboundfate .uf-dialog .item-portrait {
+  margin-right: 5px;
+}
+.system-unboundfate .uf-dialog .item-portrait img {
+  width: 50px;
+  height: 50px;
+  border-radius: 5px;
+  border: none;
+}
+.system-unboundfate .uf-hp-bar-container .uf-hp-bar-header {
+  flex-wrap: none;
+}
+.system-unboundfate .uf-hp-bar-container .uf-hp-bar-header .uf-hp-bar-header-inputs {
+  flex-wrap: none;
+}
+.system-unboundfate .uf-hp-bar-container .uf-hp-bar-header .uf-hp-bar-header-inputs input {
+  max-width: 40px;
+}
+.system-unboundfate .uf-actor-dialog .actor-resources {
+  justify-content: flex-start;
+}
 .system-unboundfate .resource-label {
   font-weight: bold;
 }

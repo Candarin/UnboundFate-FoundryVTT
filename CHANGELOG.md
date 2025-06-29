@@ -379,6 +379,10 @@
 - Add fate points feature for new characters 
 - Update templates
 
+## 1.0.104
+- Enhance UI component css
+- Localizations
+
 TODO
 - add damage to attack message
 - Weapon dialog. correct update of skill rating
