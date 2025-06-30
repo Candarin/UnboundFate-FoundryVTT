@@ -386,6 +386,10 @@
 ## 1.0.105
 - Enhance UI and stylings, and fix bindings
 
+## 1.0.106
+- Improved weapon attack and dodge dialogs 
+- update styles for HP bar and dialog templates
+
 TODO
 - add damage to attack message
 - Weapon dialog. correct update of skill rating

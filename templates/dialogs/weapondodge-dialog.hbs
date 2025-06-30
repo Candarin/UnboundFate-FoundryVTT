@@ -19,8 +19,7 @@
 
 
   {{!-- Ability Details --}}
-  <hr>
-  <h3>Abilities</h3>
+  <hr>  
   <div class="form-group">
     <label>Ability 1</label>
     <div class="flexrow">
@@ -50,7 +49,7 @@
   <div class="form-group">
     <label>Equipped Weapon</label>
     <div class="flexrow">
-      <select class="flex2" name="weaponId">
+      <select class="flex1" name="weaponId">
         <option value="">None</option>
         {{#each actorWeaponOptions}}
           <option value="{{this.key}}" {{#if this.selected}}selected{{/if}}>{{this.label}}</option>
@@ -63,18 +62,19 @@
   <div class="form-group">
     <label>Linked Skill</label>  
     <div class="flexrow">
-      <input name="flex2 actorWeaponSkill" id="actorWeaponSkill" value="{{actorWeaponSkillLabel}}" disabled />  
+      <input class="flex1 actorWeaponSkill" id="actorWeaponSkill" value="{{actorWeaponSkillLabel}}" disabled />  
       <input class="flex0 stat-value-box" id="actorWeaponSkillRating" value="{{actorWeaponSkillRating}}" disabled />
     </div>
   </div>
 
   <div class="form-group">
-    <label>Parry (min of skill and weapon parry)</label>
-    <input type="number" name="actorParry" value="{{actorParry}}" disabled id="actorParry"/>
+    <label title="Weapon parry rating, up to a max of ranks in the matching skill">Parry</label>
+    <div class="flexrow">
+      <span></span>
+      <input class="flex0 stat-value-box" id="actorParry" type="number" name="actorParry" value="{{actorParry}}" disabled/>
+    </div>    
   </div>
-  
-  
-
+    
   {{!-- Shield Details --}}
   <hr>
   <div class="form-group">
@@ -89,10 +89,8 @@
     </div>
   </div>
 
-
   {{!-- Armour Details --}}
-  <hr>
-  <h3>Armour Deflection</h3>
+  <hr>  
   <div class="form-group">
     <label>Equipped Armour</label>
     <div class="flexrow">
@@ -107,9 +105,8 @@
     </div>
   </div>
 
-
   {{!-- Modifer --}}
-  <h3>Modifier</h3>
+  <hr>
   <div class="form-group">
     <label>Modifier</label>
     <input type="number" name="modifier" value="{{modifier}}"/>

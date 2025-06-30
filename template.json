@@ -44,7 +44,8 @@
         }
       },
       "creation-template": {
-        "isCreationMode": true      
+        "isCreationMode": true,
+        "isSpendFateMode": false     
       },
       "grit-template": {
         "specialAbilities": {

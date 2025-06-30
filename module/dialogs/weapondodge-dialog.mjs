@@ -55,7 +55,7 @@ export function launchWeaponDodgeDialog({ actor, attackingActor, options = {} })
     selected: weapon.id === actorWeaponEquipped?.id
   }));
   const actorWeaponParry = actorWeaponEquipped?.system?.parry || 0;
-  const actorWeaponSkillKey = actorWeaponEquipped?.system?.skill || '';
+  const actorWeaponSkillKey = actorWeaponEquipped?.system?.melee?.skill || '';
   const actorWeaponSkillRating = actor.system.skills?.[actorWeaponSkillKey]?.rating || 0; // Use the weapon's skill rating if available
   const actorParry = Math.min(actorWeaponParry, actor.system.skills?.[actorWeaponSkillKey]?.rating || 0); // Use the weapon's parry or the skill rating, whichever is lower
 
@@ -106,6 +106,7 @@ export function launchWeaponDodgeDialog({ actor, attackingActor, options = {} })
 
   // Set Template Data
   const templateData = {       
+    attackType: options.attackType || '',
     attackSuccesses,
     targetNumber,
     ability1Key,
@@ -243,7 +244,7 @@ export function launchWeaponDodgeDialog({ actor, attackingActor, options = {} })
           const weaponId = $(this).val();
           const weapon = actor.items.get(weaponId);
           const weaponParry = weapon?.system?.parry || 0;
-          const skillKey = weapon?.system?.skill || '';
+          const skillKey = weapon?.system?.melee?.skill || '';
           const skillRating = actor.system.skills?.[skillKey]?.rating || 0;
           const actorParry = Math.min(weaponParry, skillRating);
 

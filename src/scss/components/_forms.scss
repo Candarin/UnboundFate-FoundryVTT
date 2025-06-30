@@ -125,10 +125,20 @@
 
     .uf-hp-bar-header-inputs {
       flex-wrap: nowrap;
+      flex-shrink: 1;
       margin-left: 2px;
 
       input {
         width: 40px
+      }
+
+      span {
+        white-space: nowrap;
+        margin-left: 2px;
+      }
+
+      a {
+        margin-left: 2px;       
       }
 
     }

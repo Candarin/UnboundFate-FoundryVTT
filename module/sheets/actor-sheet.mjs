@@ -192,9 +192,9 @@ export class UnboundFateActorSheet extends ActorSheet {
     // Creation mode toggle
     html.on('click', '.toggle-creation-mode', (ev) => {
       ev.preventDefault();
-      // Toggle a flag or property on the actor to switch creation mode
-      const isCreationMode = this.actor.getFlag('unboundfate', 'isCreationMode') || false;
-      this.actor.setFlag('unboundfate', 'isCreationMode', !isCreationMode);
+      const current = this.actor.system.isCreationMode || false;
+      console.log('Toggle Creation Mode button clicked. Current isCreationMode:', current);
+      this.actor.update({ 'system.isCreationMode': !current });
       this.render();
     });
 

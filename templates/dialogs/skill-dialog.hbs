@@ -10,9 +10,9 @@
   </div>
   <!-- Ability -->
   <div class="form-group">
-    <label for="abilityKey">Ability</label>
+    <label>Ability</label>
     <div class="flexrow">
-      <select name="abilityKey">
+      <select name="abilityKey" id="abilityKey">
         {{#each abilityOptions}}
           <option value="{{this.key}}" {{#if this.selected}}selected{{/if}}>{{this.label}}</option>
         {{/each}}
