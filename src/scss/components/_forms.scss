@@ -118,6 +118,7 @@
 
   .uf-hp-bar-header {
     flex-wrap: none;
+    margin-bottom: 2px;
 
     .uf-hp-bar-header-label {
       
@@ -132,12 +133,12 @@
         width: 40px
       }
 
-      span {
+      .uf-hp-bar-header-maxhp {
         white-space: nowrap;
         margin-left: 2px;
       }
 
-      a {
+      .uf-hp-bar-header-log-btn {
         margin-left: 2px;       
       }
 

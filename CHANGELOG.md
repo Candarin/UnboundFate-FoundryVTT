@@ -390,6 +390,10 @@
 - Improved weapon attack and dodge dialogs 
 - update styles for HP bar and dialog templates
 
+## 1.0.107
+- Add Grit feature and update HP bar styles in actor templates
+
+
 TODO
 - add damage to attack message
 - Weapon dialog. correct update of skill rating

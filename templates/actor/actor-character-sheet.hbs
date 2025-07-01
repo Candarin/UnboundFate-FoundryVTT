@@ -1,8 +1,8 @@
 <form class="{{cssClass}} {{actor.type}} flexcol uf-dialog uf-actor-dialog" autocomplete="off">
   {{!-- Creation Mode Ribbon --}}
-  <div class="creation-mode-ribbon flex0" style="background: {{#if isCreationMode}}#e67e22{{else}}#888{{/if}}; border-radius: 4px 4px 4px 4px;">
+  <div class="creation-mode-ribbon flex0" style="background: {{#if system.isCreationMode}}#e67e22{{else}}#888{{/if}}; border-radius: 4px 4px 4px 4px;">
     <div class="flexcol" style="text-align: center;">
-      {{#if isCreationMode}}
+      {{#if system.isCreationMode}}
         <div>Character Creation Mode</div>
         <button type="button" class="flex0 toggle-creation-mode">Exit Creation</button>
       {{else}}
@@ -37,6 +37,10 @@
       {{#if canHaveRace}}
         {{> "systems/unboundfate/templates/actor/parts/actor-race.hbs"}}
       {{/if}}
+
+      {{!-- Grit --}}
+      {{> "systems/unboundfate/templates/actor/parts/actor-grit.hbs"}}
+
     </div>
 
   </header>
@@ -57,11 +61,11 @@
 
     {{!-- Core Tab --}}
     <div class="tab core" data-group="primary" data-tab="core">
-      <section class="grid grid-3col">
+      <section class="grid grid-4col">
         <aside class="sidebar">
           {{> "systems/unboundfate/templates/actor/parts/actor-abilities.hbs"}}
         </aside>
-        <section class="main grid-span-2">
+        <section class="main grid-span-3">
           {{!-- Skills Tab --}}
           {{> "systems/unboundfate/templates/actor/parts/actor-skills.hbs"}}
         </section>

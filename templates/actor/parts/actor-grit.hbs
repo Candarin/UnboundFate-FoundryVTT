@@ -1,0 +1,13 @@
+{{#if system.specialAbilities.grt}}
+  {{#if system.hasGrit}}
+    <div class="form-group uf-grit-bar-group">
+      <label for="grit-bar">Grit</label>
+      <div class="uf-bar uf-grit-bar" title="{{system.specialAbilities.grt.value}} / {{system.specialAbilities.grt.max}}">
+        {{#each (range 1 system.specialAbilities.grt.max)}}
+          <span class="uf-bar-segment {{#if (lte @index system.specialAbilities.grt.value)}}filled{{/if}}"></span>
+        {{/each}}
+      </div>
+      <span class="uf-bar-label">{{system.specialAbilities.grt.value}} / {{system.specialAbilities.grt.max}}</span>
+    </div>
+  {{/if}}
+{{/if}}

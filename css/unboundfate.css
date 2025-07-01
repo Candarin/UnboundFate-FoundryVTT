@@ -307,13 +307,22 @@
 }
 .system-unboundfate .uf-hp-bar-container .uf-hp-bar-header {
   flex-wrap: none;
+  margin-bottom: 2px;
 }
 .system-unboundfate .uf-hp-bar-container .uf-hp-bar-header .uf-hp-bar-header-inputs {
   flex-wrap: nowrap;
+  flex-shrink: 1;
   margin-left: 2px;
 }
 .system-unboundfate .uf-hp-bar-container .uf-hp-bar-header .uf-hp-bar-header-inputs input {
   width: 40px;
+}
+.system-unboundfate .uf-hp-bar-container .uf-hp-bar-header .uf-hp-bar-header-inputs .uf-hp-bar-header-maxhp {
+  white-space: nowrap;
+  margin-left: 2px;
+}
+.system-unboundfate .uf-hp-bar-container .uf-hp-bar-header .uf-hp-bar-header-inputs .uf-hp-bar-header-log-btn {
+  margin-left: 2px;
 }
 .system-unboundfate .uf-actor-dialog .actor-resources {
   justify-content: flex-start;
