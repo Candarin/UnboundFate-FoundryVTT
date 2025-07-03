@@ -1,0 +1,22 @@
+<div class="form-group uf-actions-group">
+  <label>Actions</label>
+  <div class="uf-actions-fields">
+    <span class="uf-action-label">Regular:</span>
+    <span class="uf-action-value">{{system.actions.regularActions}}</span>
+    <span class="uf-action-label">Free:</span>
+    <span class="uf-action-value">{{system.actions.freeActions}}</span>
+  </div>
+  {{#if system.actions.modifiers}}
+    <div class="uf-actions-modifiers">
+      <label>Modifiers:</label>
+      <ul>
+        {{#each system.actions.modifiers}}
+          <li>{{this.label}}: {{this.value}}</li>
+        {{/each}}
+      </ul>
+      <div class="uf-actions-total">
+        <strong>Total:</strong> {{system.actions.total}}
+      </div>
+    </div>
+  {{/if}}
+</div>

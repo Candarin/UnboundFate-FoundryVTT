@@ -393,6 +393,9 @@
 ## 1.0.107
 - Add Grit feature and update HP bar styles in actor templates
 
+## 1.0.108
+- Add actions template and integrate into character sheet
+
 
 TODO
 - add damage to attack message

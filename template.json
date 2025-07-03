@@ -80,10 +80,16 @@
       "race-template": {
         "canHaveRace": true,
         "assignedRaceId": null
+      },
+      "actions-template": {
+        "actions": {
+          "regularActions": 3,
+          "freeActions": 1
+        }
       }
     },
     "character": {
-      "templates": ["base-template", "abilities-template", "creation-template", "fatePoints-template", "grit-template", "skills-template", "log-hitpoints-template", "race-template"],
+      "templates": ["base-template", "abilities-template", "creation-template", "fatePoints-template", "grit-template", "skills-template", "log-hitpoints-template", "race-template", "actions-template"],
       "attributes": {
         "level": {
           "value": 1
@@ -91,7 +97,7 @@
       }      
     },
     "npc": {
-      "templates": ["base-template", "abilities-template", "fatePoints-template", "skills-template", "log-hitpoints-template", "race-template"],
+      "templates": ["base-template", "abilities-template", "fatePoints-template", "skills-template", "log-hitpoints-template", "race-template", "actions-template"],
       "cr": 0
     }
   },

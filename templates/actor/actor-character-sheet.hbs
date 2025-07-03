@@ -3,11 +3,19 @@
   <div class="creation-mode-ribbon flex0" style="background: {{#if system.isCreationMode}}#e67e22{{else}}#888{{/if}}; border-radius: 4px 4px 4px 4px;">
     <div class="flexcol" style="text-align: center;">
       {{#if system.isCreationMode}}
-        <div>Character Creation Mode</div>
-        <button type="button" class="flex0 toggle-creation-mode">Exit Creation</button>
+        <div class="flewrow">
+          <div style="text-align: center;">Character Creation Mode</div>
+          <div class="flex0">
+            <a class="toggle-creation-mode" title="Ready for Play"><i class="fas fa-user-check"></i> Ready for Play </a>
+          </div>                    
+        </div>       
       {{else}}
-        <div>Normal Mode</div>
-        <button type="button" class="flex0 toggle-creation-mode">Enter Creation</button>
+        <div class="flexrow">
+          <div class="" style="text-align: center;">Normal Mode</div>        
+          <div class="flex0">
+            <a class="toggle-creation-mode" title="Return to Character Creation"><i class="fas fa-edit"></i></a>
+          </div>  
+        </div>
       {{/if}}
     </div>
   </div>
@@ -66,8 +74,22 @@
           {{> "systems/unboundfate/templates/actor/parts/actor-abilities.hbs"}}
         </aside>
         <section class="main grid-span-3">
-          {{!-- Skills Tab --}}
-          {{> "systems/unboundfate/templates/actor/parts/actor-skills.hbs"}}
+          <div class="flewcol">
+            <div class="flex0 flexrow">
+              {{!-- Movement Panel --}}
+              {{!-- {{> "systems/unboundfate/templates/actor/parts/actor-movement.hbs"}} --}}
+
+              {{!-- Actions Panel --}}
+              {{> "systems/unboundfate/templates/actor/parts/actor-actions.hbs"}}
+            </div>
+
+            {{!-- Skills Panel --}}
+            <div>
+              {{> "systems/unboundfate/templates/actor/parts/actor-skills.hbs"}}
+            </div>
+          </div>
+
+          
         </section>
       </section>
     </div> 
