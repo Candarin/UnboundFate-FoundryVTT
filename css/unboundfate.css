@@ -330,19 +330,32 @@
 }
 .system-unboundfate .uf-abilities-container {
   border: 1px solid #ccc;
+  padding: 0px 3px;
 }
 .system-unboundfate .uf-abilities-container .uf-ability-box .uf-ability-name {
   font-weight: bold;
   font-size: 1.1em;
+  text-align: center;
+}
+.system-unboundfate .uf-abilities-container .uf-ability-box .uf-ability-total {
+  text-align: center;
+  vertical-align: middle;
+  font-size: large;
+}
+.system-unboundfate .uf-abilities-container .uf-ability-box .uf-ability-input-container {
+  align-items: center;
+  flex-grow: 0;
 }
 .system-unboundfate .uf-abilities-container .uf-ability-box .uf-ability-input-container .uf-ability-small-label {
   text-align: center;
   flex-shrink: 1;
   width: 30px;
+  font-size: xx-small;
 }
 .system-unboundfate .uf-abilities-container .uf-ability-box .uf-ability-input-container .uf-ability-input {
   text-align: center;
   width: 30px;
+  height: 20px;
 }
 .system-unboundfate .resource-label {
   font-weight: bold;

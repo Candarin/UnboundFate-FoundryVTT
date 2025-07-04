@@ -404,6 +404,9 @@
 ## 1.0.110
 - Fixed issue on actor-abilities.hbs
 
+## 1.0.111
+- Updates to actor-abilities styling
+
 TODO
 - add damage to attack message
 - Weapon dialog. correct update of skill rating

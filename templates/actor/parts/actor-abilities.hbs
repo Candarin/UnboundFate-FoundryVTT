@@ -1,11 +1,11 @@
 {{!-- Ability Scores --}}
 <div class="flexcol uf-abilities-container">
     {{#each system.abilities as |ability key|}}
-    <div class="uf-ability-box flexcol flex-group-center">
+    <div class="uf-ability-box flexcol">
         <label class="uf-ability-name flex0 rollable" for="system.abilities.{{key}}.value" data-roll="d20+@abilities.{{key}}.mod" data-label="{{localize (lookup @root.config.abilities key)}}">{{localize (lookup @root.config.abilities key)}}</label>
         <div class="flexrow">
             <span class="uf-ability-total" title="Total">{{ability.total}}</span>
-            <div class="uf-ability-input-container flex0 flexcol">
+            <div class="uf-ability-input-container flexcol">
                 <span class="uf-ability-small-label">BASE</span>
                 <input class="uf-ability-input" type="number" min="0" name="system.abilities.{{key}}.value" value="{{ability.value}}" title="Base Value" data-dtype="Number"/>
                 <span class="uf-ability-small-label">MOD</span>
