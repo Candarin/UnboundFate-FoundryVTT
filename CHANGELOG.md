@@ -401,6 +401,8 @@
 - Added CSS styles for ability containers and inputs.
 - Updated template to reflect new structure for ability scores.
 
+## 1.0.110
+- Fixed issue on actor-abilities.hbs
 
 TODO
 - add damage to attack message

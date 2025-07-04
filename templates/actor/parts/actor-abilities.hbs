@@ -4,7 +4,7 @@
     <div class="uf-ability-box flexcol flex-group-center">
         <label class="uf-ability-name flex0 rollable" for="system.abilities.{{key}}.value" data-roll="d20+@abilities.{{key}}.mod" data-label="{{localize (lookup @root.config.abilities key)}}">{{localize (lookup @root.config.abilities key)}}</label>
         <div class="flexrow">
-            <span class="uf-ability-total" title="Total">{{system.abilities.{{key}}.total}}</span>
+            <span class="uf-ability-total" title="Total">{{ability.total}}</span>
             <div class="uf-ability-input-container flex0 flexcol">
                 <span class="uf-ability-small-label">BASE</span>
                 <input class="uf-ability-input" type="number" min="0" name="system.abilities.{{key}}.value" value="{{ability.value}}" title="Base Value" data-dtype="Number"/>
