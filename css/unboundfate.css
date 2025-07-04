@@ -328,6 +328,22 @@
   justify-content: flex-start;
   margin-left: 10px;
 }
+.system-unboundfate .uf-abilities-container {
+  border: 1px solid #ccc;
+}
+.system-unboundfate .uf-abilities-container .uf-ability-box .uf-ability-name {
+  font-weight: bold;
+  font-size: 1.1em;
+}
+.system-unboundfate .uf-abilities-container .uf-ability-box .uf-ability-input-container .uf-ability-small-label {
+  text-align: center;
+  flex-shrink: 1;
+  width: 30px;
+}
+.system-unboundfate .uf-abilities-container .uf-ability-box .uf-ability-input-container .uf-ability-input {
+  text-align: center;
+  width: 30px;
+}
 .system-unboundfate .resource-label {
   font-weight: bold;
 }

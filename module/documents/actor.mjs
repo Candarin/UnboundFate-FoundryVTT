@@ -61,6 +61,15 @@ export class UnboundFateActor extends Actor {
       // Calculate the modifier using d20 rules.
       //ability.mod = Math.floor((ability.value - 10) / 2);
     //}
+
+    // Ability score totals
+    if (systemData.abilities) {
+      for (let [key, ability] of Object.entries(systemData.abilities)) {
+        
+
+      }
+    }
+
   }
 
   /**
@@ -136,6 +145,17 @@ export class UnboundFateActor extends Actor {
     // Clamp currentHP to maxHP if needed
     if (systemData.hitPoints.currentHP > systemData.hitPoints.maxHP) {
       systemData.hitPoints.currentHP = systemData.hitPoints.maxHP;
+    }
+  }
+
+  _calculateAbilityTotals(systemData) {
+    if (!systemData.abilities) return;
+
+    // Loop through ability scores, and add their modifiers to our sheet output.
+    for (let [key, ability] of Object.entries(systemData.abilities)) {
+      // Total should be the base value plus any modifiers.
+      ability.total = ability.value + (ability.mod || 0);
+      // If the ability has a special property, you can add it here.
     }
   }
 

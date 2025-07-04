@@ -21,25 +21,32 @@
       "abilities-template": {
         "abilities": {
           "str": {
-            "value": 0
+            "value": 0,
+            "mod": 0
           },
           "agl": {
-            "value": 0
+            "value": 0,
+            "mod": 0
           },
           "end": {
-            "value": 0
+            "value": 0,
+            "mod": 0
           },
           "int": {
-            "value": 0
+            "value": 0,
+            "mod": 0
           }, 
           "wil": {
-            "value": 0
+            "value": 0,
+            "mod": 0
           },
           "prs": {
-            "value": 0
+            "value": 0,
+            "mod": 0
           }, 
           "awr": {
-            "value": 0
+            "value": 0,
+            "mod": 0
           }
         }
       },

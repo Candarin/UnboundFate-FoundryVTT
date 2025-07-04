@@ -153,3 +153,31 @@
     margin-left: 10px;
   }
 }
+
+.uf-abilities-container {
+  border: 1px solid #ccc;
+
+  .uf-ability-box {
+
+    .uf-ability-name {
+      font-weight: bold;
+      font-size: 1.1em;      
+    }
+
+    .uf-ability-input-container {
+      .uf-ability-small-label {
+        text-align: center;
+        flex-shrink: 1;
+        width: 30px;
+      }
+
+      .uf-ability-input {
+        text-align: center;
+        width: 30px;
+      }
+    }
+
+  }
+
+
+}

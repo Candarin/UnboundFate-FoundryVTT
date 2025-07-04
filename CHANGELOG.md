@@ -396,6 +396,11 @@
 ## 1.0.108
 - Add actions template and integrate into character sheet
 
+## 1.0.109
+- Enhanced ability score management with new styles and calculations
+- Added CSS styles for ability containers and inputs.
+- Updated template to reflect new structure for ability scores.
+
 
 TODO
 - add damage to attack message
