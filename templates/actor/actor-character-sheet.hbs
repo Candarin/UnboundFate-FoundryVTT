@@ -1,17 +1,18 @@
 <form class="{{cssClass}} {{actor.type}} flexcol uf-dialog uf-actor-dialog" autocomplete="off">
+  
   {{!-- Creation Mode Ribbon --}}
   <div class="creation-mode-ribbon flex0" style="background: {{#if system.isCreationMode}}#e67e22{{else}}#888{{/if}}; border-radius: 4px 4px 4px 4px;">
-    <div class="flexcol" style="text-align: center;">
+    <div class="" style="text-align: center;">
       {{#if system.isCreationMode}}
         <div class="flewrow">
           <div style="text-align: center;">Character Creation Mode</div>
           <div class="flex0">
-            <a class="toggle-creation-mode" title="Ready for Play"><i class="fas fa-user-check"></i> Ready for Play </a>
+            <a class="toggle-creation-mode" title="Ready for Play"><i class="fas fa-user-check"></i></a>
           </div>                    
         </div>       
       {{else}}
         <div class="flexrow">
-          <div class="" style="text-align: center;">Normal Mode</div>        
+          <div class="" style="text-align: center;">Character Active</div>        
           <div class="flex0">
             <a class="toggle-creation-mode" title="Return to Character Creation"><i class="fas fa-edit"></i></a>
           </div>  

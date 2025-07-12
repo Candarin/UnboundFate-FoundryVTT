@@ -407,6 +407,9 @@
 ## 1.0.111
 - Updates to actor-abilities styling
 
+## 1.0.112
+- Improved styling for character sheet components
+
 TODO
 - add damage to attack message
 - Weapon dialog. correct update of skill rating

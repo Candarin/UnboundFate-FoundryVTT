@@ -187,10 +187,18 @@
         text-align: center;
         width: 30px;
         height: 20px;
+        font-size: x-small;
+        padding: 0px 2px;
       }
     }
 
   }
 
 
+}
+
+.uf-sheet-segment-container {
+  margin-bottom: 2px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
 }
