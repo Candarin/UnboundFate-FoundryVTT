@@ -197,4 +197,26 @@ Hooks.on('createActor', async (actor, options, userId) => {
   }
 });
 
+// Add the Unbound Fate GM controls to the scene control buttons
+Hooks.on("getSceneControlButtons", controls => {
+  controls.push({
+    name: "unboundfate-gm",
+    title: "Unbound Fate GM Controls",
+    icon: "fas fa-hat-wizard",
+    layer: null,
+    tools: [
+      {
+        name: "assign-fate-points",
+        title: "Assign Fate Points",
+        icon: "fas fa-dice-d20",
+        visible: game.user.isGM,
+        onClick: () => {
+          ui.notifications.info("Assign Fate Points dialog would open here!");
+        },
+        button: true
+      }
+    ]
+  });
+});
+
 

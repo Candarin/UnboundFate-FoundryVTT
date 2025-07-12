@@ -410,6 +410,9 @@
 ## 1.0.112
 - Improved styling for character sheet components
 
+## 1.0.113
+- Added hook for 'Assign Fate Points' control button
+
 TODO
 - add damage to attack message
 - Weapon dialog. correct update of skill rating
