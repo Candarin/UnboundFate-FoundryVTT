@@ -213,7 +213,8 @@ Hooks.on("getSceneControlButtons", controls => {
         onClick: () => {
           ui.notifications.info("Assign Fate Points dialog would open here!");
         },
-        button: true
+        button: true,
+        active: true // <-- Added to prevent the 'activate' error
       }
     ]
   });

@@ -416,6 +416,9 @@
 ## 1.0.114
 - Enhance ability box styles and refactor ability total calculation
 
+## 1.0.115
+- Refactor weapon dialog calculations to use total ability values and update UI elements accordingly
+- Fixed issue on selection of Unbound Fate GM Controls
 
 TODO
 - add damage to attack message

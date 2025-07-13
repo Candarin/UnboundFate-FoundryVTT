@@ -22,6 +22,7 @@ export function launchWeaponDialog({ weapon, attackType, actor, attackerTokenId 
   const skillSpec = actor.system.skills[weaponSkillKey]?.specialisation || '';                                                  // The skill specialisation of the actor for the weapon's skill, default to empty string  
   const abilityKey = CONFIG.UNBOUNDFATE.AttackType?.[attackType]?.defaultAbility || 'str';                    // The ability key associated with the attack type, default to 'str' 
   const abilityValue = actor.system.abilities[abilityKey]?.value || 0;  // The value of the selected ability
+  const abilityTotal = actor.system.abilities[abilityKey]?.total || 0;  // The total of the selected ability (base + mods)
   // Roll fields
   const modifier = 0; // Default modifier, can be set in dialog
 
@@ -54,12 +55,12 @@ export function launchWeaponDialog({ weapon, attackType, actor, attackerTokenId 
   }
 
   // Calculate initial total pool
-  const totalPool = abilityValue + skillRating + (useSpec ? 2 : 0) + modifier;
+  const totalPool = abilityTotal + skillRating + (useSpec ? 2 : 0) + modifier;
 
   // Calculate modifiers string
   let modifiersText = [];
-  if (abilityKey && abilityValue !== 0) {
-    modifiersText.push(`${game.i18n.localize(abilities[abilityKey])} ${abilityValue >= 0 ? '+' : ''}${abilityValue}`);
+  if (abilityKey && abilityTotal !== 0) {
+    modifiersText.push(`${game.i18n.localize(abilities[abilityKey])} ${abilityTotal >= 0 ? '+' : ''}${abilityTotal}`);
   }
   if (skillKey && skillRating !== 0) {           
     modifiersText.push(`${game.i18n.localize(skills[skillKey])} ${skillRating >= 0 ? '+' : ''}${skillRating}`);
@@ -101,14 +102,14 @@ export function launchWeaponDialog({ weapon, attackType, actor, attackerTokenId 
   }
 
   // Add ability bonus as a separate entry in the array
-  if (abilityValue > 0) {
+  if (abilityTotal > 0) {
     damage.addComponent({
       label: `${game.i18n.localize(abilities[abilityKey])} Bonus`,
-      formula: `+${abilityValue}`,
+      formula: `+${abilityTotal}`,
       type: (attackType === 'melee') ? (weapon.system.melee?.damageType || weapon.system.damageType || 'slashing') : (weapon.system.ranged?.damageType || weapon.system.damageType || 'piercing'),
       source: 'ability'
     });
-    weaponDamageFormula += ` +${abilityValue}`;
+    weaponDamageFormula += ` +${abilityTotal}`;
   }
 
   // Use the utility to generate the display string
@@ -133,6 +134,7 @@ export function launchWeaponDialog({ weapon, attackType, actor, attackerTokenId 
     abilityOptions,
     abilityKey,
     abilityValue,
+    abilityTotal,
     useSpec,
     modifier,
     modifiersString,
@@ -184,9 +186,9 @@ export function launchWeaponDialog({ weapon, attackType, actor, attackerTokenId 
           
           // Get selected ability value
           const abilityKey = form.abilityKey?.value || 'str';
-          let abilityValue = 0;
+          let abilityTotal = 0;
           if (actor.system.abilities[abilityKey]) {
-            abilityValue = parseInt(actor.system.abilities[abilityKey].value, 10) || 0;
+            abilityTotal = parseInt(actor.system.abilities[abilityKey].value, 10) || 0;
           }         
           // Get modifier
           const modifier = parseInt(form.modifier?.value, 10) || 0;
@@ -194,14 +196,14 @@ export function launchWeaponDialog({ weapon, attackType, actor, attackerTokenId 
           const useSpec = form.useSpec.checked ? 2 : 0;          
 
            // Calculate total pool: ability + skill + spec + modifier
-          const total = abilityValue + skillRating + useSpec + modifier;
+          const total = abilityTotal + skillRating + useSpec + modifier;
           // Update totalPool display
           form.totalPool.value = total;
 
 
           // Update displayed ability value display
-          const abilityValueElem = form.querySelector('#ability-value');
-          if (abilityValueElem) abilityValueElem.value = abilityValue;
+          const abilityTotalElem = form.querySelector('#ability-total');
+          if (abilityTotalElem) abilityTotalElem.value = abilityTotal;
 
 
           // Update displayed Skill Rating
@@ -216,8 +218,8 @@ export function launchWeaponDialog({ weapon, attackType, actor, attackerTokenId 
 
           // Calculate modifiers string
           let modifiersText = [];
-          if (abilityKey && abilityValue !== 0) {
-            modifiersText.push(`${game.i18n.localize(abilities[abilityKey])} ${abilityValue >= 0 ? '+' : ''}${abilityValue}`);
+          if (abilityKey && abilityTotal !== 0) {
+            modifiersText.push(`${game.i18n.localize(abilities[abilityKey])} ${abilityTotal >= 0 ? '+' : ''}${abilityTotal}`);
           }
           if (skillKey && skillRating !== 0) {           
             modifiersText.push(`${game.i18n.localize(skills[skillKey])} ${skillRating >= 0 ? '+' : ''}${skillRating}`);
@@ -239,9 +241,9 @@ export function launchWeaponDialog({ weapon, attackType, actor, attackerTokenId 
           const selectedAbilityKey = form.abilityKey?.value || '';
 
           // Update ability value display
-          const abilityValueElem = form.querySelector('#ability-value');
-          if (abilityValueElem) {
-            abilityValueElem.value = actor.system.abilities[selectedAbilityKey]?.value || 0;
+          const abilityTotalElem = form.querySelector('#ability-total');
+          if (abilityTotalElem) {
+            abilityTotalElem.value = actor.system.abilities[selectedAbilityKey]?.total || 0;
           }
           // Update total pool and modifiers string
           updateTotal();
