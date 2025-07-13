@@ -159,9 +159,9 @@
   padding: 0px 3px;
 
   .uf-ability-box {
+    border-bottom: 1px solid #ccc;
 
     .uf-ability-name {
-      font-weight: bold;
       font-size: 1.1em;  
       text-align: center;    
     }
@@ -173,6 +173,7 @@
     }
 
     .uf-ability-input-container {
+      margin-top: 5px;
       align-items: center;
       flex-grow: 0;
 
@@ -194,6 +195,10 @@
 
   }
 
+  .uf-ability-box:last-child {
+    border-bottom: none;
+  }
+
 
 }
 
@@ -202,4 +207,5 @@
   margin-top: 0px;
   border: 1px solid #ccc;
   border-radius: 5px;
+  padding: 2px;
 }

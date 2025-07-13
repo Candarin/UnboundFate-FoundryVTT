@@ -203,7 +203,7 @@ Hooks.on("getSceneControlButtons", controls => {
     name: "unboundfate-gm",
     title: "Unbound Fate GM Controls",
     icon: "fas fa-hat-wizard",
-    layer: null,
+    // layer: null,
     tools: [
       {
         name: "assign-fate-points",

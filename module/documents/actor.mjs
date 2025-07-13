@@ -63,12 +63,7 @@ export class UnboundFateActor extends Actor {
     //}
 
     // Ability score totals
-    if (systemData.abilities) {
-      for (let [key, ability] of Object.entries(systemData.abilities)) {
-        
-
-      }
-    }
+    this._calculateAbilityTotals(systemData);
 
   }
 

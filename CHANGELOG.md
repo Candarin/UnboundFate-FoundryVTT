@@ -413,6 +413,10 @@
 ## 1.0.113
 - Added hook for 'Assign Fate Points' control button
 
+## 1.0.114
+- Enhance ability box styles and refactor ability total calculation
+
+
 TODO
 - add damage to attack message
 - Weapon dialog. correct update of skill rating

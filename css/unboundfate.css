@@ -332,8 +332,10 @@
   border: 1px solid #ccc;
   padding: 0px 3px;
 }
+.system-unboundfate .uf-abilities-container .uf-ability-box {
+  border-bottom: 1px solid #ccc;
+}
 .system-unboundfate .uf-abilities-container .uf-ability-box .uf-ability-name {
-  font-weight: bold;
   font-size: 1.1em;
   text-align: center;
 }
@@ -343,6 +345,7 @@
   font-size: large;
 }
 .system-unboundfate .uf-abilities-container .uf-ability-box .uf-ability-input-container {
+  margin-top: 5px;
   align-items: center;
   flex-grow: 0;
 }
@@ -359,11 +362,15 @@
   font-size: x-small;
   padding: 0px 2px;
 }
+.system-unboundfate .uf-abilities-container .uf-ability-box:last-child {
+  border-bottom: none;
+}
 .system-unboundfate .uf-sheet-segment-container {
   margin-bottom: 3px;
   margin-top: 0px;
   border: 1px solid #ccc;
   border-radius: 5px;
+  padding: 2px;
 }
 .system-unboundfate .resource-label {
   font-weight: bold;
