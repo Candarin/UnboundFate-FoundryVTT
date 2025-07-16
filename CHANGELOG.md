@@ -429,6 +429,9 @@
 ## 1.0.118
 - Fixed issue with sceneControls buttons
 
+## 1.0.119
+- Fixed issue with sceneControls buttons
+
 TODO
 - add damage to attack message
 - Weapon dialog. correct update of skill rating

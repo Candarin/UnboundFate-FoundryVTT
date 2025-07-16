@@ -199,8 +199,8 @@ Hooks.on('createActor', async (actor, options, userId) => {
 
 // Add the Unbound Fate GM controls to the scene control buttons
 Hooks.on("getSceneControlButtons", controls => {
-  controls.push({
-    name: "unboundfate-gm",
+  controls.unboundfate_gm = {
+    name: "unboundfate_gm",
     title: "Unbound Fate GM Controls",
     icon: "fas fa-hat-wizard",
     visible: game.user.isGM,
@@ -222,7 +222,8 @@ Hooks.on("getSceneControlButtons", controls => {
       },
     ],
     activeTool: "assign-fate-points"
-  });
+  };
+  
 });
 
 
