@@ -205,13 +205,12 @@ Hooks.on("getSceneControlButtons", controls => {
     icon: "fas fa-hat-wizard",
     visible: game.user.isGM,
     order: 99,
-    layer: "actors",
+    // layer: "actors",
     tools: [
       {
         name: "assign-fate-points",
         title: "Assign Fate Points",
-        icon: "fas fa-dice-d20",
-        activeTool: "assign-fate-points",
+        icon: "fas fa-dice-d20",        
         order: 0,
         visible: game.user.isGM,
         toggle: false,        
@@ -220,8 +219,9 @@ Hooks.on("getSceneControlButtons", controls => {
         onClick: () => {
           ui.notifications.info("Assign Fate Points dialog would open here!");
         }
-      }
-    ]
+      },
+    ],
+    activeTool: "assign-fate-points"
   });
 });
 
