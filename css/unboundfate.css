@@ -341,7 +341,7 @@
 }
 .system-unboundfate .uf-abilities-container .uf-ability-box .uf-ability-total {
   text-align: center;
-  vertical-align: middle;
+  padding-top: 5px;
   font-size: large;
 }
 .system-unboundfate .uf-abilities-container .uf-ability-box .uf-ability-input-container {

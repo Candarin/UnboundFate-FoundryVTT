@@ -203,18 +203,23 @@ Hooks.on("getSceneControlButtons", controls => {
     name: "unboundfate-gm",
     title: "Unbound Fate GM Controls",
     icon: "fas fa-hat-wizard",
+    visible: game.user.isGM,
+    order: 99,
     // layer: null,
     tools: [
       {
         name: "assign-fate-points",
         title: "Assign Fate Points",
         icon: "fas fa-dice-d20",
+        activeTool: "assign-fate-points",
+        order: 0,
         visible: game.user.isGM,
+        toggle: false,        
+        button: true,
+        // active: true, // <-- Added to prevent the 'activate' error
         onClick: () => {
           ui.notifications.info("Assign Fate Points dialog would open here!");
-        },
-        button: true,
-        active: true // <-- Added to prevent the 'activate' error
+        }
       }
     ]
   });

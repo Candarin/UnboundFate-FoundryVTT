@@ -420,6 +420,9 @@
 - Refactor weapon dialog calculations to use total ability values and update UI elements accordingly
 - Fixed issue on selection of Unbound Fate GM Controls
 
+## 1.0.116
+- Fixed issue with sceneControls buttons
+
 TODO
 - add damage to attack message
 - Weapon dialog. correct update of skill rating
