@@ -205,7 +205,7 @@ Hooks.on("getSceneControlButtons", controls => {
     icon: "fas fa-hat-wizard",
     visible: game.user.isGM,
     order: 99,
-    // layer: null,
+    layer: "actors",
     tools: [
       {
         name: "assign-fate-points",
